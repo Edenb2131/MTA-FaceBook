@@ -5,6 +5,11 @@
 #ifndef MTA_FACEBOOK_MEMBER_H
 #define MTA_FACEBOOK_MEMBER_H
 
+#include <iostream>
+using namespace std;
+#include <string>
+#include "Status.h"
+
 struct Date{
     int day;
     int month;
@@ -12,13 +17,13 @@ struct Date{
 };
 
 class Member {
-    char *name;
-    Date birthday;
-    Member *friends;
-    int numOfFriends;
-    char** posts;
-    int numOfPosts;
-    //fanPage *fanPages;
+    char *Name;
+    Date Birthday;
+    Member *Friends;
+    int NumOfFriends;
+    Status* Posts;
+    int NumOfPosts;
+    //FanPage *fanPages;
 
 public:
     //constructor
@@ -30,7 +35,8 @@ public:
     Date getBirthday() const;
     Member* getFriends() const;
     int getNumOfFriends() const;
-    char** getPosts() const;
+    //char** getPosts() const;
+    Status* getPosts() const;
     int getNumOfPosts() const;
     //fanPage* getFanPages() const;
 
@@ -39,15 +45,15 @@ public:
     void setBirthday(Date birthday);
     void setFriends(Member *friends);
     void setNumOfFriends(int numOfFriends);
-    void setPosts(char** posts);
+    void setPosts(Status* posts);
     void setNumOfPosts(int numOfPosts);
 
     //functions :
     void addFriend(Member *friendToAdd);
     void removeFriend(Member *friendToRemove);
-    void addPost(char *postToAdd);
-    void removePost(char *postToRemove);
-    void printPosts();
+    void addPost(Status *postToAdd);
+    void removePost(Status *postToRemove);
+    //void printPosts();
     void printFriends();
     void printMember();
 

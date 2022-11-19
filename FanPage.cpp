@@ -30,23 +30,23 @@ int FanPage::getNumOfPosts() const {
 }
 
 void FanPage::setName(const char *name) {
-    FanPage::Name = name;
+    this->Name = name;
 }
 
 void FanPage::setFans(Member *fans) {
-    FanPage::Fans = fans;
+    this->Fans = fans;
 }
 
 void FanPage::setNumOfFans(int numOfFans){
-    FanPage::NumOfFans = numOfFans;
+    this->NumOfFans = numOfFans;
 }
 
 void FanPage::setPosts(Status *posts) {
-    FanPage::Posts = posts;
+    this->Posts = posts;
 }
 
 void FanPage::setNumOfPosts(int numOfPosts) {
-    FanPage::NumOfPosts = numOfPosts;
+    this->NumOfPosts = numOfPosts;
 }
 
 void FanPage::addPost(Status *postToAdd) {

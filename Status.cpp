@@ -1,22 +1,19 @@
-//
-// Created by Eden Bar on 17/11/2022.
-//
 
 #include "Status.h"
 
 Status::Status(char *content) {
-    this->content = content;
+    Content = content;
 }
 
 char *Status::getContent() const {
-    return content;
+    return Content;
 }
 
 void Status::setContent(char *content) {
-    Status::content = content;
+    Status::Content = content;
 }
 
 void Status::printStatus() {
-    cout << "Status: " << content << endl;
+    cout << "Status: " << Content << endl;
 }
 

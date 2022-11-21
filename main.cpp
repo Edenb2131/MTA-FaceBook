@@ -1,12 +1,13 @@
-//
-// Created by Eden Bar on 14/11/2022.
-//
 
 #include <iostream>
 using namespace std;
-
+#include "FaceBook.h"
 
 int main(){
     cout << "Hello, World!!" << endl;
+
+    FaceBook fb = FaceBook();
+
+
     return 0;
 }

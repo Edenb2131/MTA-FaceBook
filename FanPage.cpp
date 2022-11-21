@@ -1,12 +1,11 @@
 #include "FanPage.h"
-#include "Member.h"
 
-FanPage::FanPage(char *Name){
-    this->Name = Name;
-    this->Fans = nullptr;
-    this->NumOfFans = 0;
-    this->Posts = nullptr;
-    this->NumOfPosts = 0;
+FanPage::FanPage(char *name){
+    Name = name;
+    Fans = nullptr;
+    NumOfFans = 0;
+    Posts = nullptr;
+    NumOfPosts = 0;
 }
 
 char *FanPage::getName() const {

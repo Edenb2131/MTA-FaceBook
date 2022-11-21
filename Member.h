@@ -1,6 +1,3 @@
-//
-// Created by Eden Bar on 16/11/2022.
-//
 
 #ifndef MTA_FACEBOOK_MEMBER_H
 #define MTA_FACEBOOK_MEMBER_H
@@ -8,7 +5,9 @@
 #include <iostream>
 using namespace std;
 #include <string>
-#include "Status.h"
+#include "Functions.h"
+
+class Status; // Forward declaration
 
 struct Date{
     int day;
@@ -27,8 +26,7 @@ class Member {
 
 public:
     //constructor
-    Member(char *name, Date birthday);
-
+    Member();
 
     //getters :
     char* getName() const;

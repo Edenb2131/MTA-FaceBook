@@ -1,8 +1,12 @@
 #ifndef MTA_FACEBOOK_FANPAGE_H
 #define MTA_FACEBOOK_FANPAGE_H
 
+#include <iostream>
+using namespace std;
+#include <string>
 #include "Member.h"
 #include "Status.h"
+
 
 class FanPage {
     char *Name;

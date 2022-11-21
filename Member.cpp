@@ -5,13 +5,16 @@
 #include "Member.h"
 
 
-Member::Member(char *name, Date birthday) {
-    this->Name = name;
-    this->Birthday = birthday;
-    this->Friends = nullptr;
-    this->NumOfFriends = 0;
-    this->Posts = nullptr;
-    this->NumOfPosts = 0;
+Member::Member() {
+    cout << "Enter your name: " << endl;
+    Functions::getString(this->Name);
+    cout << "Enter your birthday: (Day/Month/Year" << endl;
+    cin << Birthday.day << Birthday.month << Birthday.year;
+    Friends = nullptr;
+    NumOfFriends = 0;
+    Posts = nullptr;
+    NumOfPosts = 0;
+
 }
 
 char *Member::getName() const {

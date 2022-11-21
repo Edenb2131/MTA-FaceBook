@@ -28,7 +28,7 @@ int FanPage::getNumOfPosts() const {
     return NumOfPosts;
 }
 
-void FanPage::setName(const char *name) {
+void FanPage::setName( char *name) {
     this->Name = name;
 }
 
@@ -48,21 +48,22 @@ void FanPage::setNumOfPosts(int numOfPosts) {
     this->NumOfPosts = numOfPosts;
 }
 
-void FanPage::addPost(Status *postToAdd) {
-    Status* newPosts = new Status[NumOfPosts + 1];
-    for (int i = 0; i < NumOfPosts; i++){
-        newPosts[i] = Posts[i];
-    }
-    newPosts[NumOfPosts] = *postToAdd;
-    delete [] Posts;
-    Posts = newPosts;
-    NumOfPosts++;
-}
+//void FanPage::addPost(Status *postToAdd) {
+//    Status* newPosts = new Status[NumOfPosts + 1];
+//    for (int i = 0; i < NumOfPosts; i++){
+//        newPosts[i] = Posts[i];
+//    }
+//    newPosts[NumOfPosts] = *postToAdd;
+//    delete [] Posts;
+//    Posts = newPosts;
+//    NumOfPosts++;
+//}
+
 
 void FanPage::printAllPosts() const {
     cout << "Posts are:" << endl;
     for (int i = 0; i < NumOfPosts; i++){
-        cout << i+1 << ". " << Posts[i] << endl;
+        cout << i+1 << ". " << Posts[i].getContent() << endl;
     }
 }
 

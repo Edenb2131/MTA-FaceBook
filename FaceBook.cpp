@@ -3,11 +3,12 @@
 
 //constructor
 FaceBook::FaceBook() {
-//    Members = new Member; //??
-//    NumOfMembersOverAll = 0;
-//    FanPages = nullptr;
-//    NumOfFanPagesOverAll = 0;
+    Members = nullptr;
+    NumOfMembersOverAll = 0;
+    FanPages = nullptr;
+    NumOfFanPagesOverAll = 0;
 }
+
 
 Member *FaceBook::getMembers() const {
     return Members;
@@ -25,9 +26,9 @@ int FaceBook::getNumOfFanPagesOverAll() const {
     return NumOfFanPagesOverAll;
 }
 
-void FaceBook::setMembers(Member *members) {
-    FaceBook::Members = members;
-}
+//void FaceBook::setMembers(Member *members) {
+//    FaceBook::Members = members;
+//}
 
 void FaceBook::setNumOfMembersOverAll(int numOfMembersOverAll) {
     FaceBook::NumOfMembersOverAll = numOfMembersOverAll;
@@ -47,7 +48,8 @@ void FaceBook::addNewMember() {
     for (int i = 0; i < NumOfMembersOverAll; i++){
         newMembers[i] = Members[i];
     }
-    newMembers[NumOfMembersOverAll] = Member::Member();
+    //newMembers[NumOfMembersOverAll] = *new Member;
+
     delete [] Members;
     Members = newMembers;
     NumOfMembersOverAll++;

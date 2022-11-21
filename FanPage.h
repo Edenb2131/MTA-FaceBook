@@ -27,7 +27,7 @@ public:
     int getNumOfPosts() const;
 
     //setters :
-    void setName(const char *name);
+    void setName(char *name);
     void setFans(Member *fans);
     void setNumOfFans(int numOfFans);
     void setPosts(Status *posts);

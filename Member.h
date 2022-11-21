@@ -4,7 +4,7 @@
 
 #include <iostream>
 using namespace std;
-#include <string>
+#include "Status.h"
 #include "Functions.h"
 
 class Status; // Forward declaration
@@ -17,7 +17,7 @@ struct Date{
 
 class Member {
     char *Name;
-    Date Birthday;
+    Date Birthday{};
     Member *Friends;
     int NumOfFriends;
     Status* Posts;
@@ -51,7 +51,7 @@ public:
     void removeFriend(Member *friendToRemove);
     void addPost(Status *postToAdd);
     void removePost(Status *postToRemove);
-    //void printPosts();
+    void printPosts();
     void printFriends();
     void printMember();
 

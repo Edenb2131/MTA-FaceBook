@@ -8,7 +8,6 @@ using namespace std;
 #include "Member.h"
 #include "FanPage.h"
 
-
 class FaceBook {
 
     Member *Members;

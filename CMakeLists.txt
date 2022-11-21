@@ -6,4 +6,14 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(.)
 
 add_executable(MTA_FaceBook
-        main.cpp)
+        main.cpp
+        FaceBook.cpp
+        FaceBook.h
+        FanPage.cpp
+        FanPage.h
+        Member.cpp
+        Member.h
+        Status.cpp
+        Status.h
+        Functions.cpp
+        Functions.h)

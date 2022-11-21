@@ -4,12 +4,11 @@
 
 #include "Member.h"
 
-
 Member::Member() {
     cout << "Enter your name: " << endl;
-    Functions::getString(this->Name);
+    Name = getDynamicString();
     cout << "Enter your birthday: (Day/Month/Year" << endl;
-    cin << Birthday.day << Birthday.month << Birthday.year;
+    cin >> Birthday.day >> Birthday.month >> Birthday.year;
     Friends = nullptr;
     NumOfFriends = 0;
     Posts = nullptr;
@@ -41,9 +40,9 @@ int Member::getNumOfPosts() const {
     return NumOfPosts;
 }
 
-void Member::setName(const char *name) {
-    Member::Name = name;
-}
+//void Member::setName(const char *name) {
+//    Member::Name = name;
+//}
 
 void Member::setBirthday(Date birthday) {
     Member::Birthday = birthday;
@@ -57,9 +56,9 @@ void Member::setNumOfFriends(int numOfFriends) {
     Member::NumOfFriends = numOfFriends;
 }
 
-void Member::setPosts(Status* *posts) {
-    Member::Posts = posts;
-}
+//void Member::setPosts(Status* *posts) {
+//    Member::Posts = posts;
+//}
 
 void Member::setNumOfPosts(int numOfPosts) {
     Member::NumOfPosts = numOfPosts;
@@ -94,17 +93,18 @@ void Member::addFriend(Member *friendToAdd) {
 //    numOfFriends--;
 //}
 
-void Member::addPost(Status* postToAdd){
-    Status* temp = new Status[NumOfPosts + 1];
-    for(int i = 0; i < NumOfPosts ; i++){
-        temp[i] = Posts[i];
-    }
 
-    temp[NumOfPosts] = postToAdd;
-    delete [] Posts;
-    Posts = temp;
-    NumOfPosts++;
-}
+//// Have a problem with this function ////
+//void Member::addPost(Status *postToAdd) {
+//    Status *temp = new Status[NumOfPosts + 1];
+//    for (int i = 0; i < NumOfPosts; ++i) {
+//        temp[i] = Posts[i];
+//    }
+//    temp[NumOfPosts] = *postToAdd;
+//    delete[] Posts;
+//    Posts = temp;
+//    NumOfPosts++;
+//}
 
 //void Member::removePost(char *postToRemove) {
 //    char **temp = new char*[NumOfPosts-1];
@@ -121,12 +121,11 @@ void Member::addPost(Status* postToAdd){
 //}
 
 
-////
-//void Member::printPosts() {
-//    for (int i = 0; i < NumOfPosts; ++i) {
-//        cout << Posts[i] << endl;
-//    }
-//}
+void Member::printPosts() {
+    for (int i = 0; i < NumOfPosts; ++i) {
+        cout << Posts[i].getContent() << endl;
+    }
+}
 
 void Member::printFriends() {
     for (int i = 0; i < NumOfFriends; ++i) {
@@ -137,9 +136,21 @@ void Member::printFriends() {
 void Member::printMember() {
     cout << "Name: " << Name << endl;
     cout << "Birthday: " << Birthday.day << "/" << Birthday.month << "/" << Birthday.year << endl;
-    cout << "Friends: " << endl;
-    printFriends();
-    cout << "Posts: " << endl;
-    printPosts();
+    if(NumOfFriends == 0){
+        cout << "You have no friends ! " << endl;
+        printFriends();
+    }
+    else {
+        cout << "Friends: " << endl;
+        printFriends();
+    }
+    if(NumOfPosts == 0){
+        cout << "You have no posts ! " << endl;
+    }
+    else {
+        cout << "Posts: " << endl;
+        printPosts();
+    }
+    cout << endl;
 }
 

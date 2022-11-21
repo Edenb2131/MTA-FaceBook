@@ -1,8 +1,9 @@
 
 #include "Status.h"
 
-Status::Status(char *content) {
-    Content = content;
+Status::Status() {
+    cout << "Enter your status: " << endl;
+    Content = getDynamicString();
 }
 
 char *Status::getContent() const {
@@ -16,4 +17,5 @@ void Status::setContent(char *content) {
 void Status::printStatus() {
     cout << "Status: " << Content << endl;
 }
+
 

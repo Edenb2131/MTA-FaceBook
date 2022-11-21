@@ -5,6 +5,7 @@
 #include <iostream>
 using namespace std;
 #include <string>
+#include "Functions.h"
 
 
 class Status {
@@ -12,7 +13,7 @@ class Status {
 
 public:
 
-    Status(char* content);
+    Status();
     char* getContent() const;
     void setContent(char* content);
     void printStatus();

@@ -1,14 +1,13 @@
-//
-// Created by Eden Bar on 16/11/2022.
-//
 
 #ifndef MTA_FACEBOOK_MEMBER_H
 #define MTA_FACEBOOK_MEMBER_H
 
 #include <iostream>
 using namespace std;
-#include <string>
 #include "Status.h"
+#include "Functions.h"
+
+class Status; // Forward declaration
 
 struct Date{
     int day;
@@ -18,7 +17,7 @@ struct Date{
 
 class Member {
     char *Name;
-    Date Birthday;
+    Date Birthday{};
     Member *Friends;
     int NumOfFriends;
     Status* Posts;
@@ -27,8 +26,7 @@ class Member {
 
 public:
     //constructor
-    Member(char *name, Date birthday);
-
+    Member();
 
     //getters :
     char* getName() const;
@@ -53,7 +51,7 @@ public:
     void removeFriend(Member *friendToRemove);
     void addPost(Status *postToAdd);
     void removePost(Status *postToRemove);
-    //void printPosts();
+    void printPosts();
     void printFriends();
     void printMember();
 

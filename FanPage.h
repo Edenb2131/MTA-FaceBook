@@ -1,8 +1,12 @@
 #ifndef MTA_FACEBOOK_FANPAGE_H
 #define MTA_FACEBOOK_FANPAGE_H
 
+#include <iostream>
+using namespace std;
+#include <string>
 #include "Member.h"
 #include "Status.h"
+
 
 class FanPage {
     char *Name;
@@ -23,7 +27,7 @@ public:
     int getNumOfPosts() const;
 
     //setters :
-    void setName(const char *name);
+    void setName(char *name);
     void setFans(Member *fans);
     void setNumOfFans(int numOfFans);
     void setPosts(Status *posts);

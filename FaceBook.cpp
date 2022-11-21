@@ -44,13 +44,20 @@ void FaceBook::setNumOfFanPagesOverAll(int numOfFanPagesOverAll) {
 
 
 void FaceBook::addNewMember() {
-    Member* newMembers = new Member[NumOfMembersOverAll + 1];
-    for (int i = 0; i < NumOfMembersOverAll; i++){
-        newMembers[i] = Members[i];
-    }
-    //newMembers[NumOfMembersOverAll] = *new Member;
 
-    delete [] Members;
-    Members = newMembers;
+    if(NumOfMembersOverAll != 0){
+        Member* newMembers = (Member*) malloc(sizeof(Member) * (NumOfMembersOverAll + 1));
+        for (int i = 0; i < NumOfMembersOverAll; i++){
+            newMembers[i] = Members[i];
+        }
+        newMembers[NumOfMembersOverAll] = Member();
+        delete [] Members;
+        Members = newMembers;
+    }
+    else{
+        Members = new Member[1];
+    }
+
     NumOfMembersOverAll++;
+    cout << endl;
 }

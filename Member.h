@@ -47,11 +47,13 @@ public:
     void setNumOfPosts(int numOfPosts);
 
     //functions :
-    void addFriend(Member *friendToAdd);
+    void addFriend(Member *friendToAdd, int a = 0);
     void removeFriend(Member *friendToRemove);
-    void addPost(Status *postToAdd);
+    void addPost();
     void removePost(Status *postToRemove);
-    void printPosts();
+    void printLatestPosts();
+    void printAllPosts();
+    void printTenLatestPosts();
     void printFriends();
     void printMember();
 

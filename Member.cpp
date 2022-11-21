@@ -5,15 +5,16 @@
 #include "Member.h"
 
 Member::Member() {
+    cout << "Making a new member" << endl;
     cout << "Enter your name: " << endl;
     Name = getDynamicString();
     cout << "Enter your birthday: (Day/Month/Year" << endl;
     cin >> Birthday.day >> Birthday.month >> Birthday.year;
+    getchar(); // This is to flush the buffer
     Friends = nullptr;
     NumOfFriends = 0;
     Posts = nullptr;
     NumOfPosts = 0;
-
 }
 
 char *Member::getName() const {
@@ -64,15 +65,18 @@ void Member::setNumOfPosts(int numOfPosts) {
     Member::NumOfPosts = numOfPosts;
 }
 
-void Member::addFriend(Member *friendToAdd) {
-    Member *temp = new Member[NumOfFriends + 1];
-    for (int i = 0; i < NumOfFriends; ++i) {
+void Member::addFriend(Member *friendToAdd, int a ) {
+    Member *temp = (Member*)malloc(sizeof(Member) * (NumOfFriends + 1));
+    //Member *temp = new Member[NumOfFriends + 1]; // Dont know why this doesn't work - opening constructor
+    for (int i = 0; i < NumOfFriends; i++) {
         temp[i] = Friends[i];
     }
     temp[NumOfFriends] = *friendToAdd;
 
     //// Need to add the friend to the friend's friend list as well ////
-    friendToAdd->addFriend(this);
+    if (a == 0) {
+        friendToAdd->addFriend(this, 1);
+    }
 
     delete[] Friends;
     Friends = temp;
@@ -94,17 +98,26 @@ void Member::addFriend(Member *friendToAdd) {
 //}
 
 
-//// Have a problem with this function ////
-//void Member::addPost(Status *postToAdd) {
-//    Status *temp = new Status[NumOfPosts + 1];
-//    for (int i = 0; i < NumOfPosts; ++i) {
-//        temp[i] = Posts[i];
-//    }
-//    temp[NumOfPosts] = *postToAdd;
-//    delete[] Posts;
-//    Posts = temp;
-//    NumOfPosts++;
-//}
+void Member::addPost() {
+    if(NumOfPosts != 0) {
+        Status *temp = (Status *) malloc(sizeof(Status) * (NumOfPosts + 1));
+        for (int i = 0; i < NumOfPosts; i++) {
+            temp[i] = Posts[i];
+        }
+
+        cout << "Enter your new status: " << endl;
+        temp[NumOfPosts].setContent(getDynamicString());
+        delete[] Posts;
+        Posts = temp;
+    }
+    else{
+        Posts = (Status *) malloc(sizeof(Status));
+        cout << "Enter your new status: " << endl;
+        Posts[NumOfPosts].setContent(getDynamicString());
+    }
+    cout << endl;
+    NumOfPosts++;
+}
 
 //void Member::removePost(char *postToRemove) {
 //    char **temp = new char*[NumOfPosts-1];
@@ -121,16 +134,17 @@ void Member::addFriend(Member *friendToAdd) {
 //}
 
 
-void Member::printPosts() {
-    for (int i = 0; i < NumOfPosts; ++i) {
-        cout << Posts[i].getContent() << endl;
-    }
+void Member::printLatestPosts() {
+    cout << Posts[NumOfPosts - 1].getContent() ;
+    cout << endl;
 }
 
 void Member::printFriends() {
-    for (int i = 0; i < NumOfFriends; ++i) {
-        cout << Friends[i].getName() << endl;
-    }
+    int i;
+    for (i = 0; i < NumOfFriends - 1; i++)
+        cout << Friends[i].getName() << ", " ;
+
+    cout << Friends[i].getName() << endl ;
 }
 
 void Member::printMember() {
@@ -138,19 +152,36 @@ void Member::printMember() {
     cout << "Birthday: " << Birthday.day << "/" << Birthday.month << "/" << Birthday.year << endl;
     if(NumOfFriends == 0){
         cout << "You have no friends ! " << endl;
-        printFriends();
     }
     else {
-        cout << "Friends: " << endl;
+        cout << "Friends: ";
         printFriends();
     }
     if(NumOfPosts == 0){
         cout << "You have no posts ! " << endl;
     }
     else {
-        cout << "Posts: " << endl;
-        printPosts();
+        cout << "The latest post : " ;
+        printLatestPosts();
     }
     cout << endl;
+}
+
+void Member::printAllPosts() {
+    for (int i = 0; i < NumOfPosts; i++) {
+        cout << Posts[i].getContent() << endl;
+    }
+}
+
+void Member::printTenLatestPosts() {
+    cout << "These are your 10 latest posts: " << endl;
+    if(NumOfPosts < 10){
+        printAllPosts();
+    }
+    else {
+        for (int i = NumOfPosts - 10; i < NumOfPosts; i++) {
+            cout << Posts[i].getContent() << endl;
+        }
+    }
 }
 

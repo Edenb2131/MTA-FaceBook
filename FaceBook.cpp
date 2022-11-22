@@ -83,3 +83,36 @@ void FaceBook::addNewPage(){
     NumOfFanPagesOverAll++;
 }
 
+void FaceBook::printAllMembers() const {
+    for (int i = 0; i < NumOfMembersOverAll; i++){
+        Members[i]->printMember();
+    }
+}
+
+void FaceBook::printAllFanPages() const {
+    for (int i = 0; i < NumOfFanPagesOverAll; i++){
+        FanPages[i]->printFanPage();
+    }
+}
+
+void FaceBook::printAllEntitiesAndTheirData() const {
+    printAllMembers();
+    printAllFanPages();
+}
+
+void FaceBook::printAllEntities() const {
+    cout << "All entities are:" << endl;
+
+    cout << "Members:" ;
+    for (int i = 0; i < NumOfMembersOverAll - 1; i++) {
+        cout << Members[i]->getName() << ", ";
+    }
+    cout << Members[NumOfMembersOverAll - 1]->getName() << endl;
+
+    cout << "Fan Pages: " ;
+    for (int i = 0; i < NumOfFanPagesOverAll; i++){
+        cout << FanPages[i]->getName() << ", ";
+    }
+    cout << FanPages[NumOfFanPagesOverAll - 1]->getName() << endl;
+}
+

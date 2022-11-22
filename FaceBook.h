@@ -34,6 +34,11 @@ public:
 
     void addNewMember();
     void addNewPage();
+
+    void printAllMembers() const;
+    void printAllFanPages() const;
+    void printAllEntitiesAndTheirData() const;
+    void printAllEntities() const;
 };
 
 

@@ -36,6 +36,8 @@ public:
     //functions :
     void addPost();
     void printAllPosts() const;
+    ////void printFans() const; //// Need to implement
+    void printFanPage() const;
 };
 
 #endif //MTA_FACEBOOK_FANPAGE_H

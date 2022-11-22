@@ -75,5 +75,12 @@ void FanPage::printAllPosts() const {
 }
 
 
+void FanPage::printFanPage() const {
+    cout << "FanPage name is: " << Name << endl;
+    cout << "Number of fans: " << NumOfFans << endl;
+    cout << "Number of posts: " << NumOfPosts << endl;
+    cout << endl;
+}
+
 
 

@@ -6,6 +6,21 @@
 using namespace std;
 #include <string>
 
-void checkMemoryAllocation(void* ptr);
+struct Date{
+    int day;
+    int month;
+    int year;
+};
+
+struct Info{
+    char* Name;
+    Date birthDate;
+};
+
+void checkMemoryAllocation(void* ptr); // Checks if the memory allocation was successful
+
+char* getDynamicString(); //Getting a string with unknown length from the user
+
+Info getInfoFromUser(); //Getting info from the user
 
 #endif //MTA_FACEBOOK_FUNCTIONS_H

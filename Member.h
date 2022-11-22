@@ -5,20 +5,11 @@
 #include <iostream>
 using namespace std;
 #include "Status.h"
+#include "Functions.h"
 
 class FanPage; // Forward declaration
-class Status;
+class Status;  // Forward declaration
 
-struct Date{
-    int day;
-    int month;
-    int year;
-};
-
-struct Info{
-    char* Name;
-    Date birthDate;
-};
 
 class Member {
     char *Name;
@@ -39,10 +30,10 @@ public:
     Date getBirthday() const;
     Member** getFriends() const;
     int getNumOfFriends() const;
-    //char** getPosts() const;
+    ////char** getPosts() const; ////
     Status** getPosts() const;
     int getNumOfPosts() const;
-    FanPage** getFanPages() const;
+    /////FanPage** getFanPages() const; ////
 
     //setters :
     void setName(char *name);
@@ -59,13 +50,13 @@ public:
     void printMember();
 
 
-    void addFriend(Member *friendToAdd, int a = 0);
-    void removeFriend(Member *friendToRemove);
+    void addFriend(Member *friendToAdd, int a = 0); // a = 0 means that we didn't add the friend to his friend list
+    ////void removeFriend(Member *friendToRemove);
     void printLatestPost();
     void printTenLatestPosts();
+    void printFriendsTenLatestPosts(Member *friendToPrintLatestPosts);
+    void printTenLatestPostsOfFriends();
 };
 
-Info getInfoFromUser();
-char* getDynamicString();
 
 #endif //MTA_FACEBOOK_MEMBER_H

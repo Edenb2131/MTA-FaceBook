@@ -23,11 +23,11 @@ struct Info{
 class Member {
     char *Name;
     Date Birthday{};
-    Member *Friends;
+    Member** Friends;
     int NumOfFriends;
-    Status* Posts;
+    Status** Posts;
     int NumOfPosts;
-    FanPage *fanPages;
+    FanPage** fanPages;
 
 public:
     //constructor
@@ -37,31 +37,32 @@ public:
     //getters :
     char* getName() const;
     Date getBirthday() const;
-    Member* getFriends() const;
+    Member** getFriends() const;
     int getNumOfFriends() const;
     //char** getPosts() const;
-    Status* getPosts() const;
+    Status** getPosts() const;
     int getNumOfPosts() const;
-    FanPage* getFanPages() const;
+    FanPage** getFanPages() const;
 
     //setters :
     void setName(char *name);
     void setBirthday(Date birthday);
-    void setFriends(Member *friends);
+    void setFriends(Member** friends);
     void setNumOfFriends(int numOfFriends);
-    void setPosts(Status* posts);
+    void setPosts(Status** posts);
     void setNumOfPosts(int numOfPosts);
 
     //functions :
-    void addFriend(Member *friendToAdd, int a = 0);
-    void removeFriend(Member *friendToRemove);
-//    void addPost();
-    void removePost(Status *postToRemove);
-    void printLatestPosts();
+    void addPost();
     void printAllPosts();
-    void printTenLatestPosts();
     void printFriends();
     void printMember();
+
+
+    void addFriend(Member *friendToAdd, int a = 0);
+    void removeFriend(Member *friendToRemove);
+    void printLatestPost();
+    void printTenLatestPosts();
 };
 
 Info getInfoFromUser();

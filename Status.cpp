@@ -3,8 +3,8 @@
 
 Status::Status() {
     cout << "Enter your status: " << endl;
-    cin >> Content;
-    //Content = getDynamicString();
+    Content = new char[100];
+    cin.getline(Content, 100);
 }
 
 char *Status::getContent() const {
@@ -12,7 +12,7 @@ char *Status::getContent() const {
 }
 
 void Status::setContent(char *content) {
-    Status::Content = content;
+    Content = content;
 }
 
 void Status::printStatus() {

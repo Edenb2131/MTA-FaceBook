@@ -10,9 +10,9 @@ class Member;
 
 class FanPage {
     char *Name;
-    Member *Fans;
+    Member** Fans;
     int NumOfFans;
-    Status *Posts;
+    Status** Posts;
     int NumOfPosts;
 
 public:
@@ -21,20 +21,20 @@ public:
 
     //getters  :
     char* getName() const;
-    Member* getFans() const;
+    Member** getFans() const;
     int getNumOfFans() const;
-    Status* getPosts() const;
+    Status** getPosts() const;
     int getNumOfPosts() const;
 
     //setters :
     void setName(char *name);
-    void setFans(Member *fans);
+    void setFans(Member **fans);
     void setNumOfFans(int numOfFans);
-    void setPosts(Status *posts);
+    void setPosts(Status **posts);
     void setNumOfPosts(int numOfPosts);
 
     //functions :
-    void addPost(Status *postToAdd);
+    void addPost();
     void printAllPosts() const;
 };
 

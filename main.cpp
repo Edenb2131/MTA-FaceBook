@@ -7,25 +7,18 @@ int main(){
 
     FaceBook fb;
     fb.addNewMember();
-    fb.addNewMember();
-    fb.addNewMember();
+    fb.getMembers()[0]->addPost();
+    fb.getMembers()[0]->addPost();
+    fb.getMembers()[0]->addPost();
+    fb.addNewPage();
+    fb.getFanPages()[0]->addPost();
 
    for(int i = 0; i < fb.getNumOfMembersOverAll(); i++) {
-       fb.getMembers()[i].printMember();
+       fb.getMembers()[i]->printMember();
    }
 
-    fb.getMembers()[0].addFriend(&fb.getMembers()[1]);
-    fb.getMembers()[0].addFriend(&fb.getMembers()[2]);
-    fb.getMembers()[1].addFriend(&fb.getMembers()[2]);
-
-    for(int i = 0; i < fb.getNumOfMembersOverAll(); i++) {
-        fb.getMembers()[i].printMember();
-    }
-
-//    fb.getMembers()[0].addPost();
-//    fb.getMembers()[0].addPost();
-    fb.getMembers()[0].printMember();
-
-    fb.getMembers()[0].printTenLatestPosts();
+   for (int i = 0; i < fb.getNumOfFanPagesOverAll(); i++) {
+       fb.getFanPages()[i]->printAllPosts();
+   }
     return 0;
 }

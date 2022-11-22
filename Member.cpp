@@ -1,6 +1,3 @@
-//
-// Created by Eden Bar on 16/11/2022.
-//
 
 #include "Member.h"
 
@@ -21,7 +18,7 @@ Date Member::getBirthday() const {
     return Birthday;
 }
 
-Member *Member::getFriends() const {
+Member **Member::getFriends() const {
     return Friends;
 }
 
@@ -29,7 +26,7 @@ int Member::getNumOfFriends() const {
     return NumOfFriends;
 }
 
-Status *Member::getPosts() const {
+Status **Member::getPosts() const {
     return Posts;
 }
 
@@ -45,7 +42,7 @@ void Member::setBirthday(Date birthday) {
     Birthday = birthday;
 }
 
-void Member::setFriends(Member *friends) {
+void Member::setFriends(Member **friends) {
     Friends = friends;
 }
 
@@ -53,7 +50,7 @@ void Member::setNumOfFriends(int numOfFriends) {
     NumOfFriends = numOfFriends;
 }
 
-void Member::setPosts(Status* posts) {
+void Member::setPosts(Status** posts) {
     Posts = posts;
 }
 
@@ -61,23 +58,23 @@ void Member::setNumOfPosts(int numOfPosts) {
     NumOfPosts = numOfPosts;
 }
 
-void Member::addFriend(Member *friendToAdd, int a ) {
-    Member *temp = (Member*)malloc(sizeof(Member) * (NumOfFriends + 1));
-    //Member *temp = new Member[NumOfFriends + 1]; // Dont know why this doesn't work - opening constructor
-    for (int i = 0; i < NumOfFriends; i++) {
-        temp[i] = Friends[i];
-    }
-    temp[NumOfFriends] = *friendToAdd;
-
-    //// Need to add the friend to the friend's friend list as well ////
-    if (a == 0) {
-        friendToAdd->addFriend(this, 1);
-    }
-
-    delete[] Friends;
-    Friends = temp;
-    NumOfFriends++;
-}
+//void Member::addFriend(Member *friendToAdd, int a ) {
+//    Member *temp = (Member*)malloc(sizeof(Member) * (NumOfFriends + 1));
+//    //Member *temp = new Member[NumOfFriends + 1]; // Dont know why this doesn't work - opening constructor
+//    for (int i = 0; i < NumOfFriends; i++) {
+//        temp[i] = Friends[i];
+//    }
+//    temp[NumOfFriends] = *friendToAdd;
+//
+//    //// Need to add the friend to the friend's friend list as well ////
+//    if (a == 0) {
+//        friendToAdd->addFriend(this, 1);
+//    }
+//
+//    delete[] Friends;
+//    Friends = temp;
+//    NumOfFriends++;
+//}
 
 //void Member::removeFriend(Member *friendToRemove) {
 //    Member *temp = new Member[NumOfFriends-1];
@@ -94,79 +91,62 @@ void Member::addFriend(Member *friendToAdd, int a ) {
 //}
 
 
-//void Member::addPost() {
-//    if(NumOfPosts != 0) {
-//        Status *temp = (Status *) malloc(sizeof(Status) * (NumOfPosts + 1));
-//        for (int i = 0; i < NumOfPosts; i++) {
-//            temp[i] = Posts[i];
-//        }
-//
-//        cout << "Enter your new status: " << endl;
-//        temp[NumOfPosts].setContent(getDynamicString());
-//        delete[] Posts;
-//        Posts = temp;
-//    }
-//    else{
-//        Posts = (Status *) malloc(sizeof(Status));
-//        cout << "Enter your new status: " << endl;
-//        Posts[NumOfPosts].setContent(getDynamicString());
-//    }
-//    cout << endl;
-//    NumOfPosts++;
-//}
+void Member::addPost() {
+    Status* newPost = new Status;
 
-//void Member::removePost(char *postToRemove) {
-//    char **temp = new char*[NumOfPosts-1];
-//    int j = 0;
-//    for (int i = 0; i < NumOfPosts; ++i) {
-//        if(Posts[i] != postToRemove){
-//            temp[j] = posts[i];
-//            j++;
-//        }
-//    }
-//    delete[] Posts;
-//    Posts = temp;
-//    NumOfPosts--;
-//}
+    if (NumOfPosts) {
+        Status** newPosts = new Status*[NumOfPosts + 1];
+        for (int i = 0; i < NumOfPosts; i++) {
+            newPosts[i] = Posts[i];
+        }
+        newPosts[NumOfPosts] = newPost;
+        delete [] Posts;
+        Posts = newPosts;
+    }
+    else {
+        Posts = new Status*;
+        Posts[0] = newPost;
+    }
+    NumOfPosts++;
+}
 
-
-void Member::printLatestPosts() {
-    cout << Posts[NumOfPosts - 1].getContent() ;
-    cout << endl;
+void Member::printLatestPost() {
+    cout << Posts[NumOfPosts - 1]->getContent() << endl;
 }
 
 void Member::printFriends() {
-    int i;
-    for (i = 0; i < NumOfFriends - 1; i++)
-        cout << Friends[i].getName() << ", " ;
-
-    cout << Friends[i].getName() << endl ;
-}
-
-void Member::printMember() {
-    cout << "Name: " << Name << endl;
-    cout << "Birthday: " << Birthday.day << "/" << Birthday.month << "/" << Birthday.year << endl;
     if(NumOfFriends == 0){
         cout << "You have no friends ! " << endl;
     }
     else {
-        cout << "Friends: ";
-        printFriends();
-    }
-    if(NumOfPosts == 0){
-        cout << "You have no posts ! " << endl;
-    }
-    else {
-        cout << "The latest post : " ;
-        printLatestPosts();
+        cout << "Friends of " << "'" << Name << "'" << " are:" << endl;
+        int i;
+        for (i = 0; i < NumOfFriends - 1; i++)
+            cout << Friends[i]->getName() << ", " ;
+
+        cout << Friends[i]->getName() << endl ;
     }
     cout << endl;
 }
 
 void Member::printAllPosts() {
-    for (int i = 0; i < NumOfPosts; i++) {
-        cout << Posts[i].getContent() << endl;
+    if(NumOfPosts == 0){
+        cout << "You have no posts ! " << endl;
     }
+    else {
+        cout << "Posts of " << "'" << Name << "'" << " are:" << endl;
+        for (int i = 0; i < NumOfPosts; i++) {
+            cout << i+1 << ". " << Posts[i]->getContent() << endl;
+        }
+    }
+    cout << endl;
+}
+
+void Member::printMember() {
+    cout << "Name: " << Name << endl;
+    cout << "Birthday: " << Birthday.day << "/" << Birthday.month << "/" << Birthday.year << endl;
+    printFriends();
+    printAllPosts();
 }
 
 void Member::printTenLatestPosts() {
@@ -176,17 +156,16 @@ void Member::printTenLatestPosts() {
     }
     else {
         for (int i = NumOfPosts - 10; i < NumOfPosts; i++) {
-            cout << Posts[i].getContent() << endl;
+            cout << Posts[i]->getContent() << endl;
         }
     }
 }
 
 Info getInfoFromUser() {
     Info infoFromUser;
-    cout << "Making a new member" << endl;
-    cout << "Enter your name: " << endl;
+    cout << "Enter member's name: " << endl;
     infoFromUser.Name = getDynamicString();
-    cout << "Enter your birthday: (Day Month Year)" << endl;
+    cout << "Enter member's birthday: (Day Month Year)" << endl;
     cin >> infoFromUser.birthDate.day >> infoFromUser.birthDate.month >> infoFromUser.birthDate.year;
     getchar(); // This is to flush the buffer
 

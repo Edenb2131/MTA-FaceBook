@@ -10,9 +10,9 @@ using namespace std;
 
 class FaceBook {
 
-    Member *Members;
+    Member **Members;
     int NumOfMembersOverAll;
-    FanPage *FanPages;
+    FanPage **FanPages;
     int NumOfFanPagesOverAll;
 
 public:
@@ -21,18 +21,19 @@ public:
     FaceBook();
 
     //getters :
-    Member* getMembers() const;
+    Member** getMembers() const;
     int getNumOfMembersOverAll() const;
-    FanPage* getFanPages() const;
+    FanPage** getFanPages() const;
     int getNumOfFanPagesOverAll() const;
 
     //setters :
-    void setMembers(Member* members);
+    void setMembers(Member** members);
     void setNumOfMembersOverAll(int NumOfMembersOverAll);
-    void setFanPages(FanPage* fanPages);
+    void setFanPages(FanPage** fanPages);
     void setNumOfFanPagesOverAll(int NumOfFanPagesOverAll);
 
     void addNewMember();
+    void addNewPage();
 };
 
 

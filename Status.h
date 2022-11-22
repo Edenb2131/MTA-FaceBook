@@ -5,8 +5,6 @@
 #include <iostream>
 using namespace std;
 #include <string>
-#include "Functions.h"
-
 
 class Status {
     char* Content;

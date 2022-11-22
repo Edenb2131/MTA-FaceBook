@@ -1,16 +1,9 @@
-//
-// Created by Eden Bar on 16/11/2022.
-//
 
 #include "Member.h"
 
-Member::Member() {
-    cout << "Making a new member" << endl;
-    cout << "Enter your name: " << endl;
-    Name = getDynamicString();
-    cout << "Enter your birthday: (Day/Month/Year" << endl;
-    cin >> Birthday.day >> Birthday.month >> Birthday.year;
-    getchar(); // This is to flush the buffer
+Member::Member(Info infoFromUser) {
+    Name = infoFromUser.Name;
+    Birthday = infoFromUser.birthDate;
     Friends = nullptr;
     NumOfFriends = 0;
     Posts = nullptr;
@@ -25,7 +18,7 @@ Date Member::getBirthday() const {
     return Birthday;
 }
 
-Member *Member::getFriends() const {
+Member **Member::getFriends() const {
     return Friends;
 }
 
@@ -33,7 +26,7 @@ int Member::getNumOfFriends() const {
     return NumOfFriends;
 }
 
-Status *Member::getPosts() const {
+Status **Member::getPosts() const {
     return Posts;
 }
 
@@ -41,136 +34,119 @@ int Member::getNumOfPosts() const {
     return NumOfPosts;
 }
 
-//void Member::setName(const char *name) {
-//    Member::Name = name;
-//}
-
-void Member::setBirthday(Date birthday) {
-    Member::Birthday = birthday;
+void Member::setName(char *name) {
+  Name = name;
 }
 
-void Member::setFriends(Member *friends) {
-    Member::Friends = friends;
+void Member::setBirthday(Date birthday) {
+    Birthday = birthday;
+}
+
+void Member::setFriends(Member **friends) {
+    Friends = friends;
 }
 
 void Member::setNumOfFriends(int numOfFriends) {
-    Member::NumOfFriends = numOfFriends;
+    NumOfFriends = numOfFriends;
 }
 
-//void Member::setPosts(Status* *posts) {
-//    Member::Posts = posts;
-//}
+void Member::setPosts(Status** posts) {
+    Posts = posts;
+}
 
 void Member::setNumOfPosts(int numOfPosts) {
-    Member::NumOfPosts = numOfPosts;
+    NumOfPosts = numOfPosts;
 }
 
-void Member::addFriend(Member *friendToAdd, int a ) {
-    Member *temp = (Member*)malloc(sizeof(Member) * (NumOfFriends + 1));
-    //Member *temp = new Member[NumOfFriends + 1]; // Dont know why this doesn't work - opening constructor
-    for (int i = 0; i < NumOfFriends; i++) {
-        temp[i] = Friends[i];
-    }
-    temp[NumOfFriends] = *friendToAdd;
-
-    //// Need to add the friend to the friend's friend list as well ////
-    if (a == 0) {
-        friendToAdd->addFriend(this, 1);
-    }
-
-    delete[] Friends;
-    Friends = temp;
-    NumOfFriends++;
-}
+//void Member::addFriend(Member *friendToAdd, int a ) {
+//    Member *temp = (Member*)malloc(sizeof(Member) * (NumOfFriends + 1));
+//    //Member *temp = new Member[NumOfFriends + 1]; // Dont know why this doesn't work - opening constructor
+//    for (int i = 0; i < NumOfFriends; i++) {
+//        temp[i] = Friends[i];
+//    }
+//    temp[NumOfFriends] = *friendToAdd;
+//
+//    //// Need to add the friend to the friend's friend list as well ////
+//    if (a == 0) {
+//        friendToAdd->addFriend(this, 1);
+//    }
+//
+//    delete[] Friends;
+//    Friends = temp;
+//    NumOfFriends++;
+//}
 
 //void Member::removeFriend(Member *friendToRemove) {
 //    Member *temp = new Member[NumOfFriends-1];
 //    int j = 0;
 //    for (int i = 0; i < NumOfFriends; ++i) {
-//        if(friends[i].getName() != friendToRemove->getName()){
+//        if(Friends[i].getName() != friendToRemove->getName()){
 //            temp[j] = Friends[i];
 //            j++;
 //        }
 //    }
-//    delete[] friends;
-//    friends = temp;
-//    numOfFriends--;
+//    delete[] Friends;
+//    Friends = temp;
+//    NumOfFriends--;
 //}
 
 
 void Member::addPost() {
-    if(NumOfPosts != 0) {
-        Status *temp = (Status *) malloc(sizeof(Status) * (NumOfPosts + 1));
-        for (int i = 0; i < NumOfPosts; i++) {
-            temp[i] = Posts[i];
-        }
+    Status* newPost = new Status;
 
-        cout << "Enter your new status: " << endl;
-        temp[NumOfPosts].setContent(getDynamicString());
-        delete[] Posts;
-        Posts = temp;
+    if (NumOfPosts) {
+        Status** newPosts = new Status*[NumOfPosts + 1];
+        for (int i = 0; i < NumOfPosts; i++) {
+            newPosts[i] = Posts[i];
+        }
+        newPosts[NumOfPosts] = newPost;
+        delete [] Posts;
+        Posts = newPosts;
     }
-    else{
-        Posts = (Status *) malloc(sizeof(Status));
-        cout << "Enter your new status: " << endl;
-        Posts[NumOfPosts].setContent(getDynamicString());
+    else {
+        Posts = new Status*;
+        Posts[0] = newPost;
     }
-    cout << endl;
     NumOfPosts++;
 }
 
-//void Member::removePost(char *postToRemove) {
-//    char **temp = new char*[NumOfPosts-1];
-//    int j = 0;
-//    for (int i = 0; i < NumOfPosts; ++i) {
-//        if(Posts[i] != postToRemove){
-//            temp[j] = posts[i];
-//            j++;
-//        }
-//    }
-//    delete[] Posts;
-//    Posts = temp;
-//    NumOfPosts--;
-//}
-
-
-void Member::printLatestPosts() {
-    cout << Posts[NumOfPosts - 1].getContent() ;
-    cout << endl;
+void Member::printLatestPost() {
+    cout << Posts[NumOfPosts - 1]->getContent() << endl;
 }
 
 void Member::printFriends() {
-    int i;
-    for (i = 0; i < NumOfFriends - 1; i++)
-        cout << Friends[i].getName() << ", " ;
-
-    cout << Friends[i].getName() << endl ;
-}
-
-void Member::printMember() {
-    cout << "Name: " << Name << endl;
-    cout << "Birthday: " << Birthday.day << "/" << Birthday.month << "/" << Birthday.year << endl;
     if(NumOfFriends == 0){
         cout << "You have no friends ! " << endl;
     }
     else {
-        cout << "Friends: ";
-        printFriends();
-    }
-    if(NumOfPosts == 0){
-        cout << "You have no posts ! " << endl;
-    }
-    else {
-        cout << "The latest post : " ;
-        printLatestPosts();
+        cout << "Friends of " << "'" << Name << "'" << " are:" << endl;
+        int i;
+        for (i = 0; i < NumOfFriends - 1; i++)
+            cout << Friends[i]->getName() << ", " ;
+
+        cout << Friends[i]->getName() << endl ;
     }
     cout << endl;
 }
 
 void Member::printAllPosts() {
-    for (int i = 0; i < NumOfPosts; i++) {
-        cout << Posts[i].getContent() << endl;
+    if(NumOfPosts == 0){
+        cout << "You have no posts ! " << endl;
     }
+    else {
+        cout << "Posts of " << "'" << Name << "'" << " are:" << endl;
+        for (int i = 0; i < NumOfPosts; i++) {
+            cout << i+1 << ". " << Posts[i]->getContent() << endl;
+        }
+    }
+    cout << endl;
+}
+
+void Member::printMember() {
+    cout << "Name: " << Name << endl;
+    cout << "Birthday: " << Birthday.day << "/" << Birthday.month << "/" << Birthday.year << endl;
+    printFriends();
+    printAllPosts();
 }
 
 void Member::printTenLatestPosts() {
@@ -180,8 +156,25 @@ void Member::printTenLatestPosts() {
     }
     else {
         for (int i = NumOfPosts - 10; i < NumOfPosts; i++) {
-            cout << Posts[i].getContent() << endl;
+            cout << Posts[i]->getContent() << endl;
         }
     }
 }
 
+Info getInfoFromUser() {
+    Info infoFromUser;
+    cout << "Enter member's name: " << endl;
+    infoFromUser.Name = getDynamicString();
+    cout << "Enter member's birthday: (Day Month Year)" << endl;
+    cin >> infoFromUser.birthDate.day >> infoFromUser.birthDate.month >> infoFromUser.birthDate.year;
+    getchar(); // This is to flush the buffer
+
+    return infoFromUser;
+}
+
+//Getting a string with unknown length from the user
+char* getDynamicString() {
+    char *str = new char[100];
+    cin.getline(str, 100);
+    return str;
+}

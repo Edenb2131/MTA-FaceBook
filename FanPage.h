@@ -4,15 +4,15 @@
 #include <iostream>
 using namespace std;
 #include <string>
-#include "Member.h"
 #include "Status.h"
 
+class Member;
 
 class FanPage {
     char *Name;
-    Member *Fans;
+    Member** Fans;
     int NumOfFans;
-    Status *Posts;
+    Status** Posts;
     int NumOfPosts;
 
 public:
@@ -21,23 +21,20 @@ public:
 
     //getters  :
     char* getName() const;
-    Member* getFans() const;
+    Member** getFans() const;
     int getNumOfFans() const;
-    Status* getPosts() const;
+    Status** getPosts() const;
     int getNumOfPosts() const;
 
     //setters :
     void setName(char *name);
-    void setFans(Member *fans);
+    void setFans(Member **fans);
     void setNumOfFans(int numOfFans);
-    void setPosts(Status *posts);
+    void setPosts(Status **posts);
     void setNumOfPosts(int numOfPosts);
 
     //functions :
-    //void addFan(Member *fanToAdd);
-    //maybe replace this function with "LikePage" in member because a page does not add fans but a member can like a page.
-    //same about deletePage (should be replaced with "UnLikePage").
-    void addPost(Status *postToAdd);
+    void addPost();
     void printAllPosts() const;
 };
 

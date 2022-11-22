@@ -12,7 +12,7 @@ char *FanPage::getName() const {
     return Name;
 }
 
-Member *FanPage::getFans() const {
+Member **FanPage::getFans() const {
     return Fans;
 }
 
@@ -20,7 +20,7 @@ int FanPage::getNumOfFans() const {
     return NumOfFans;
 }
 
-Status* FanPage::getPosts() const {
+Status** FanPage::getPosts() const {
     return Posts;
 }
 
@@ -29,41 +29,48 @@ int FanPage::getNumOfPosts() const {
 }
 
 void FanPage::setName( char *name) {
-    this->Name = name;
+    Name = name;
 }
 
-void FanPage::setFans(Member *fans) {
-    this->Fans = fans;
+void FanPage::setFans(Member **fans) {
+    Fans = fans;
 }
 
 void FanPage::setNumOfFans(int numOfFans){
-    this->NumOfFans = numOfFans;
+    NumOfFans = numOfFans;
 }
 
-void FanPage::setPosts(Status *posts) {
-    this->Posts = posts;
+void FanPage::setPosts(Status **posts) {
+    Posts = posts;
 }
 
 void FanPage::setNumOfPosts(int numOfPosts) {
-    this->NumOfPosts = numOfPosts;
+    NumOfPosts = numOfPosts;
 }
 
-//void FanPage::addPost(Status *postToAdd) {
-//    Status* newPosts = new Status[NumOfPosts + 1];
-//    for (int i = 0; i < NumOfPosts; i++){
-//        newPosts[i] = Posts[i];
-//    }
-//    newPosts[NumOfPosts] = *postToAdd;
-//    delete [] Posts;
-//    Posts = newPosts;
-//    NumOfPosts++;
-//}
+void FanPage::addPost() {
+    Status* newPost = new Status;
 
+    if (NumOfPosts) {
+        Status** newPosts = new Status*[NumOfPosts + 1];
+        for (int i = 0; i < NumOfPosts; i++) {
+            newPosts[i] = Posts[i];
+        }
+        newPosts[NumOfPosts] = newPost;
+        delete [] Posts;
+        Posts = newPosts;
+    }
+    else {
+        Posts = new Status*;
+        Posts[0] = newPost;
+    }
+    NumOfPosts++;
+}
 
 void FanPage::printAllPosts() const {
-    cout << "Posts are:" << endl;
+    cout << "Posts for page " << "'" << Name << "'" << " are:" << endl;
     for (int i = 0; i < NumOfPosts; i++){
-        cout << i+1 << ". " << Posts[i].getContent() << endl;
+        cout << i+1 << ". " << Posts[i]->getContent() << endl;
     }
 }
 

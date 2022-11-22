@@ -5,9 +5,9 @@
 #include <iostream>
 using namespace std;
 #include "Status.h"
-#include "Functions.h"
 
-class Status; // Forward declaration
+class FanPage; // Forward declaration
+class Status;
 
 struct Date{
     int day;
@@ -15,50 +15,57 @@ struct Date{
     int year;
 };
 
+struct Info{
+    char* Name;
+    Date birthDate;
+};
+
 class Member {
     char *Name;
     Date Birthday{};
-    Member *Friends;
+    Member** Friends;
     int NumOfFriends;
-    Status* Posts;
+    Status** Posts;
     int NumOfPosts;
-    //FanPage *fanPages;
+    FanPage** fanPages;
 
 public:
     //constructor
-    Member();
+    Member() = default;
+    Member(Info infoFromUser);
 
     //getters :
     char* getName() const;
     Date getBirthday() const;
-    Member* getFriends() const;
+    Member** getFriends() const;
     int getNumOfFriends() const;
     //char** getPosts() const;
-    Status* getPosts() const;
+    Status** getPosts() const;
     int getNumOfPosts() const;
-    //fanPage* getFanPages() const;
+    FanPage** getFanPages() const;
 
     //setters :
-    void setName(const char *name);
+    void setName(char *name);
     void setBirthday(Date birthday);
-    void setFriends(Member *friends);
+    void setFriends(Member** friends);
     void setNumOfFriends(int numOfFriends);
-    void setPosts(Status* posts);
+    void setPosts(Status** posts);
     void setNumOfPosts(int numOfPosts);
 
     //functions :
-    void addFriend(Member *friendToAdd, int a = 0);
-    void removeFriend(Member *friendToRemove);
     void addPost();
-    void removePost(Status *postToRemove);
-    void printLatestPosts();
     void printAllPosts();
-    void printTenLatestPosts();
     void printFriends();
     void printMember();
 
 
+    void addFriend(Member *friendToAdd, int a = 0);
+    void removeFriend(Member *friendToRemove);
+    void printLatestPost();
+    void printTenLatestPosts();
 };
 
+Info getInfoFromUser();
+char* getDynamicString();
 
 #endif //MTA_FACEBOOK_MEMBER_H

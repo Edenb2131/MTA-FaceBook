@@ -5,7 +5,7 @@ using namespace std;
 
 int main(){
 
-    FaceBook fb = FaceBook();
+    FaceBook fb;
     fb.addNewMember();
     fb.addNewMember();
     fb.addNewMember();
@@ -22,8 +22,8 @@ int main(){
         fb.getMembers()[i].printMember();
     }
 
-    fb.getMembers()[0].addPost();
-    fb.getMembers()[0].addPost();
+//    fb.getMembers()[0].addPost();
+//    fb.getMembers()[0].addPost();
     fb.getMembers()[0].printMember();
 
     fb.getMembers()[0].printTenLatestPosts();

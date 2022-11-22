@@ -3,7 +3,8 @@
 
 Status::Status() {
     cout << "Enter your status: " << endl;
-    Content = getDynamicString();
+    cin >> Content;
+    //Content = getDynamicString();
 }
 
 char *Status::getContent() const {

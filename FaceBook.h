@@ -27,13 +27,12 @@ public:
     int getNumOfFanPagesOverAll() const;
 
     //setters :
-    //void setMembers(Member* members);
+    void setMembers(Member* members);
     void setNumOfMembersOverAll(int NumOfMembersOverAll);
     void setFanPages(FanPage* fanPages);
     void setNumOfFanPagesOverAll(int NumOfFanPagesOverAll);
 
     void addNewMember();
-
 };
 
 

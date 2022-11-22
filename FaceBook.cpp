@@ -9,7 +9,6 @@ FaceBook::FaceBook() {
     NumOfFanPagesOverAll = 0;
 }
 
-
 Member *FaceBook::getMembers() const {
     return Members;
 }
@@ -26,38 +25,39 @@ int FaceBook::getNumOfFanPagesOverAll() const {
     return NumOfFanPagesOverAll;
 }
 
-//void FaceBook::setMembers(Member *members) {
-//    FaceBook::Members = members;
-//}
+void FaceBook::setMembers(Member *members) {
+    Members = members;
+}
 
 void FaceBook::setNumOfMembersOverAll(int numOfMembersOverAll) {
-    FaceBook::NumOfMembersOverAll = numOfMembersOverAll;
+    NumOfMembersOverAll = numOfMembersOverAll;
 }
 
 void FaceBook::setFanPages(FanPage *fanPages) {
-    FaceBook::FanPages = fanPages;
+    FanPages = fanPages;
 }
 
 void FaceBook::setNumOfFanPagesOverAll(int numOfFanPagesOverAll) {
-    FaceBook::NumOfFanPagesOverAll = numOfFanPagesOverAll;
+    NumOfFanPagesOverAll = numOfFanPagesOverAll;
 }
 
 
 void FaceBook::addNewMember() {
+    Info infoFromUser = getInfoFromUser();
+    Member newMember(infoFromUser);
 
-    if(NumOfMembersOverAll != 0){
-        Member* newMembers = (Member*) malloc(sizeof(Member) * (NumOfMembersOverAll + 1));
+    if (NumOfMembersOverAll){
+        Member* newMembers = new Member[NumOfMembersOverAll + 1];
         for (int i = 0; i < NumOfMembersOverAll; i++){
             newMembers[i] = Members[i];
         }
-        newMembers[NumOfMembersOverAll] = Member();
+        newMembers[NumOfMembersOverAll] = newMember;
         delete [] Members;
         Members = newMembers;
     }
-    else{
-        Members = new Member[1];
+    else {
+        Members = new Member(newMember);
     }
-
     NumOfMembersOverAll++;
-    cout << endl;
 }
+

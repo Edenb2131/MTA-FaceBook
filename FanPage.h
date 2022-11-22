@@ -4,9 +4,9 @@
 #include <iostream>
 using namespace std;
 #include <string>
-#include "Member.h"
 #include "Status.h"
 
+class Member;
 
 class FanPage {
     char *Name;
@@ -34,9 +34,6 @@ public:
     void setNumOfPosts(int numOfPosts);
 
     //functions :
-    //void addFan(Member *fanToAdd);
-    //maybe replace this function with "LikePage" in member because a page does not add fans but a member can like a page.
-    //same about deletePage (should be replaced with "UnLikePage").
     void addPost(Status *postToAdd);
     void printAllPosts() const;
 };

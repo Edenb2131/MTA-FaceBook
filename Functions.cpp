@@ -11,8 +11,8 @@ void checkMemoryAllocation(void* ptr) {
 
 //Getting a string with unknown length from the user
 char* getDynamicString() {
-    char *str = new char[100];
-    cin.getline(str, 100);
+    char *str = new char[LEN];
+    cin.getline(str, LEN);
     return str;
 }
 

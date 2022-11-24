@@ -1,14 +1,29 @@
 
 #include "Member.h"
 
-Member::Member(Info infoFromUser) {
-    Name = infoFromUser.Name;
-    Birthday = infoFromUser.birthDate;
+Member::Member(Info infoFromUser): // Using here c'tor init line
+    Name(infoFromUser.Name),
+    Birthday(infoFromUser.birthDate)
+{
     Friends = nullptr;
-    NumOfFriends = 0;
+    NumOfFriends = 0,
     Posts = nullptr;
     NumOfPosts = 0;
-    fanPages = nullptr;
+    fanPages =nullptr;
+}
+
+Member::Member(const char* name, int day, int month, int year ) :
+    Name(strdup(name)),
+    Birthday(),
+    Friends(nullptr),
+    NumOfFriends(0),
+    Posts(nullptr),
+    NumOfPosts(0),
+    fanPages(nullptr)
+{
+    Birthday.day = day;
+    Birthday.month = month;
+    Birthday.year = year;
 }
 
 char *Member::getName() const {
@@ -111,6 +126,25 @@ void Member::addPost() {
     NumOfPosts++;
 }
 
+void Member::addPost(const char* content) {
+    Status* newPost = new Status(content);
+
+    if (NumOfPosts) {
+        Status** newPosts = new Status*[NumOfPosts + 1];
+        for (int i = 0; i < NumOfPosts; i++) {
+            newPosts[i] = Posts[i];
+        }
+        newPosts[NumOfPosts] = newPost;
+        delete [] Posts;
+        Posts = newPosts;
+    }
+    else {
+        Posts = new Status*;
+        Posts[0] = newPost;
+    }
+    NumOfPosts++;
+}
+
 void Member::printLatestPost() {
     cout << Posts[NumOfPosts - 1]->getContent() << endl;
 }
@@ -120,7 +154,7 @@ void Member::printFriends() {
         cout << "You have no friends ! " << endl;
     }
     else {
-        cout << "Friends of " << "'" << Name << "'" << " are:" ;
+        cout << "Friends of " << "'" << Name << "'" << " are: " ;
         int i;
         for (i = 0; i < NumOfFriends - 1; i++)
             cout << Friends[i]->getName() << ", " ;
@@ -137,7 +171,8 @@ void Member::printAllPosts() {
     else {
         cout << "Posts of " << "'" << Name << "'" << " are:" << endl;
         for (int i = 0; i < NumOfPosts; i++) {
-            cout << i+1 << ". " << Posts[i]->getContent() << endl;
+            cout <<" "<< i+1 << ". " ;
+            Posts[i]->printStatus();
         }
     }
     cout << endl;

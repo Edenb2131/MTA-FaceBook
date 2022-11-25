@@ -24,6 +24,7 @@ public:
     //constructor
     Member() = default;
     Member(Info infoFromUser);
+    Member(const char* name, int day, int month, int year );
 
     //getters :
     char* getName() const;
@@ -45,6 +46,7 @@ public:
 
     //functions :
     void addPost();
+    void addPost(const char* content);
     void printAllPosts();
     void printFriends();
     void printMember();

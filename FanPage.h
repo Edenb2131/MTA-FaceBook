@@ -35,6 +35,7 @@ public:
 
     //functions :
     void addPost();
+    void addPost(const char* content);
     void printAllPosts() const;
     ////void printFans() const; //// Need to implement
     void printFanPage() const;

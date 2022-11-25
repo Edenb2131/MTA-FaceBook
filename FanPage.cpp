@@ -1,10 +1,11 @@
 #include "FanPage.h"
 
-FanPage::FanPage(char *name){
-    Name = name;
+FanPage::FanPage(char *name) :  // Using here c'tor init line
+    Name(strdup(name))
+{
     Fans = nullptr;
-    NumOfFans = 0;
-    Posts = nullptr;
+    NumOfFans = 0,
+    Posts = nullptr,
     NumOfPosts = 0;
 }
 
@@ -67,11 +68,32 @@ void FanPage::addPost() {
     NumOfPosts++;
 }
 
+void FanPage::addPost(const char* content) {
+    Status* newPost = new Status(content);
+
+    if (NumOfPosts) {
+        Status** newPosts = new Status*[NumOfPosts + 1];
+        for (int i = 0; i < NumOfPosts; i++) {
+            newPosts[i] = Posts[i];
+        }
+        newPosts[NumOfPosts] = newPost;
+        delete [] Posts;
+        Posts = newPosts;
+    }
+    else {
+        Posts = new Status*;
+        Posts[0] = newPost;
+    }
+    NumOfPosts++;
+}
+
 void FanPage::printAllPosts() const {
     cout << "Posts for page " << "'" << Name << "'" << " are:" << endl;
     for (int i = 0; i < NumOfPosts; i++){
-        cout << i+1 << ". " << Posts[i]->getContent() << endl;
+        cout <<" "<< i+1 << ". " ;
+        Posts[i]->printStatus();
     }
+    cout << endl;
 }
 
 

@@ -32,9 +32,11 @@ public:
     void setFanPages(FanPage** fanPages);
     void setNumOfFanPagesOverAll(int NumOfFanPagesOverAll);
 
+    //functions :
     void addNewMember();
+    void addNewMember(const char* name, int day, int month, int year );
     void addNewPage();
-
+    void addNewPage(const char* name);
     void printAllMembers() const;
     void printAllFanPages() const;
     void printAllEntitiesAndTheirData() const;

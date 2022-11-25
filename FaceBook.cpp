@@ -62,10 +62,50 @@ void FaceBook::addNewMember() {
     NumOfMembersOverAll++;
 }
 
+void FaceBook::addNewMember(const char* name, int day, int month, int year ) {
+
+    Member* newMember = new Member(name, day, month, year);
+    if (NumOfMembersOverAll){
+        Member** newMembers = new Member*[NumOfMembersOverAll + 1];
+        for (int i = 0; i < NumOfMembersOverAll; i++){
+            newMembers[i] = Members[i];
+        }
+        newMembers[NumOfMembersOverAll] = newMember;
+        delete [] Members;
+        Members = newMembers;
+    }
+    else {
+        Members = new Member*;
+        Members[0] = newMember;
+    }
+    NumOfMembersOverAll++;
+
+}
+
+
 void FaceBook::addNewPage(){
     cout << "Please enter page's name:" << endl;
     char* name = getDynamicString();
     FanPage* newPage = new FanPage(name);
+
+    if (NumOfFanPagesOverAll){
+        FanPage** newPages = new FanPage*[NumOfFanPagesOverAll + 1];
+        for (int i = 0; i <NumOfFanPagesOverAll; i++){
+            newPages[i] = FanPages[i];
+        }
+        newPages[NumOfFanPagesOverAll] = newPage;
+        delete [] FanPages;
+        FanPages = newPages;
+    }
+    else {
+        FanPages = new FanPage*;
+        FanPages[0] = newPage;
+    }
+    NumOfFanPagesOverAll++;
+}
+
+void FaceBook::addNewPage(const char* name){
+    FanPage* newPage = new FanPage((char*)name);
 
     if (NumOfFanPagesOverAll){
         FanPage** newPages = new FanPage*[NumOfFanPagesOverAll + 1];

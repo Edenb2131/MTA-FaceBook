@@ -18,13 +18,15 @@ class Member {
     int NumOfFriends;
     Status** Posts;
     int NumOfPosts;
-    FanPage** fanPages;
+    FanPage** FanPages;
+    int NumOfFanPages;
 
 public:
-    //constructor
+    //constructors and destructor
     Member() = default;
     Member(Info infoFromUser);
     Member(const char* name, int day, int month, int year );
+    ~Member();
 
     //getters :
     char* getName() const;

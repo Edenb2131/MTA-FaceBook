@@ -13,9 +13,10 @@ class Status {
     char* pTime;
 public:
 
-    //constructors
+    //constructors and destructor
     Status();
     Status(const char* content);
+    ~Status();
 
 
     char* getContent() const;

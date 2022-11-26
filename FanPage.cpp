@@ -1,5 +1,6 @@
 #include "FanPage.h"
 
+//constructor
 FanPage::FanPage(char *name) :  // Using here c'tor init line
     Name(strdup(name))
 {
@@ -7,6 +8,22 @@ FanPage::FanPage(char *name) :  // Using here c'tor init line
     NumOfFans = 0,
     Posts = nullptr,
     NumOfPosts = 0;
+}
+
+//destructor
+FanPage::~FanPage() {
+   int i;
+   for (i = 0; i < NumOfFans; i++) {
+      delete Fans[i];
+   }
+   delete [] Fans;
+
+   for (i = 0; i < NumOfPosts; i++) {
+       delete Posts[i];
+   }
+   delete [] Posts;
+
+   delete [] Name;
 }
 
 char *FanPage::getName() const {
@@ -50,6 +67,7 @@ void FanPage::setNumOfPosts(int numOfPosts) {
 }
 
 void FanPage::addPost() {
+    getchar();
     Status* newPost = new Status;
 
     if (NumOfPosts) {

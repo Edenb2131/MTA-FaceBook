@@ -1,5 +1,5 @@
-
 #include "Functions.h"
+#include "FaceBook.h"
 #define LEN 100
 
 void checkMemoryAllocation(void* ptr) {
@@ -19,6 +19,7 @@ char* getDynamicString() {
 
 Info getInfoFromUser() {
     Info infoFromUser;
+    getchar();
     cout << "Enter member's name: " << endl;
     infoFromUser.Name = getDynamicString();
     cout << "Enter member's birthday: (Day Month Year)" << endl;
@@ -42,11 +43,41 @@ Info getInfoFromUser() {
         cin >> infoFromUser.birthDate.year;
     }
 
-
     getchar(); // This is to flush the buffer
 
     return infoFromUser;
 }
+
+void enterDataToStartWith(FaceBook& fb){
+
+    //Member 1:
+    fb.addNewMember("Eden Bar" , 22 ,8 , 1997);
+    fb.getMembers()[0]->addPost("I like ICE-CREAM !");
+    fb.getMembers()[0]->addPost("Let's go to paris  !");
+
+    //Member 2:
+    fb.addNewMember("Avivit Cohen" , 10 ,10 , 2000);
+    fb.getMembers()[1]->addPost("I love Computer Science !");
+    fb.getMembers()[1]->addPost("Who wants to watch FRIENDS with me ?!");
+    fb.getMembers()[1]->addPost("Im board.... ?!");
+
+    //Member 3:
+    fb.addNewMember("Liri Cohen" , 18 ,8 , 1997);
+    fb.getMembers()[2]->addPost("Who wants to play basketball this afternoon?!");
+    fb.getMembers()[2]->addPost("With my friends at tha mall (:!");
+
+
+    // Linking between friends
+    fb.getMembers()[0]->addFriend(fb.getMembers()[1]);
+    fb.getMembers()[0]->addFriend(fb.getMembers()[2]);
+
+
+    //FanPage 1:
+    fb.addNewPage("Wakanda!");
+    fb.getFanPages()[0]->addPost("Wakanda FOREVER!");
+    fb.getFanPages()[0]->addPost("Let's go to W-A-R!");
+}
+
 
 
 

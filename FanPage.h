@@ -16,8 +16,9 @@ class FanPage {
     int NumOfPosts;
 
 public:
-    //constructor
+    //constructor and destructor
     FanPage(char *name);
+    ~FanPage();
 
     //getters  :
     char* getName() const;

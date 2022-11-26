@@ -1,6 +1,7 @@
 
 #include "Status.h"
 
+//constructor
 Status::Status() {
     cout << "Enter your status: " << endl;
     Content = new char[100];
@@ -10,10 +11,17 @@ Status::Status() {
     cout << endl;
 }
 
+//constructor
 Status::Status(const char* content) : Content(strdup(content))
 {
     time_t timeRightNow = time(0);
     pTime = ctime(&timeRightNow); // Making the time a string
+}
+
+//destructor
+Status::~Status() {
+    delete [] Content;
+    delete [] pTime;
 }
 
 char *Status::getContent() const {

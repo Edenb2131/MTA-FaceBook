@@ -17,8 +17,9 @@ class FaceBook {
 
 public:
 
-    //constructor
+    //constructor and destructor
     FaceBook();
+    ~FaceBook();
 
     //getters :
     Member** getMembers() const;

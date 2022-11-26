@@ -1,6 +1,7 @@
 
 #include "Member.h"
 
+//constructor
 Member::Member(Info infoFromUser): // Using here c'tor init line
     Name(infoFromUser.Name),
     Birthday(infoFromUser.birthDate)
@@ -9,21 +10,45 @@ Member::Member(Info infoFromUser): // Using here c'tor init line
     NumOfFriends = 0,
     Posts = nullptr;
     NumOfPosts = 0;
-    fanPages =nullptr;
+    FanPages =nullptr;
+    NumOfFanPages = 0;
 }
 
-Member::Member(const char* name, int day, int month, int year ) :
+//constructor
+Member::Member(const char* name, int day, int month, int year) :
     Name(strdup(name)),
     Birthday(),
     Friends(nullptr),
     NumOfFriends(0),
     Posts(nullptr),
     NumOfPosts(0),
-    fanPages(nullptr)
+    FanPages(nullptr),
+    NumOfFanPages(0)
 {
     Birthday.day = day;
     Birthday.month = month;
     Birthday.year = year;
+}
+
+//destructor
+Member::~Member() {
+    int i;
+    for (i = 0; i < NumOfFriends; i++) {
+        delete Friends[i];
+    }
+    delete [] Friends;
+
+    for (i = 0; i < NumOfPosts; i++) {
+        delete Posts[i];
+    }
+    delete [] Posts;
+
+    for (i = 0; i < NumOfFanPages; i++) {
+        delete FanPages[i];
+    }
+    delete FanPages;
+
+    delete [] Name;
 }
 
 char *Member::getName() const {

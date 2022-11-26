@@ -9,6 +9,20 @@ FaceBook::FaceBook() {
     NumOfFanPagesOverAll = 0;
 }
 
+//destructor
+FaceBook::~FaceBook() {
+    int i;
+    for (i = 0; i < NumOfMembersOverAll; i++) {
+        delete Members[i];
+    }
+    delete [] Members;
+
+    for (i = 0; i <NumOfFanPagesOverAll; i++) {
+        delete FanPages[i];
+    }
+    delete [] FanPages;
+}
+
 Member **FaceBook::getMembers() const {
     return Members;
 }

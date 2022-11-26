@@ -5,6 +5,7 @@
 #include <iostream>
 using namespace std;
 #include <string>
+class FaceBook;
 
 struct Date{
     int day;
@@ -18,9 +19,8 @@ struct Info{
 };
 
 void checkMemoryAllocation(void* ptr); // Checks if the memory allocation was successful
-
 char* getDynamicString(); //Getting a string with unknown length from the user
-
 Info getInfoFromUser(); //Getting info from the user
+void enterDataToStartWith(FaceBook& fb);
 
 #endif //MTA_FACEBOOK_FUNCTIONS_H

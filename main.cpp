@@ -31,6 +31,25 @@ int main(){
                 fb.getFanPages()[fanPageIndex]->addPost();
                 break;
             }
+            case 5: {
+                int memberIndex = fb.findMember();
+                fb.getMembers()[memberIndex]->printAllPosts();
+                break;
+            }
+            case 6: {
+                int fanPageIndex = fb.findFanPage();
+                fb.getFanPages()[fanPageIndex]->printAllPosts();
+                break;
+            }
+            case 8: {
+                cout << "Please choose the first member: " << endl;
+                int firstMemberIndex = fb.findMember();
+                cout << "Please choose the second member: " << endl;
+                int secondMemberIndex = fb.findMember();
+
+                fb.connectTwoMembers(firstMemberIndex, secondMemberIndex);
+                break;
+            }
             case 15: {
                 cout << "Thank you for using FaceBook, hope to see you again soon!" << endl;
                 finish = true;
@@ -65,6 +84,5 @@ int main(){
 //   cout << endl << endl << endl << endl << endl;
 //
 //   fb.printAllEntitiesAndTheirData(); // Prints all entities in the system (members and fan pages) and their data
-
     return 0;
 }

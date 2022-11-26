@@ -213,3 +213,7 @@ int FaceBook::findFanPage() {
     return index - 1;
 }
 
+void FaceBook::connectTwoMembers(int firstMemberIndex, int secondMemberIndex) {
+    Members[firstMemberIndex]->addFriend(Members[secondMemberIndex]);
+}
+

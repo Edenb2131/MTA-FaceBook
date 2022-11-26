@@ -34,6 +34,7 @@ public:
     void setNumOfFanPagesOverAll(int NumOfFanPagesOverAll);
 
     //functions :
+    int menu();
     void addNewMember();
     void addNewMember(const char* name, int day, int month, int year );
     void addNewPage();
@@ -42,6 +43,7 @@ public:
     void printAllFanPages() const;
     void printAllEntitiesAndTheirData() const;
     void printAllEntities() const;
+    int findMember(); // finds a member in order to do actions on him (add post and so on..)
 };
 
 

@@ -23,6 +23,29 @@ FaceBook::~FaceBook() {
     delete [] FanPages;
 }
 
+int FaceBook::menu() {
+    int choice;
+    cout << "Please choose an action from the list below: " << endl;
+    cout << "Enter 1 to register to FaceBook as a member" << endl;
+    cout << "Enter 2 to register to FaceBook as a fan page" << endl;
+    cout << "Enter 3 to write a post as a member" << endl;
+    cout << "Enter 4 to write a post as a fan page" << endl;
+    cout << "Enter 5 to see all posts of your friends" << endl;
+    cout << "Enter 6 to see all posts of fan pages you liked" << endl;
+    cout << "Enter 7 to see ten latest posts of your friends" << endl;
+    cout << "Enter 8 to add a friend" << endl;
+    cout << "Enter 9 to delete a friend" << endl;
+    cout << "Enter 10 to like a fan page" << endl;
+    cout << "Enter 11 to unlike a fan page" << endl;
+    cout << "Enter 12 to see all entities on FaceBook" << endl;
+    cout << "Enter 13 to see all your friends" << endl;
+    cout << "Enter 14 to see all your liked fan pages" << endl;
+    cout << "Enter 15 to exit" << endl;
+
+    cin >> choice;
+    return choice;
+}
+
 Member **FaceBook::getMembers() const {
     return Members;
 }
@@ -168,5 +191,15 @@ void FaceBook::printAllEntities() const {
         cout << FanPages[i]->getName() << ", ";
     }
     cout << FanPages[NumOfFanPagesOverAll - 1]->getName() << endl;
+}
+
+int FaceBook::findMember() {
+    int index = -1;
+    cout << "Please choose a member from the list below:" << endl;
+    for (int i = 0; i < NumOfMembersOverAll; i++) {
+        cout << i+1 << " for " << Members[i]->getName() << endl;
+    }
+    cin >> index;
+    return index;
 }
 

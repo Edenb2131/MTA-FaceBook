@@ -133,6 +133,7 @@ void Member::addFriend(Member *friendToAdd, int a) {
 
 
 void Member::addPost() {
+    getchar();
     Status* newPost = new Status;
 
     if (NumOfPosts) {

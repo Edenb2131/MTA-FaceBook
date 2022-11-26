@@ -19,6 +19,7 @@ char* getDynamicString() {
 
 Info getInfoFromUser() {
     Info infoFromUser;
+    getchar();
     cout << "Enter member's name: " << endl;
     infoFromUser.Name = getDynamicString();
     cout << "Enter member's birthday: (Day Month Year)" << endl;

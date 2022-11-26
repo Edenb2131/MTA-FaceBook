@@ -200,6 +200,16 @@ int FaceBook::findMember() {
         cout << i+1 << " for " << Members[i]->getName() << endl;
     }
     cin >> index;
-    return index;
+    return index - 1;
+}
+
+int FaceBook::findFanPage() {
+    int index = -1;
+    cout << "Please choose a fan page from the list below:" << endl;
+    for (int i = 0; i < NumOfFanPagesOverAll; i++) {
+        cout << i+1 << " for " << FanPages[i]->getName() << endl;
+    }
+    cin >> index;
+    return index - 1;
 }
 

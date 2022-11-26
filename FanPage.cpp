@@ -67,6 +67,7 @@ void FanPage::setNumOfPosts(int numOfPosts) {
 }
 
 void FanPage::addPost() {
+    getchar();
     Status* newPost = new Status;
 
     if (NumOfPosts) {

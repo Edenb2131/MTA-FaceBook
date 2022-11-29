@@ -76,6 +76,14 @@ int Member::getNumOfPosts() const {
     return NumOfPosts;
 }
 
+FanPage** Member::getFanPages() const {
+    return FanPages;
+}
+
+int Member::getNumOfFanPages() const {
+    return NumOfFanPages;
+}
+
 void Member::setName(char *name) {
   Name = name;
 }
@@ -100,6 +108,13 @@ void Member::setNumOfPosts(int numOfPosts) {
     NumOfPosts = numOfPosts;
 }
 
+void Member::setFanPages(FanPage** fanPages) {
+    FanPages = fanPages;
+}
+
+void Member::setNumOfFanPages(int numOfFanPages) {
+    NumOfFanPages = numOfFanPages;
+}
 
 void Member::addFriend(Member *friendToAdd) {
     int i;
@@ -125,19 +140,30 @@ void Member::addFriend(Member *friendToAdd) {
 }
 
 void Member::removeFriend(Member *friendToRemove) {
-    int i;
+    int friendsIndex;
+    bool found = false;
     // Check if possible in Theta(1)
-    for (i = 0; i < this->NumOfFriends; i++) {
-        if (strcmp (this->Friends[i]->Name, friendToRemove->Name) != 0) {
-            return;
+    for (friendsIndex = 0; friendsIndex < this->NumOfFriends; friendsIndex++) {
+        if (strcmp (this->Friends[friendsIndex]->Name, friendToRemove->Name) != 0) {
+            found = false;
+        }
+        else {
+            found = true;
+            break;
         }
     }
 
-    Member **temp = new Member *[NumOfFriends - 1];
-    for (i = 0; i < NumOfFriends; i++) {
-        temp[i] = Friends[i];
-    }
+    if (!found)
+        return;
 
+    Member **temp = new Member *[NumOfFriends - 1];
+    int tempIndex = 0;
+    for (friendsIndex = 0; friendsIndex < NumOfFriends; friendsIndex++) {
+        if (strcmp (this->Friends[friendsIndex]->Name, friendToRemove->Name) != 0){
+            temp[tempIndex] = Friends[friendsIndex];
+            tempIndex++;
+        }
+    }
     delete[] Friends;
     Friends = temp;
     NumOfFriends--;
@@ -146,6 +172,59 @@ void Member::removeFriend(Member *friendToRemove) {
     friendToRemove->removeFriend(this);
 }
 
+void Member::likeFanPage(FanPage *fanPageToLike) {
+    int i;
+    for (i = 0; i < NumOfFanPages; i++) {
+        if (strcmp (FanPages[i]->getName(), fanPageToLike->getName()) == 0) {
+            return;
+        }
+    }
+
+    FanPage** temp = new FanPage * [NumOfFanPages + 1];
+    for (i = 0; i < NumOfFanPages; i++) {
+        temp[i] = FanPages[i];
+    }
+    temp[NumOfFanPages] = fanPageToLike;
+    delete [] FanPages;
+    FanPages = temp;
+    NumOfFanPages++;
+
+    //// Need to add the member to the page's fans list as well ////
+    fanPageToLike->addFan(this);
+}
+
+void Member::unlikeFanPage(FanPage *fanPageToUnlike) {
+    int pagesIndex;
+    bool found = false;
+    for (pagesIndex = 0; pagesIndex < NumOfFanPages; pagesIndex++) {
+        if (strcmp (FanPages[pagesIndex]->getName(), fanPageToUnlike->getName()) != 0) {
+            found = false;
+        }
+        else {
+            found = true;
+            break;
+        }
+    }
+
+    if (!found)
+        return;
+
+    FanPage** temp = new FanPage * [NumOfFanPages - 1];
+    int tempIndex = 0;
+    for (pagesIndex = 0; pagesIndex < NumOfFanPages; pagesIndex++) {
+        if (strcmp (FanPages[pagesIndex]->getName(), fanPageToUnlike->getName()) != 0) {
+            temp[pagesIndex] = FanPages[pagesIndex];
+            tempIndex++;
+        }
+    }
+
+    delete [] FanPages;
+    FanPages = temp;
+    NumOfFanPages--;
+
+    //// Need to remove the member from the page's fans list as well ////
+    fanPageToUnlike->addFan(this);
+}
 
 void Member::addPost() {
     getchar();

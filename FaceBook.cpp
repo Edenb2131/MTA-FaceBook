@@ -247,3 +247,39 @@ void FaceBook::disconnectTwoMembers(int firstMemberIndex, int secondMemberIndex)
     cout << "Friends disconnected successfully!" << endl;
 }
 
+void FaceBook::connectMemberAndFanPage(int memberIndex, int fanPageIndex) {
+    for (int i = 0; i < Members[memberIndex]->getNumOfFanPages(); i++) {
+        char* page1Name = Members[memberIndex]->getFanPages()[i]->getName();
+        char* page2Name = FanPages[fanPageIndex]->getName();
+        if (strcmp(page1Name, page2Name) == 0) {
+            cout << "This member already likes this page!" << endl;
+            return;
+        }
+    }
+    Members[memberIndex]->likeFanPage(FanPages[fanPageIndex]);
+    cout << "Page liked successfully!" << endl;
+}
+
+void FaceBook::disconnectMemberAndFanPage(int memberIndex, int fanPageIndex) {
+    bool connected = false;
+    for (int i = 0; i < Members[memberIndex]->getNumOfFanPages(); i++) {
+        char *page1Name = Members[memberIndex]->getFanPages()[i]->getName();
+        char *page2Name = FanPages[fanPageIndex]->getName();
+        if (strcmp(page1Name, page2Name) != 0) {
+            connected = false;
+        }
+        else {
+            connected = true;
+            break;
+        }
+    }
+
+    if (!connected) {
+        cout << "This member does not like this page!" << endl;
+        return;
+    }
+    Members[memberIndex]->unlikeFanPage(FanPages[fanPageIndex]);
+    cout << "Page unliked successfully!" << endl;
+}
+
+

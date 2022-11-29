@@ -66,9 +66,15 @@ int main(){
                 break;
             }
             case 10: {
+                int memberIndex = fb.findMember();
+                int fanPageIndex = fb.findFanPage();
+                fb.connectMemberAndFanPage(memberIndex, fanPageIndex);
                 break;
             }
             case 11: {
+                int memberIndex = fb.findMember();
+                int fanPageIndex = fb.findFanPage();
+                fb.disconnectMemberAndFanPage(memberIndex, fanPageIndex);
                 break;
             }
             case 12: {
@@ -90,7 +96,6 @@ int main(){
                 finish = true;
                 break;
             }
-
         }
         if (!finish)
             choice = fb.menu();

@@ -1,4 +1,5 @@
 #include "FanPage.h"
+#include "Member.h"
 
 //constructor
 FanPage::FanPage(char *name) :  // Using here c'tor init line
@@ -120,6 +121,62 @@ void FanPage::printFanPage() const {
     cout << "Number of fans: " << NumOfFans << endl;
     cout << "Number of posts: " << NumOfPosts << endl;
     cout << endl;
+}
+
+void FanPage::addFan(Member* fanToAdd) {
+    int i;
+    for (i = 0; i < NumOfFans; i++) {
+        if (strcmp(Fans[i]->getName(), fanToAdd->getName()) == 0) {
+            return;
+        }
+    }
+
+    Member** temp = new Member * [NumOfFans + 1];
+    for (i = 0; i < NumOfFans; i++) {
+        temp[i] = Fans[i];
+    }
+
+    temp[NumOfFans] = fanToAdd;
+    delete [] Fans;
+    Fans = temp;
+    NumOfFans++;
+
+    //// Need to add the page to the member's likes pages list as well ////
+    fanToAdd->likeFanPage(this);
+}
+
+void FanPage::removeFan(Member* fanToRemove) {
+    int fansIndex;
+    bool found = false;
+
+    for (fansIndex = 0; fansIndex < NumOfFans; fansIndex++) {
+        if (strcmp(Fans[fansIndex]->getName(), fanToRemove->getName()) != 0) {
+            found = false;
+        }
+        else {
+            found = true;
+            break;
+        }
+    }
+
+    if (!found)
+        return;
+
+    Member** temp = new Member * [NumOfFans - 1];
+    int tempIndex = 0;
+    for (fansIndex = 0; fansIndex < NumOfFans; fansIndex++) {
+        if (strcmp(Fans[fansIndex]->getName(), fanToRemove->getName()) != 0) {
+            temp[tempIndex] = Fans[fansIndex];
+            tempIndex++;
+        }
+    }
+
+    delete [] Fans;
+    Fans = temp;
+    NumOfFans--;
+
+    //// Need to remove the page from the member's likes pages list as well ////
+    fanToRemove->unlikeFanPage(this);
 }
 
 

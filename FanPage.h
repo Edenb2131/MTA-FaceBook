@@ -40,6 +40,8 @@ public:
     void printAllPosts() const;
     ////void printFans() const; //// Need to implement
     void printFanPage() const;
+    void addFan(Member* fanToAdd);
+    void removeFan(Member* fanToRemove);
 };
 
 #endif //MTA_FACEBOOK_FANPAGE_H

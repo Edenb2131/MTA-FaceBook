@@ -68,14 +68,21 @@ void enterDataToStartWith(FaceBook& fb){
 
 
     // Linking between friends
-    fb.getMembers()[0]->addFriend(fb.getMembers()[1]);
-    fb.getMembers()[0]->addFriend(fb.getMembers()[2]);
+    fb.getMembers()[0]->addFriend(fb.getMembers()[1]); // Eden and Avivit are friends.
+    fb.getMembers()[0]->addFriend(fb.getMembers()[2]); // Eden and Liri are friends.
 
 
     //FanPage 1:
     fb.addNewPage("Wakanda!");
     fb.getFanPages()[0]->addPost("Wakanda FOREVER!");
     fb.getFanPages()[0]->addPost("Let's go to W-A-R!");
+
+    fb.addNewPage("Marvel fans!");
+    fb.getFanPages()[1]->addPost("I love Spider-Man!");
+
+    //Linking between friends and fan pages
+    fb.getMembers()[0]->likeFanPage(fb.getFanPages()[0]); // Eden like the Wakanda page.
+    fb.getMembers()[1]->likeFanPage(fb.getFanPages()[1]); // Avivit likes the Marvel fans page.
 }
 
 

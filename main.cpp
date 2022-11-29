@@ -41,6 +41,12 @@ int main(){
                 fb.getFanPages()[fanPageIndex]->printAllPosts();
                 break;
             }
+            case 7: {
+                for (int i = 0; i < fb.getNumOfMembersOverAll(); i++) {
+                    fb.getMembers()[i]->printTenLatestPosts();
+                }
+                break;
+            }
             case 8: {
                 cout << "Please choose the first member: " << endl;
                 int firstMemberIndex = fb.findMember();
@@ -50,39 +56,49 @@ int main(){
                 fb.connectTwoMembers(firstMemberIndex, secondMemberIndex);
                 break;
             }
+            case 9: {
+                cout << "Please choose the first member: " << endl;
+                int firstMemberIndex = fb.findMember();
+                cout << "Please choose the second member: " << endl;
+                int secondMemberIndex = fb.findMember();
+
+                fb.disconnectTwoMembers(firstMemberIndex, secondMemberIndex);
+                break;
+            }
+            case 10: {
+                int memberIndex = fb.findMember();
+                int fanPageIndex = fb.findFanPage();
+                fb.connectMemberAndFanPage(memberIndex, fanPageIndex);
+                break;
+            }
+            case 11: {
+                int memberIndex = fb.findMember();
+                int fanPageIndex = fb.findFanPage();
+                fb.disconnectMemberAndFanPage(memberIndex, fanPageIndex);
+                break;
+            }
+            case 12: {
+                fb.printAllEntities();
+                break;
+            }
+            case 13: {
+                int memberIndex = fb.findMember();
+                fb.getMembers()[memberIndex]->printFriends();
+                break;
+            }
+            case 14: {
+                int memberIndex = fb.findMember();
+                fb.getMembers()[memberIndex]->printLikedPages();
+                break;
+            }
             case 15: {
                 cout << "Thank you for using FaceBook, hope to see you again soon!" << endl;
                 finish = true;
                 break;
             }
-
         }
         if (!finish)
             choice = fb.menu();
     }
-
-
-
-//    //printing the start data:
-//   for(int i = 0; i < fb.getNumOfMembersOverAll(); i++) {
-//       fb.getMembers()[i]->printMember();
-//   }
-//
-//   for (int i = 0; i < fb.getNumOfFanPagesOverAll(); i++) {
-//       fb.getFanPages()[i]->printAllPosts();
-//   }
-//
-//   fb.addNewMember();
-//   fb.getMembers()[1]->addPost();
-//   fb.getMembers()[1]->addFriend(fb.getMembers()[0]);
-//   fb.getMembers()[1]->printFriendsTenLatestPosts(fb.getMembers()[0]);
-//   fb.getMembers()[1]->printTenLatestPostsOfFriends();
-//
-//
-//   fb.printAllEntities(); // Prints all entities in the system (members and fan pages)
-//
-//   cout << endl << endl << endl << endl << endl;
-//
-//   fb.printAllEntitiesAndTheirData(); // Prints all entities in the system (members and fan pages) and their data
     return 0;
 }

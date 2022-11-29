@@ -46,6 +46,9 @@ public:
     int findMember(); // finds a member in order to do actions on him (add post and so on..)
     int findFanPage(); // finds a fan page in order to do actions on him (add post and so on..)
     void connectTwoMembers(int firstMemberIndex, int secondMemberIndex);
+    void disconnectTwoMembers(int firstMemberIndex, int secondMemberIndex);
+    void connectMemberAndFanPage(int memberIndex, int fanPageIndex);
+    void disconnectMemberAndFanPage(int memberIndex, int fanPageIndex);
 };
 
 

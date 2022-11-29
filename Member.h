@@ -33,10 +33,10 @@ public:
     Date getBirthday() const;
     Member** getFriends() const;
     int getNumOfFriends() const;
-    ////char** getPosts() const; ////
     Status** getPosts() const;
     int getNumOfPosts() const;
-    /////FanPage** getFanPages() const; ////
+    FanPage** getFanPages() const;
+    int getNumOfFanPages() const;
 
     //setters :
     void setName(char *name);
@@ -45,22 +45,24 @@ public:
     void setNumOfFriends(int numOfFriends);
     void setPosts(Status** posts);
     void setNumOfPosts(int numOfPosts);
+    void setFanPages(FanPage** fanPages);
+    void setNumOfFanPages(int numOfFanPages);
 
     //functions :
     void addPost();
     void addPost(const char* content);
     void printAllPosts();
     void printFriends();
+    void printLikedPages();
     void printMember();
-
-
-    void addFriend(Member *friendToAdd, int a = 0); // a = 0 means that we didn't add the friend to his friend list
-    ////void removeFriend(Member *friendToRemove);
+    void addFriend(Member *friendToAdd);
+    void removeFriend(Member *friendToRemove);
+    void likeFanPage(FanPage *fanPageToLike);
+    void unlikeFanPage(FanPage *fanPageToUnlike);
     void printLatestPost();
     void printTenLatestPosts();
     void printFriendsTenLatestPosts(Member *friendToPrintLatestPosts);
     void printTenLatestPostsOfFriends();
 };
-
 
 #endif //MTA_FACEBOOK_MEMBER_H

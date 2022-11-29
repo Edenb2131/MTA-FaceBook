@@ -54,8 +54,8 @@ public:
     void printMember();
 
 
-    void addFriend(Member *friendToAdd, int a = 0); // a = 0 means that we didn't add the friend to his friend list
-    ////void removeFriend(Member *friendToRemove);
+    void addFriend(Member *friendToAdd);
+    void removeFriend(Member *friendToRemove);
     void printLatestPost();
     void printTenLatestPosts();
     void printFriendsTenLatestPosts(Member *friendToPrintLatestPosts);

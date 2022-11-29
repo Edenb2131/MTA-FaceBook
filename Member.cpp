@@ -100,36 +100,48 @@ void Member::setNumOfPosts(int numOfPosts) {
 }
 
 
-void Member::addFriend(Member *friendToAdd, int a) {
-    Member **temp = new Member *[NumOfFriends + 1];
-    for (int i = 0; i < NumOfFriends; i++) {
-        temp[i] = Friends[i];
+void Member::addFriend(Member *friendToAdd) {
+    int i;
+    for (i = 0; i < this->NumOfFriends; i++) {
+        if (strcmp (this->Friends[i]->Name, friendToAdd->Name) == 0) {
+            return;
+        }
     }
 
-    //// Need to add the friend to the friend's friend list as well ////
-    if(a == 0) {
-        friendToAdd->addFriend(this, 1);
+    Member **temp = new Member *[NumOfFriends + 1];
+    for (i = 0; i < NumOfFriends; i++) {
+        temp[i] = Friends[i];
     }
 
     temp[NumOfFriends] = friendToAdd;
     delete[] Friends;
     Friends = temp;
     NumOfFriends++;
+
+    //// Need to add the friend to the friend's friend list as well ////
+    friendToAdd->addFriend(this);
 }
 
-//void Member::removeFriend(Member *friendToRemove) {
-//    Member **temp = new Member*[NumOfFriends - 1];
-//    int j = 0;
-//    for (int i = 0; i < NumOfFriends; i++) {
-//        if (Friends[i] != friendToRemove) {
-//            temp[j] = Friends[i];
-//            j++;
-//        }
-//    }
-//    delete[] Friends;
-//    Friends = temp;
-//    NumOfFriends--;
-//}
+void Member::removeFriend(Member *friendToRemove) {
+    int i;
+    for (i = 0; i < this->NumOfFriends; i++) {
+        if (strcmp (this->Friends[i]->Name, friendToRemove->Name) != 0) {
+            return;
+        }
+    }
+
+    Member **temp = new Member *[NumOfFriends - 1];
+    for (i = 0; i < NumOfFriends; i++) {
+        temp[i] = Friends[i];
+    }
+
+    delete[] Friends;
+    Friends = temp;
+    NumOfFriends--;
+
+    //// Need to remove the friend from the friend's friend list as well ////
+    friendToRemove->removeFriend(this);
+}
 
 
 void Member::addPost() {

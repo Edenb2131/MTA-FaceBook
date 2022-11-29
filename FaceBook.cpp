@@ -214,6 +214,36 @@ int FaceBook::findFanPage() {
 }
 
 void FaceBook::connectTwoMembers(int firstMemberIndex, int secondMemberIndex) {
+    for (int i = 0; i < Members[firstMemberIndex]->getNumOfFriends(); i++) {
+        char* friend1Name = Members[firstMemberIndex]->getFriends()[i]->getName();
+        char* friend2Name = Members[secondMemberIndex]->getName();
+        if (strcmp (friend1Name, friend2Name) == 0) {
+            cout << "Friends are already connected!" << endl;
+            return;
+        }
+    }
     Members[firstMemberIndex]->addFriend(Members[secondMemberIndex]);
+    cout << "Friends connected successfully!" << endl;
+}
+
+void FaceBook::disconnectTwoMembers(int firstMemberIndex, int secondMemberIndex) {
+    bool connected = false;
+    for (int i = 0; i < Members[firstMemberIndex]->getNumOfFriends(); i++) {
+        char* friend1Name = Members[firstMemberIndex]->getFriends()[i]->getName();
+        char* friend2Name = Members[secondMemberIndex]->getName();
+        if (strcmp (friend1Name, friend2Name) != 0) {
+            connected = false;
+        }
+        else {
+            connected = true;
+            break;
+        }
+    }
+    if (!connected) {
+        cout << "Friends are not connected!" << endl;
+        return;
+    }
+    Members[firstMemberIndex]->removeFriend(Members[secondMemberIndex]);
+    cout << "Friends disconnected successfully!" << endl;
 }
 

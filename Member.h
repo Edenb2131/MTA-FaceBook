@@ -57,7 +57,7 @@ public:
     void printFriends();
     void printLikedPages();
     void printMember();
-    void addFriend(Member *friendToAdd);
+    void addFriend(Member *friendToAdd, int neededToBeAdded = false);
     void removeFriend(Member *friendToRemove);
     void likeFanPage(FanPage *fanPageToLike);
     void unlikeFanPage(FanPage *fanPageToUnlike);

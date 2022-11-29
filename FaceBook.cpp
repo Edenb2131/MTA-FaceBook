@@ -53,14 +53,19 @@ void FaceBook::process() {
                 break;
             }
             case 6: {
-                int fanPageIndex = findFanPage();
-                getFanPages()[fanPageIndex]->printAllPosts();
+                int memberIndex = findMember();
+                int fanPageIndex = findFanPageByMember(*getMembers()[memberIndex]);
+                //getFanPages()[fanPageIndex]->printAllPosts();
+                //print all posts of a fan page from a specific member
+                getMembers()[memberIndex]->getFanPages()[fanPageIndex]->printAllPosts();
                 break;
             }
             case 7: {
-                for (int i = 0; i < getNumOfMembersOverAll(); i++) {
-                    getMembers()[i]->printTenLatestPosts();
-                }
+                int memberIndex = findMember();
+                getMembers()[memberIndex]->printTenLatestPosts();
+//                for (int i = 0; i < getNumOfMembersOverAll(); i++) {
+//                    getMembers()[i]->printTenLatestPosts();
+//                }
                 break;
             }
             case 8: {
@@ -84,12 +89,14 @@ void FaceBook::process() {
             case 10: {
                 int memberIndex = findMember();
                 int fanPageIndex = findFanPage();
+                //int fanPageIndex = findFanPageByMember(*(Members[memberIndex]));
                 connectMemberAndFanPage(memberIndex, fanPageIndex);
                 break;
             }
             case 11: {
                 int memberIndex = findMember();
                 int fanPageIndex = findFanPage();
+                //int fanPageIndex = findFanPageByMember(*(Members[memberIndex]));
                 disconnectMemberAndFanPage(memberIndex, fanPageIndex);
                 break;
             }
@@ -120,15 +127,16 @@ void FaceBook::process() {
 }
 
 int FaceBook::menu() {
+    cout << endl;
     int choice;
     cout << "Please choose an action from the list below: " << endl;
     cout << "Enter 1 to register to FaceBook as a member" << endl;
     cout << "Enter 2 to register to FaceBook as a fan page" << endl;
     cout << "Enter 3 to write a post as a member" << endl;
     cout << "Enter 4 to write a post as a fan page" << endl;
-    cout << "Enter 5 to see all posts of your friends" << endl;
+    cout << "Enter 5 to see all posts of one of your friends" << endl;
     cout << "Enter 6 to see all posts of fan pages you liked" << endl;
-    cout << "Enter 7 to see ten latest posts of your friends" << endl;
+    cout << "Enter 7 to see ten latest posts one of your friends" << endl;
     cout << "Enter 8 to add a friend" << endl;
     cout << "Enter 9 to delete a friend" << endl;
     cout << "Enter 10 to like a fan page" << endl;
@@ -217,6 +225,7 @@ void FaceBook::addNewMember(const char* name, int day, int month, int year ) {
 
 
 void FaceBook::addNewPage(){
+    cin.ignore();
     cout << "Please enter page's name:" << endl;
     char* name = getDynamicString();
     FanPage* newPage = new FanPage(name);
@@ -287,26 +296,53 @@ void FaceBook::printAllEntities() const {
         cout << FanPages[i]->getName() << ", ";
     }
     cout << FanPages[NumOfFanPagesOverAll - 1]->getName() << endl;
+
+    cout << endl;
 }
 
 int FaceBook::findMember() {
     int index = -1;
     cout << "Please choose a member from the list below:" << endl;
-    for (int i = 0; i < NumOfMembersOverAll; i++) {
-        cout << i+1 << " for " << Members[i]->getName() << endl;
+    while(index < 0 || index > NumOfMembersOverAll) {
+        for (int i = 0; i < NumOfMembersOverAll; i++) {
+            cout << "Enter " << i + 1 << " for " << Members[i]->getName() << endl;
+        }
+        cin >> index;
+        if(index < 0 || index > NumOfMembersOverAll)
+            cout << "Invalid input. Enter again." << endl;
     }
-    cin >> index;
+
     return index - 1;
 }
 
 int FaceBook::findFanPage() {
     int index = -1;
     cout << "Please choose a fan page from the list below:" << endl;
-    for (int i = 0; i < NumOfFanPagesOverAll; i++) {
-        cout << i+1 << " for " << FanPages[i]->getName() << endl;
+    while(index < 0 || index > NumOfFanPagesOverAll) {
+        for (int i = 0; i < NumOfFanPagesOverAll; i++) {
+            cout << "Enter " << i + 1 << " for " << FanPages[i]->getName() << endl;
+        }
+        cin >> index;
+        if(index < 0 || index > NumOfFanPagesOverAll)
+            cout << "Invalid input. Enter again." << endl;
     }
-    cin >> index;
     return index - 1;
+}
+
+int FaceBook::findFanPageByMember(const Member& member){
+    int index = -1;
+    cout << "Please choose a fan page from the list below:" << endl;
+    while(index < 0 || index > member.getNumOfFanPages()) {
+        for (int i = 0; i < member.getNumOfFanPages(); i++) {
+            cout << "Enter " << i + 1 << " for " << member.getFanPages()[i]->getName() << endl;
+        }
+        cin >> index;
+        if(index < 0 || index > member.getNumOfFanPages())
+            cout << "Invalid input. Enter again." << endl;
+    }
+
+    return index - 1;
+
 }
 
 void FaceBook::connectTwoMembers(int firstMemberIndex, int secondMemberIndex) {

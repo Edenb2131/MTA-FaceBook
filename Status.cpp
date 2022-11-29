@@ -6,22 +6,19 @@ Status::Status() {
     cout << "Enter your status: " << endl;
     Content = new char[100];
     cin.getline(Content, 100);
-    time_t timeRightNow = time(0);
-    pTime = ctime(&timeRightNow); // Making the time a string
+    pTime = time(nullptr);
     cout << endl;
 }
 
 //constructor
 Status::Status(const char* content) : Content(strdup(content))
 {
-    time_t timeRightNow = time(0);
-    pTime = ctime(&timeRightNow); // Making the time a string
+    pTime = time(nullptr);
 }
 
 //destructor
 Status::~Status() {
     delete [] Content;
-    delete [] pTime;
 }
 
 char *Status::getContent() const {
@@ -33,7 +30,7 @@ void Status::setContent(char *content) {
 }
 
 char* Status::getTimePostPosted(){
-    return pTime;
+    return ctime(&pTime);
 }
 
 void Status::printStatus() {

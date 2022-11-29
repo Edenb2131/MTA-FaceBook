@@ -9,8 +9,7 @@ using namespace std;
 
 class Status {
     char* Content;
-    // need to insert time to a status !!!!!
-    char* pTime;
+    time_t pTime;
 public:
 
     //constructors and destructor

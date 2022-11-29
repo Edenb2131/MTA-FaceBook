@@ -116,11 +116,24 @@ void Member::setNumOfFanPages(int numOfFanPages) {
     NumOfFanPages = numOfFanPages;
 }
 
-void Member::addFriend(Member *friendToAdd) {
+void Member::addFriend(Member *friendToAdd, int neededToBeAdded) {
     int i;
-    // Check if possible in Theta(1)
+
+    // Checking to see if not trying to add yourself
+    if(this == friendToAdd){
+        cout << "You cannot add yourself !" << endl;
+        return;
+    }
+
+    // Need to add the friend to the friend's friend list as well
+    if(neededToBeAdded == false ){
+        friendToAdd->addFriend(this, true);
+    }
+
+    //Checking to see if already friends
     for (i = 0; i < this->NumOfFriends; i++) {
         if (strcmp (this->Friends[i]->Name, friendToAdd->Name) == 0) {
+            cout << "Already friends !" << endl;
             return;
         }
     }
@@ -135,8 +148,8 @@ void Member::addFriend(Member *friendToAdd) {
     Friends = temp;
     NumOfFriends++;
 
-    //// Need to add the friend to the friend's friend list as well ////
-    friendToAdd->addFriend(this);
+
+
 }
 
 void Member::removeFriend(Member *friendToRemove) {
@@ -174,6 +187,8 @@ void Member::removeFriend(Member *friendToRemove) {
 
 void Member::likeFanPage(FanPage *fanPageToLike) {
     int i;
+
+    // Checking to see if needed to add that fan-page or not
     for (i = 0; i < NumOfFanPages; i++) {
         if (strcmp (FanPages[i]->getName(), fanPageToLike->getName()) == 0) {
             return;
@@ -189,7 +204,7 @@ void Member::likeFanPage(FanPage *fanPageToLike) {
     FanPages = temp;
     NumOfFanPages++;
 
-    //// Need to add the member to the page's fans list as well ////
+    // Need to add the member to the page's fans as well
     fanPageToLike->addFan(this);
 }
 
@@ -296,6 +311,7 @@ void Member::printLikedPages() {
 
         cout << FanPages[i]->getName() << endl ;
     }
+    cout << endl;
 }
 
 void Member::printAllPosts() {
@@ -317,6 +333,7 @@ void Member::printMember() {
     cout << "Birthday: " << Birthday.day << "/" << Birthday.month << "/" << Birthday.year << endl;
     printFriends();
     printAllPosts();
+    printLikedPages();
 }
 
 void Member::printTenLatestPosts() {

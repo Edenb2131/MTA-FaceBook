@@ -125,8 +125,11 @@ void FanPage::printFanPage() const {
 
 void FanPage::addFan(Member* fanToAdd) {
     int i;
+
+    // Checking to see if needed to add that friend or not
     for (i = 0; i < NumOfFans; i++) {
         if (strcmp(Fans[i]->getName(), fanToAdd->getName()) == 0) {
+            cout << "Already likes that fan page!" << endl;
             return;
         }
     }
@@ -141,7 +144,7 @@ void FanPage::addFan(Member* fanToAdd) {
     Fans = temp;
     NumOfFans++;
 
-    //// Need to add the page to the member's likes pages list as well ////
+    // Need to add the page to the member's likes pages list as well
     fanToAdd->likeFanPage(this);
 }
 

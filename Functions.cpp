@@ -2,6 +2,7 @@
 #include "FaceBook.h"
 #define LEN 100
 
+// Checking allocation
 void checkMemoryAllocation(void* ptr) {
     if (ptr == nullptr) {
         cout << "Memory allocation failed!" << endl;
@@ -16,7 +17,7 @@ char* getDynamicString() {
     return str;
 }
 
-
+//Getting info from a new user
 Info getInfoFromUser() {
     Info infoFromUser;
     getchar();
@@ -73,16 +74,26 @@ void enterDataToStartWith(FaceBook& fb){
 
 
     //FanPage 1:
-    fb.addNewPage("Wakanda!");
+    fb.addNewPage("Wakanda 4Ever");
     fb.getFanPages()[0]->addPost("Wakanda FOREVER!");
     fb.getFanPages()[0]->addPost("Let's go to W-A-R!");
 
+    //FanPage 2:
     fb.addNewPage("Marvel fans!");
     fb.getFanPages()[1]->addPost("I love Spider-Man!");
+    fb.getFanPages()[1]->addPost("I love Thor!");
+    fb.getFanPages()[1]->addPost("I love Caption America!");
+
+    //FanPage 3:
+    fb.addNewPage("Thanos was right!");
+    fb.getFanPages()[2]->addPost("The population of the world need to be cut in half...");
+    fb.getFanPages()[2]->addPost("We want THANOS !");
 
     //Linking between friends and fan pages
     fb.getMembers()[0]->likeFanPage(fb.getFanPages()[0]); // Eden likes the Wakanda page.
     fb.getMembers()[1]->likeFanPage(fb.getFanPages()[1]); // Avivit likes the Marvel fans page.
+    fb.getMembers()[0]->likeFanPage(fb.getFanPages()[2]); // Eden likes the Thanos was right page.
+    fb.getMembers()[2]->likeFanPage(fb.getFanPages()[2]); // Liri likes the Thanos was right page.
 }
 
 

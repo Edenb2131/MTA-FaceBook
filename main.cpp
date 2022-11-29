@@ -72,12 +72,17 @@ int main(){
                 break;
             }
             case 12: {
+                fb.printAllEntities();
                 break;
             }
             case 13: {
+                int memberIndex = fb.findMember();
+                fb.getMembers()[memberIndex]->printFriends();
                 break;
             }
             case 14: {
+                int memberIndex = fb.findMember();
+                fb.getMembers()[memberIndex]->printLikedPages();
                 break;
             }
             case 15: {

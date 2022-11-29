@@ -51,6 +51,7 @@ public:
     void addPost(const char* content);
     void printAllPosts();
     void printFriends();
+    void printLikedPages();
     void printMember();
 
 

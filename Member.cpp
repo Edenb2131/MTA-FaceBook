@@ -1,5 +1,6 @@
 
 #include "Member.h"
+#include "FanPage.h"
 
 //constructor
 Member::Member(Info infoFromUser): // Using here c'tor init line
@@ -102,6 +103,7 @@ void Member::setNumOfPosts(int numOfPosts) {
 
 void Member::addFriend(Member *friendToAdd) {
     int i;
+    // Check if possible in Theta(1)
     for (i = 0; i < this->NumOfFriends; i++) {
         if (strcmp (this->Friends[i]->Name, friendToAdd->Name) == 0) {
             return;
@@ -124,6 +126,7 @@ void Member::addFriend(Member *friendToAdd) {
 
 void Member::removeFriend(Member *friendToRemove) {
     int i;
+    // Check if possible in Theta(1)
     for (i = 0; i < this->NumOfFriends; i++) {
         if (strcmp (this->Friends[i]->Name, friendToRemove->Name) != 0) {
             return;
@@ -200,6 +203,20 @@ void Member::printFriends() {
         cout << Friends[i]->getName() << endl ;
     }
     cout << endl;
+}
+
+void Member::printLikedPages() {
+    if (NumOfFanPages == 0) {
+        cout << "You have no liked pages !" << endl;
+    }
+    else {
+        cout << "Liked pages of " << "'" << Name << "'" << " are: " ;
+        int i;
+        for (i = 0; i < NumOfFanPages - 1; i++)
+            cout << FanPages[i]->getName() << ", " ;
+
+        cout << FanPages[i]->getName() << endl ;
+    }
 }
 
 void Member::printAllPosts() {

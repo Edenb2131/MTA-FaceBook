@@ -81,7 +81,7 @@ void enterDataToStartWith(FaceBook& fb){
     fb.getFanPages()[1]->addPost("I love Spider-Man!");
 
     //Linking between friends and fan pages
-    fb.getMembers()[0]->likeFanPage(fb.getFanPages()[0]); // Eden like the Wakanda page.
+    fb.getMembers()[0]->likeFanPage(fb.getFanPages()[0]); // Eden likes the Wakanda page.
     fb.getMembers()[1]->likeFanPage(fb.getFanPages()[1]); // Avivit likes the Marvel fans page.
 }
 

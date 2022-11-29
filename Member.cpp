@@ -223,7 +223,7 @@ void Member::unlikeFanPage(FanPage *fanPageToUnlike) {
     NumOfFanPages--;
 
     //// Need to remove the member from the page's fans list as well ////
-    fanPageToUnlike->addFan(this);
+    fanPageToUnlike->removeFan(this);
 }
 
 void Member::addPost() {

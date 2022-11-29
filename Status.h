@@ -18,12 +18,10 @@ public:
     Status(const char* content);
     ~Status();
 
-
     char* getContent() const;
     void setContent(char* content);
     void printStatus();
     char* getTimePostPosted();
 };
-
 
 #endif //MTA_FACEBOOK_STATUS_H

@@ -21,6 +21,8 @@ public:
     FaceBook();
     ~FaceBook();
 
+    FaceBook(const FaceBook&) = delete;
+
     //getters :
     Member** getMembers() const;
     int getNumOfMembersOverAll() const;
@@ -35,6 +37,7 @@ public:
 
     //functions :
     int menu();
+    void process();
     void addNewMember();
     void addNewMember(const char* name, int day, int month, int year );
     void addNewPage();
@@ -50,6 +53,5 @@ public:
     void connectMemberAndFanPage(int memberIndex, int fanPageIndex);
     void disconnectMemberAndFanPage(int memberIndex, int fanPageIndex);
 };
-
 
 #endif //MTA_FACEBOOK_FACEBOOK_H

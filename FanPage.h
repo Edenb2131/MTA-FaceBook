@@ -20,6 +20,8 @@ public:
     FanPage(char *name);
     ~FanPage();
 
+    FanPage(const FanPage&) = delete;
+
     //getters  :
     char* getName() const;
     Member** getFans() const;

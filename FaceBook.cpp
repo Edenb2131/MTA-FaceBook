@@ -23,6 +23,102 @@ FaceBook::~FaceBook() {
     delete [] FanPages;
 }
 
+void FaceBook::process() {
+    bool finish = false;
+    int choice = menu();
+
+    while (!finish) {
+        switch (choice) {
+            case 1: {
+                addNewMember();
+                break;
+            }
+            case 2: {
+                addNewPage();
+                break;
+            }
+            case 3: {
+                int memberIndex = findMember();
+                getMembers()[memberIndex]->addPost();
+                break;
+            }
+            case 4: {
+                int fanPageIndex = findFanPage();
+                getFanPages()[fanPageIndex]->addPost();
+                break;
+            }
+            case 5: {
+                int memberIndex = findMember();
+                getMembers()[memberIndex]->printAllPosts();
+                break;
+            }
+            case 6: {
+                int fanPageIndex = findFanPage();
+                getFanPages()[fanPageIndex]->printAllPosts();
+                break;
+            }
+            case 7: {
+                for (int i = 0; i < getNumOfMembersOverAll(); i++) {
+                    getMembers()[i]->printTenLatestPosts();
+                }
+                break;
+            }
+            case 8: {
+                cout << "Please choose the first member: " << endl;
+                int firstMemberIndex = findMember();
+                cout << "Please choose the second member: " << endl;
+                int secondMemberIndex = findMember();
+
+                connectTwoMembers(firstMemberIndex, secondMemberIndex);
+                break;
+            }
+            case 9: {
+                cout << "Please choose the first member: " << endl;
+                int firstMemberIndex = findMember();
+                cout << "Please choose the second member: " << endl;
+                int secondMemberIndex = findMember();
+
+                disconnectTwoMembers(firstMemberIndex, secondMemberIndex);
+                break;
+            }
+            case 10: {
+                int memberIndex = findMember();
+                int fanPageIndex = findFanPage();
+                connectMemberAndFanPage(memberIndex, fanPageIndex);
+                break;
+            }
+            case 11: {
+                int memberIndex = findMember();
+                int fanPageIndex = findFanPage();
+                disconnectMemberAndFanPage(memberIndex, fanPageIndex);
+                break;
+            }
+            case 12: {
+                printAllEntities();
+                printAllEntitiesAndTheirData();
+                break;
+            }
+            case 13: {
+                int memberIndex = findMember();
+                getMembers()[memberIndex]->printFriends();
+                break;
+            }
+            case 14: {
+                int memberIndex = findMember();
+                getMembers()[memberIndex]->printLikedPages();
+                break;
+            }
+            case 15: {
+                cout << "Thank you for using FaceBook, hope to see you again soon!" << endl;
+                finish = true;
+                break;
+            }
+        }
+        if (!finish)
+            choice = menu();
+    }
+}
+
 int FaceBook::menu() {
     int choice;
     cout << "Please choose an action from the list below: " << endl;

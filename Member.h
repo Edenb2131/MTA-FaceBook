@@ -28,6 +28,8 @@ public:
     Member(const char* name, int day, int month, int year );
     ~Member();
 
+    Member(const Member&) = delete;
+
     //getters :
     char* getName() const;
     Date getBirthday() const;

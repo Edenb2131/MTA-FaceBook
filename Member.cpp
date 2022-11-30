@@ -84,32 +84,12 @@ int Member::getNumOfFanPages() const {
     return NumOfFanPages;
 }
 
-void Member::setName(char *name) {
-  Name = name;
-}
-
-void Member::setBirthday(Date birthday) {
-    Birthday = birthday;
-}
-
-void Member::setFriends(Member **friends) {
-    Friends = friends;
-}
-
 void Member::setNumOfFriends(int numOfFriends) {
     NumOfFriends = numOfFriends;
 }
 
-void Member::setPosts(Status** posts) {
-    Posts = posts;
-}
-
 void Member::setNumOfPosts(int numOfPosts) {
     NumOfPosts = numOfPosts;
-}
-
-void Member::setFanPages(FanPage** fanPages) {
-    FanPages = fanPages;
 }
 
 void Member::setNumOfFanPages(int numOfFanPages) {
@@ -347,13 +327,13 @@ void Member::printTenLatestPosts() {
         }
     }
 }
+
 // Getting a friend's name and printing his 10 latest posts
 void Member::printFriendsTenLatestPosts(Member *friendToPrintLatestPosts){
     cout << "These are the latest posts of : '" << friendToPrintLatestPosts->getName() << "' "<< endl;
     friendToPrintLatestPosts->printTenLatestPosts();
     cout << endl;
 }
-
 
 // Printing all the posts of all the friends
 void Member::printTenLatestPostsOfFriends() {

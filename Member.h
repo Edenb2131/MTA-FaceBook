@@ -41,30 +41,25 @@ public:
     int getNumOfFanPages() const;
 
     //setters :
-    void setName(char *name);
-    void setBirthday(Date birthday);
-    void setFriends(Member** friends);
     void setNumOfFriends(int numOfFriends);
-    void setPosts(Status** posts);
     void setNumOfPosts(int numOfPosts);
-    void setFanPages(FanPage** fanPages);
     void setNumOfFanPages(int numOfFanPages);
 
     //functions :
-    void addPost();
-    void addPost(const char* content);
-    void printAllPosts();
-    void printFriends();
-    void printLikedPages();
-    void printMember();
-    void addFriend(Member *friendToAdd, int neededToBeAdded = false);
-    void removeFriend(Member *friendToRemove);
-    void likeFanPage(FanPage *fanPageToLike);
-    void unlikeFanPage(FanPage *fanPageToUnlike);
-    void printLatestPost();
-    void printTenLatestPosts();
-    void printFriendsTenLatestPosts(Member *friendToPrintLatestPosts);
-    void printTenLatestPostsOfFriends();
+    void addPost(); // Add a post to the member's posts
+    void addPost(const char* content); // Add a post to the member's posts
+    void printAllPosts(); // Print all the posts of the member
+    void printFriends(); // Print all the friends of the member
+    void printLikedPages(); // Print all the liked pages of the member
+    void printMember(); // Print all the member's info
+    void addFriend(Member *friendToAdd, int neededToBeAdded = false); // Add a friend to the member's friends
+    void removeFriend(Member *friendToRemove); // Remove a friend from the member's friends
+    void likeFanPage(FanPage *fanPageToLike); // Like a fan page
+    void unlikeFanPage(FanPage *fanPageToUnlike); // Unlike a fan page
+    void printLatestPost(); // Print the latest post of the member
+    void printTenLatestPosts(); // Print the ten latest posts of the member
+    void printFriendsTenLatestPosts(Member *friendToPrintLatestPosts); // Print the latest 10 posts of a friend
+    void printTenLatestPostsOfFriends(); // Print the latest 10 posts of all the member's friends
 };
 
 #endif //MTA_FACEBOOK_MEMBER_H

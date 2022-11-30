@@ -166,22 +166,13 @@ int FaceBook::getNumOfFanPagesOverAll() const {
     return NumOfFanPagesOverAll;
 }
 
-void FaceBook::setMembers(Member **members) {
-    Members = members;
-}
-
 void FaceBook::setNumOfMembersOverAll(int numOfMembersOverAll) {
     NumOfMembersOverAll = numOfMembersOverAll;
-}
-
-void FaceBook::setFanPages(FanPage **fanPages) {
-    FanPages = fanPages;
 }
 
 void FaceBook::setNumOfFanPagesOverAll(int numOfFanPagesOverAll) {
     NumOfFanPagesOverAll = numOfFanPagesOverAll;
 }
-
 
 void FaceBook::addNewMember() {
     Info infoFromUser = getInfoFromUser();
@@ -222,7 +213,6 @@ void FaceBook::addNewMember(const char* name, int day, int month, int year ) {
     NumOfMembersOverAll++;
 
 }
-
 
 void FaceBook::addNewPage(){
     cin.ignore();

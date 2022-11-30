@@ -30,29 +30,27 @@ public:
     int getNumOfFanPagesOverAll() const;
 
     //setters :
-    void setMembers(Member** members);
     void setNumOfMembersOverAll(int NumOfMembersOverAll);
-    void setFanPages(FanPage** fanPages);
     void setNumOfFanPagesOverAll(int NumOfFanPagesOverAll);
 
     //functions :
-    int menu();
-    void process();
-    void addNewMember();
-    void addNewMember(const char* name, int day, int month, int year );
-    void addNewPage();
-    void addNewPage(const char* name);
-    void printAllMembers() const;
-    void printAllFanPages() const;
-    void printAllEntitiesAndTheirData() const;
-    void printAllEntities() const;
-    int findMember(); // finds a member in order to do actions on him (add post and so on..)
-    int findFanPage(); // finds a fan page in order to do actions on him (add post and so on..)
-    int findFanPageByMember(const Member& member);
-    void connectTwoMembers(int firstMemberIndex, int secondMemberIndex);
-    void disconnectTwoMembers(int firstMemberIndex, int secondMemberIndex);
-    void connectMemberAndFanPage(int memberIndex, int fanPageIndex);
-    void disconnectMemberAndFanPage(int memberIndex, int fanPageIndex);
+    int menu(); // return the choice of the user
+    void process(); // process the choice of the user
+    void addNewMember(); // add new member to the facebook
+    void addNewMember(const char* name, int day, int month, int year ); // add new member to the facebook
+    void addNewPage(); // add new page to the facebook
+    void addNewPage(const char* name); // add new page to the facebook
+    void printAllMembers() const; // print all the members in the facebook
+    void printAllFanPages() const; // print all the fan pages in the facebook
+    void printAllEntitiesAndTheirData() const; // print all the members and fan pages in the facebook
+    void printAllEntities() const; // print all the members and fan pages in the facebook
+    int findMember(); // finds a member in order to do actions on him (add post and so on..) returns index of the member
+    int findFanPage(); // finds a fan page in order to do actions on him (add post and so on..) returns index of the fan page
+    int findFanPageByMember(const Member& member); // finds a fan page in order to do actions on him by a member
+    void connectTwoMembers(int firstMemberIndex, int secondMemberIndex); // connect two members
+    void disconnectTwoMembers(int firstMemberIndex, int secondMemberIndex); // disconnect two members
+    void connectMemberAndFanPage(int memberIndex, int fanPageIndex); // connect member and fan page
+    void disconnectMemberAndFanPage(int memberIndex, int fanPageIndex); // disconnect member and fan page
 };
 
 #endif //MTA_FACEBOOK_FACEBOOK_H

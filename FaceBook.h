@@ -45,6 +45,7 @@ public:
     void printAllEntitiesAndTheirData() const; // print all the members and fan pages in the facebook
     void printAllEntities() const; // print all the members and fan pages in the facebook
     int findMember(); // finds a member in order to do actions on him (add post and so on..) returns index of the member
+    int findMemberByMember(const Member& member); // finds a member in .returns index of the member
     int findFanPage(); // finds a fan page in order to do actions on him (add post and so on..) returns index of the fan page
     int findFanPageByMember(const Member& member); // finds a fan page in order to do actions on him by a member
     void connectTwoMembers(int firstMemberIndex, int secondMemberIndex); // connect two members

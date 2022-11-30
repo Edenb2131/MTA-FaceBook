@@ -206,9 +206,9 @@ void Member::unlikeFanPage(FanPage *fanPageToUnlike) {
 
     FanPage** temp = new FanPage * [NumOfFanPages - 1];
     int tempIndex = 0;
-    for (pagesIndex = 0; pagesIndex < NumOfFanPages; pagesIndex++) {
+    for (pagesIndex = 0; pagesIndex < NumOfFanPages - 1; pagesIndex++) {
         if (strcmp (FanPages[pagesIndex]->getName(), fanPageToUnlike->getName()) != 0) {
-            temp[pagesIndex] = FanPages[pagesIndex];
+            temp[tempIndex] = FanPages[pagesIndex];
             tempIndex++;
         }
     }

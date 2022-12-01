@@ -54,18 +54,23 @@ void FaceBook::process() {
             }
             case 6: {
                 int memberIndex = findMember();
-                int fanPageIndex = findFanPageByMember(*getMembers()[memberIndex]);
-                //getFanPages()[fanPageIndex]->printAllPosts();
-                //print all posts of a fan page from a specific member
-                getMembers()[memberIndex]->getFanPages()[fanPageIndex]->printAllPosts();
+                for (int i = 0; i < getMembers()[memberIndex]->getNumOfFanPages(); i++){
+                    getMembers()[memberIndex]->getFanPages()[i]->printAllPosts();
+                }
+
+//                int fanPageIndex = findFanPageByMember(*getMembers()[memberIndex]);
+//                getFanPages()[fanPageInd2ex]->printAllPosts();
+//                print all posts of a fan page from a specific member
+//                getMembers()[memberIndex]->getFanPages()[fanPageIndex]->printAllPosts();
                 break;
             }
             case 7: {
                 int memberIndex = findMember();
-                getMembers()[memberIndex]->printTenLatestPosts();
-//                for (int i = 0; i < getNumOfMembersOverAll(); i++) {
-//                    getMembers()[i]->printTenLatestPosts();
-//                }
+                //getMembers()[memberIndex]->printTenLatestPosts();
+                for (int i = 0; i < getMembers()[memberIndex]->getNumOfFriends(); i++) {
+                    getMembers()[memberIndex]->getFriends()[i]->printTenLatestPosts();
+                }
+
                 break;
             }
             case 8: {
@@ -136,7 +141,7 @@ int FaceBook::menu() {
     cout << "Enter 4 to write a post as a fan page" << endl;
     cout << "Enter 5 to see all posts of one of your friends" << endl;
     cout << "Enter 6 to see all posts of fan pages you liked" << endl;
-    cout << "Enter 7 to see ten latest posts one of your friends" << endl;
+    cout << "Enter 7 to see ten latest posts of your friends" << endl;
     cout << "Enter 8 to add a friend" << endl;
     cout << "Enter 9 to delete a friend" << endl;
     cout << "Enter 10 to like a fan page" << endl;

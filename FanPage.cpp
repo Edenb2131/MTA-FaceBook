@@ -14,10 +14,11 @@ FanPage::FanPage(char *name) :  // Using here c'tor init line
 //destructor
 FanPage::~FanPage() {
    int i;
-   for (i = 0; i < NumOfFans; i++) {
+
+   /*for (i = 0; i < NumOfFans; i++) {
       delete Fans[i];
    }
-   delete [] Fans;
+   delete [] Fans; */
 
    for (i = 0; i < NumOfPosts; i++) {
        delete Posts[i];

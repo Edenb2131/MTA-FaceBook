@@ -34,10 +34,11 @@ Member::Member(const char* name, int day, int month, int year) :
 //destructor
 Member::~Member() {
     int i;
-    for (i = 0; i < NumOfFriends; i++) {
+    //This is not needed
+/*    for (i = 0; i < NumOfFriends; i++) {
         delete Friends[i];
     }
-    delete [] Friends;
+    delete [] Friends; 
 
     for (i = 0; i < NumOfPosts; i++) {
         delete Posts[i];
@@ -47,7 +48,12 @@ Member::~Member() {
     for (i = 0; i < NumOfFanPages; i++) {
         delete FanPages[i];
     }
-    delete FanPages;
+    delete FanPages; */
+
+    for (i = 0; i < NumOfPosts; i++) {
+        delete Posts[i];
+    }
+    delete[] Posts;
 
     delete [] Name;
 }

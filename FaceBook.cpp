@@ -54,6 +54,11 @@ void FaceBook::process() {
             }
             case 6: {
                 int memberIndex = findMember();
+                if (Members[memberIndex]->getNumOfFanPages() == 0) {
+                    cout << "You have no Liked pages !" << endl;
+                    break;
+                }
+
                 for (int i = 0; i < Members[memberIndex]->getNumOfFanPages(); i++){
                     Members[memberIndex]->getFanPages()[i]->printAllPosts();
                 }
@@ -127,8 +132,8 @@ int FaceBook::menu() const {
     cout << "Enter 2 to register to FaceBook as a fan page" << endl;
     cout << "Enter 3 to write a post as a member" << endl;
     cout << "Enter 4 to write a post as a fan page" << endl;
-    cout << "Enter 5 to see all posts of one of your friends" << endl;
-    cout << "Enter 6 to see all posts of fan pages you liked" << endl;
+    cout << "Enter 5 to see all posts of a member in Facebook" << endl;
+    cout << "Enter 6 to see all posts of a fan pages you liked" << endl;
     cout << "Enter 7 to see ten latest posts of your friends" << endl;
     cout << "Enter 8 to add a friend" << endl;
     cout << "Enter 9 to delete a friend" << endl;

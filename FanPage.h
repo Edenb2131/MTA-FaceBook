@@ -22,7 +22,7 @@ public:
 
     FanPage(const FanPage&) = delete;
 
-    //getters  :
+    //getters :
     char* getName() const;
     Member** getFans() const;
     int getNumOfFans() const;
@@ -40,7 +40,6 @@ public:
     void addPost();
     void addPost(const char* content);
     void printAllPosts() const;
-    ////void printFans() const; //// Need to implement
     void printFanPage() const;
     void addFan(Member* fanToAdd);
     void removeFan(Member* fanToRemove);

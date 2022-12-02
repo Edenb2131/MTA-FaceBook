@@ -260,11 +260,7 @@ void Member::addPost(const char* content) {
     NumOfPosts++;
 }
 
-void Member::printLatestPost() {
-    cout << Posts[NumOfPosts - 1]->getContent() << endl;
-}
-
-void Member::printFriends() {
+void Member::printFriends() const {
     if(NumOfFriends == 0){
         cout << "You have no friends ! " << endl;
     }
@@ -279,7 +275,7 @@ void Member::printFriends() {
     cout << endl;
 }
 
-void Member::printLikedPages() {
+void Member::printLikedPages() const {
     if (NumOfFanPages == 0) {
         cout << "You have no liked pages !" << endl;
     }
@@ -294,7 +290,7 @@ void Member::printLikedPages() {
     cout << endl;
 }
 
-void Member::printAllPosts() {
+void Member::printAllPosts() const {
     if(NumOfPosts == 0){
         cout << "You have no posts ! " << endl;
     }
@@ -308,7 +304,7 @@ void Member::printAllPosts() {
     cout << endl;
 }
 
-void Member::printMember() {
+void Member::printMember() const {
     cout << "Name: " << Name << endl;
     cout << "Birthday: " << Birthday.day << "/" << Birthday.month << "/" << Birthday.year << endl;
     printFriends();
@@ -316,7 +312,7 @@ void Member::printMember() {
     printLikedPages();
 }
 
-void Member::printTenLatestPosts() {
+void Member::printTenLatestPosts() const {
     cout << "These are your 10 latest posts: " << endl;
     if(NumOfPosts < 10){
         printAllPosts();
@@ -329,14 +325,14 @@ void Member::printTenLatestPosts() {
 }
 
 // Getting a friend's name and printing his 10 latest posts
-void Member::printFriendsTenLatestPosts(Member *friendToPrintLatestPosts){
+void Member::printFriendsTenLatestPosts(Member *friendToPrintLatestPosts) const{
     cout << "These are the latest posts of : '" << friendToPrintLatestPosts->getName() << "' "<< endl;
     friendToPrintLatestPosts->printTenLatestPosts();
     cout << endl;
 }
 
 // Printing all the posts of all the friends
-void Member::printTenLatestPostsOfFriends() {
+void Member::printTenLatestPostsOfFriends() const {
     cout << "These are your 10 latest posts of your friends: " << endl;
     if(NumOfFriends == 0){
         cout << "You have no friends ! " << endl;

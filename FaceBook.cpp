@@ -1,5 +1,7 @@
 
 #include "FaceBook.h"
+using namespace std;
+
 
 //constructor
 FaceBook::FaceBook() {
@@ -269,13 +271,13 @@ void FaceBook::printAllEntities() const {
     cout << "All entities are:" << endl;
 
     cout << "Members: " ;
-    for (int i = 0; i < NumOfMembersOverAll - 1; i++) {
+    for (int i = 0; i < getNumOfMembersOverAll() - 1; i++) {
         cout << Members[i]->getName() << ", ";
     }
     cout << Members[NumOfMembersOverAll - 1]->getName() << endl;
 
     cout << "Fan Pages: " ;
-    for (int i = 0; i < NumOfFanPagesOverAll - 1; i++){
+    for (int i = 0; i < getNumOfFanPagesOverAll() - 1; i++){
         cout << FanPages[i]->getName() << ", ";
     }
     cout << FanPages[NumOfFanPagesOverAll - 1]->getName() << endl;

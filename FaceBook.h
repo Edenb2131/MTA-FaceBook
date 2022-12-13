@@ -3,7 +3,6 @@
 #define MTA_FACEBOOK_FACEBOOK_H
 
 #include <iostream>
-using namespace std;
 #include <string>
 #include "Member.h"
 #include "FanPage.h"

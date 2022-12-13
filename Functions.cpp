@@ -1,5 +1,9 @@
 #include "Functions.h"
 #include "FaceBook.h"
+#include <string>
+
+using namespace std;
+
 #define LEN 100
 
 //Getting a string with unknown length from the user
@@ -41,6 +45,7 @@ Info getInfoFromUser() {
     return infoFromUser;
 }
 
+//
 void enterDataToStartWith(FaceBook& fb){
 Member** my_arr;
     //Member 1:

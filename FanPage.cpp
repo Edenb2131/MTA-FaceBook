@@ -15,7 +15,6 @@ FanPage::FanPage(char *name) :  // Using here c'tor init line
 }
 
 //destructor
-//destructor
 FanPage::~FanPage() {
   int i;
 

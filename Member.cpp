@@ -1,6 +1,8 @@
 
 #include "Member.h"
 #include "FanPage.h"
+#include <string>
+using namespace std;
 
 //constructor
 Member::Member(Info infoFromUser): // Using here c'tor init line
@@ -18,7 +20,7 @@ Member::Member(Info infoFromUser): // Using here c'tor init line
 //constructor
 Member::Member(const char* name, int day, int month, int year) :
     Name(strdup(name)),
-    Birthday(),
+    Birthday(day, month, year), //// ??????
     Friends(nullptr),
     NumOfFriends(0),
     Posts(nullptr),
@@ -33,25 +35,22 @@ Member::Member(const char* name, int day, int month, int year) :
 
 //destructor
 Member::~Member() {
-    int i;
-    for (i = 0; i < NumOfFriends; i++) {
-        delete Friends[i];
-    }
-    delete [] Friends;
+  int i;
 
-    for (i = 0; i < NumOfPosts; i++) {
-        delete Posts[i];
-    }
-    delete [] Posts;
+  for (i = 0; i < NumOfPosts; i++) {
+    delete Posts[i];
+  }
+  delete[] Posts;
 
-    for (i = 0; i < NumOfFanPages; i++) {
-        delete FanPages[i];
-    }
-    delete FanPages;
+  delete[] Friends; //No need to delete every one because thats happning in the FaceBook d'tor
 
-    delete [] Name;
+  delete[] FanPages;  //No need to delete every one because thats happning in the FaceBook d'tor
+
+  delete[] Name;
 }
 
+
+//getters :
 char *Member::getName() const {
     return Name;
 }
@@ -84,6 +83,8 @@ int Member::getNumOfFanPages() const {
     return NumOfFanPages;
 }
 
+// Setters :
+
 void Member::setNumOfFriends(int numOfFriends) {
     NumOfFriends = numOfFriends;
 }
@@ -95,6 +96,40 @@ void Member::setNumOfPosts(int numOfPosts) {
 void Member::setNumOfFanPages(int numOfFanPages) {
     NumOfFanPages = numOfFanPages;
 }
+
+
+//operators :
+
+void Member::operator+=(Member* friendToAdd) { // Add friend operator - required
+
+    this ->addFriend(friendToAdd, false); // false = need to be added to the other friend as well
+}
+
+void Member::operator-=(Member* friendToRemove) { // Remove friend operator - required
+
+    this ->removeFriend(friendToRemove);
+}
+
+bool Member::operator<(const Member& other) const { // Less than operator - required
+
+    return (this->NumOfFriends < other.NumOfFriends);
+}
+
+bool Member::operator>(const Member& other) const { // Greater than operator - required
+
+    return (this->NumOfFriends > other.NumOfFriends);
+}
+
+bool Member::operator<=(const Member &other) const {
+    return (this->NumOfFriends <= other.NumOfFriends);
+}
+
+bool Member::operator>=(const Member &other) const {
+    return (this->NumOfFriends >= other.NumOfFriends);
+}
+
+
+// Functions :
 
 void Member::addFriend(Member *friendToAdd, int neededToBeAdded) {
     int i;

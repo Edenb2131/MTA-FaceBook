@@ -17,6 +17,12 @@ public:
     Status(const char* content);
     ~Status();
 
+    // Operator overloading
+    bool operator==(const Status& other) const; // Equality operator - required
+    bool operator!=(const Status& other) const; // Inequality operator - required
+
+
+    //Functions :
     char* getContent() const;
     void setContent(char* content);
     void printStatus();

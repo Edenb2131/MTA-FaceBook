@@ -3,9 +3,9 @@
 #define MTA_FACEBOOK_MEMBER_H
 
 #include <iostream>
-using namespace std;
 #include "Status.h"
 #include "Functions.h"
+
 
 class FanPage; // Forward declaration
 class Status;  // Forward declaration
@@ -28,7 +28,8 @@ public:
     Member(const char* name, int day, int month, int year );
     ~Member();
 
-    Member(const Member&) = delete;
+    Member(const Member&) = delete; // copy constructor
+    Member(Member&&) = delete; // move constructor
 
     //getters :
     char* getName() const;
@@ -44,6 +45,19 @@ public:
     void setNumOfFriends(int numOfFriends);
     void setNumOfPosts(int numOfPosts);
     void setNumOfFanPages(int numOfFanPages);
+
+    //operators :
+    //Member& operator=(const Member& other); // Assignment operator
+    bool operator<(const Member& other) const; // Less than operator - required
+    bool operator>(const Member& other) const; // Greater than operator - required
+    bool operator<=(const Member& other) const;
+    bool operator>=(const Member& other) const;
+    void operator+=(Member* friendToAdd); // Add friend operator - required
+    void operator-=(Member* friendToRemove); // Remove friend operator - required
+
+    friend ostream& operator<<(ostream& os, const Member& member);
+    friend istream& operator>>(istream& is, Member& member);
+
 
     //functions :
     void addPost(); // Add a post to the member's posts

@@ -1,5 +1,8 @@
 #include "FanPage.h"
 #include "Member.h"
+#include <string>
+
+using namespace std;
 
 //constructor
 FanPage::FanPage(char *name) :  // Using here c'tor init line
@@ -12,20 +15,21 @@ FanPage::FanPage(char *name) :  // Using here c'tor init line
 }
 
 //destructor
+//destructor
 FanPage::~FanPage() {
-   int i;
-   for (i = 0; i < NumOfFans; i++) {
-      delete Fans[i];
-   }
-   delete [] Fans;
+  int i;
 
-   for (i = 0; i < NumOfPosts; i++) {
-       delete Posts[i];
-   }
-   delete [] Posts;
+  delete[] Fans;   //No need to delete every one because thats happning in the FaceBook d'tor
 
-   delete [] Name;
+  for (i = 0; i < NumOfPosts; i++) {
+    delete Posts[i];
+  }
+  delete[] Posts;
+
+  delete[] Name;
 }
+
+// Getters :
 
 char *FanPage::getName() const {
     return Name;
@@ -47,6 +51,8 @@ int FanPage::getNumOfPosts() const {
     return NumOfPosts;
 }
 
+// Setters :
+
 void FanPage::setName( char *name) {
     Name = name;
 }
@@ -66,6 +72,42 @@ void FanPage::setPosts(Status **posts) {
 void FanPage::setNumOfPosts(int numOfPosts) {
     NumOfPosts = numOfPosts;
 }
+
+
+// Operators :
+
+void FanPage::operator+=(Member* fanToAdd) { // Add fan operator - required
+
+  this ->addFan(fanToAdd);
+}
+
+void FanPage::operator-=(Member* fanToRemove){ // Remove fan operator - required
+
+  this -> removeFan(fanToRemove);
+}
+
+bool FanPage::operator>(const FanPage& other) const{ // Greater than operator - required
+
+  return (this-> getNumOfFans() > other.getNumOfFans());
+}
+
+bool FanPage::operator<(const FanPage& other) const{ // Less than operator - required
+
+  return (this-> getNumOfFans() < other.getNumOfFans());
+}
+
+bool FanPage::operator>=(const FanPage& other) const{
+
+  return (this-> getNumOfFans() >= other.getNumOfFans());
+}
+
+bool FanPage::operator<=(const FanPage& other) const{
+
+  return (this-> getNumOfFans() <= other.getNumOfFans());
+}
+
+
+// Functions :
 
 void FanPage::addPost() {
     getchar();
@@ -114,7 +156,6 @@ void FanPage::printAllPosts() const {
     }
     cout << endl;
 }
-
 
 void FanPage::printFanPage() const {
     cout << "FanPage name is: " << Name << endl;
@@ -182,5 +223,13 @@ void FanPage::removeFan(Member* fanToRemove) {
     fanToRemove->unlikeFanPage(this);
 }
 
+void FanPage::printFans() const {
 
+    cout << "Fans of page " << "'" << Name << "'" << " are:" << endl;
+    for (int i = 0; i < NumOfFans; i++){
+        cout <<" "<< i+1 << ". " ;
+        Fans[i]->printMember();
+    }
+    cout << endl;
+}
 

@@ -2,7 +2,6 @@
 #define MTA_FACEBOOK_FANPAGE_H
 
 #include <iostream>
-using namespace std;
 #include <string>
 #include "Status.h"
 
@@ -36,11 +35,20 @@ public:
     void setPosts(Status **posts);
     void setNumOfPosts(int numOfPosts);
 
+    //operators :
+    void operator+=(Member* fanToAdd); // Add fan operator - required
+    void operator-=(Member* fanToRemove); // Remove fan operator - required
+    bool operator>(const FanPage& other) const; // Greater than operator - required
+    bool operator<(const FanPage& other) const; // Less than operator - required
+    bool operator>=(const FanPage& other) const;
+    bool operator<=(const FanPage& other) const;
+
+
     //functions :
     void addPost();
     void addPost(const char* content);
     void printAllPosts() const;
-    ////void printFans() const; //// Need to implement
+    void printFans() const;
     void printFanPage() const;
     void addFan(Member* fanToAdd);
     void removeFan(Member* fanToRemove);

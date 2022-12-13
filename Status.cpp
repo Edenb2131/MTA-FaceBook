@@ -1,5 +1,6 @@
 
 #include "Status.h"
+using namespace std;
 
 //constructor
 Status::Status() {
@@ -20,6 +21,19 @@ Status::Status(const char* content) : Content(strdup(content))
 Status::~Status() {
     delete [] Content;
 }
+
+// Operator overloading
+// Operator ==
+bool Status::operator==(const Status &other) const {
+    return (strcmp(Content, other.Content) == 0);
+}
+
+// Operator !=
+bool Status::operator!=(const Status &other) const {
+    return (strcmp(Content, other.Content) != 0);
+}
+
+
 
 char *Status::getContent() const {
     return Content;

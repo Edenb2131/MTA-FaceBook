@@ -3,14 +3,17 @@
 #define MTA_FACEBOOK_FUNCTIONS_H
 
 #include <iostream>
-using namespace std;
 #include <string>
+
 class FaceBook;
 
 struct Date{
     int day;
     int month;
     int year;
+
+    Date() = default;
+    Date(int day, int month, int year){ this->day = day; this->month = month; this->year = year; }
 };
 
 struct Info{

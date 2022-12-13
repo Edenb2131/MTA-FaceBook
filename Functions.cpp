@@ -1,5 +1,9 @@
 #include "Functions.h"
 #include "FaceBook.h"
+#include <string>
+
+using namespace std;
+
 #define LEN 100
 
 // Checking allocation
@@ -49,6 +53,7 @@ Info getInfoFromUser() {
     return infoFromUser;
 }
 
+//
 void enterDataToStartWith(FaceBook& fb){
 
     //Member 1:

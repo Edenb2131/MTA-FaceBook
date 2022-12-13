@@ -62,18 +62,17 @@ public:
     //functions :
     void addPost(); // Add a post to the member's posts
     void addPost(const char* content); // Add a post to the member's posts
-    void printAllPosts(); // Print all the posts of the member
-    void printFriends(); // Print all the friends of the member
-    void printLikedPages(); // Print all the liked pages of the member
-    void printMember(); // Print all the member's info
+    void printAllPosts() const; // Print all the posts of the member
+    void printFriends() const; // Print all the friends of the member
+    void printLikedPages() const; // Print all the liked pages of the member
+    void printMember() const; // Print all the member's info
     void addFriend(Member *friendToAdd, int neededToBeAdded = false); // Add a friend to the member's friends
     void removeFriend(Member *friendToRemove); // Remove a friend from the member's friends
     void likeFanPage(FanPage *fanPageToLike); // Like a fan page
     void unlikeFanPage(FanPage *fanPageToUnlike); // Unlike a fan page
-    void printLatestPost(); // Print the latest post of the member
-    void printTenLatestPosts(); // Print the ten latest posts of the member
-    void printFriendsTenLatestPosts(Member *friendToPrintLatestPosts); // Print the latest 10 posts of a friend
-    void printTenLatestPostsOfFriends(); // Print the latest 10 posts of all the member's friends
+    void printTenLatestPosts() const; // Print the ten latest posts of the member
+    void printFriendsTenLatestPosts(Member *friendToPrintLatestPosts) const; // Print the latest 10 posts of a friend
+    void printTenLatestPostsOfFriends() const; // Print the latest 10 posts of all the member's friends
 };
 
 #endif //MTA_FACEBOOK_MEMBER_H

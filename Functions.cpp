@@ -6,14 +6,6 @@ using namespace std;
 
 #define LEN 100
 
-// Checking allocation
-void checkMemoryAllocation(void* ptr) {
-    if (ptr == nullptr) {
-        cout << "Memory allocation failed!" << endl;
-        exit(1);
-    }
-}
-
 //Getting a string with unknown length from the user
 char* getDynamicString() {
     char *str = new char[LEN];
@@ -55,7 +47,7 @@ Info getInfoFromUser() {
 
 //
 void enterDataToStartWith(FaceBook& fb){
-
+Member** my_arr;
     //Member 1:
     fb.addNewMember("Eden Bar" , 22 ,8 , 1997);
     fb.getMembers()[0]->addPost("I like ICE-CREAM !");

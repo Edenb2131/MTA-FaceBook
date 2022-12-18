@@ -295,7 +295,11 @@ void Member::addPost(const char* content) {
     NumOfPosts++;
 }
 
-void Member::printFriends() const {
+void Member::printLatestPost() {
+    cout << Posts[NumOfPosts - 1]->getContent() << endl;
+}
+
+void Member::printFriends() {
     if(NumOfFriends == 0){
         cout << "You have no friends ! " << endl;
     }
@@ -310,7 +314,7 @@ void Member::printFriends() const {
     cout << endl;
 }
 
-void Member::printLikedPages() const {
+void Member::printLikedPages() {
     if (NumOfFanPages == 0) {
         cout << "You have no liked pages !" << endl;
     }
@@ -325,7 +329,7 @@ void Member::printLikedPages() const {
     cout << endl;
 }
 
-void Member::printAllPosts() const {
+void Member::printAllPosts() {
     if(NumOfPosts == 0){
         cout << "You have no posts ! " << endl;
     }
@@ -339,7 +343,7 @@ void Member::printAllPosts() const {
     cout << endl;
 }
 
-void Member::printMember() const {
+void Member::printMember() {
     cout << "Name: " << Name << endl;
     cout << "Birthday: " << Birthday.day << "/" << Birthday.month << "/" << Birthday.year << endl;
     printFriends();
@@ -347,7 +351,7 @@ void Member::printMember() const {
     printLikedPages();
 }
 
-void Member::printTenLatestPosts() const {
+void Member::printTenLatestPosts() {
     cout << "These are your 10 latest posts: " << endl;
     if(NumOfPosts < 10){
         printAllPosts();
@@ -360,14 +364,14 @@ void Member::printTenLatestPosts() const {
 }
 
 // Getting a friend's name and printing his 10 latest posts
-void Member::printFriendsTenLatestPosts(Member *friendToPrintLatestPosts) const{
+void Member::printFriendsTenLatestPosts(Member *friendToPrintLatestPosts){
     cout << "These are the latest posts of : '" << friendToPrintLatestPosts->getName() << "' "<< endl;
     friendToPrintLatestPosts->printTenLatestPosts();
     cout << endl;
 }
 
 // Printing all the posts of all the friends
-void Member::printTenLatestPostsOfFriends() const {
+void Member::printTenLatestPostsOfFriends() {
     cout << "These are your 10 latest posts of your friends: " << endl;
     if(NumOfFriends == 0){
         cout << "You have no friends ! " << endl;

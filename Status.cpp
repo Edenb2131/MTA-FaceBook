@@ -1,49 +1,40 @@
-
 #include "Status.h"
 using namespace std;
 
 //constructor
 Status::Status() {
     cout << "Enter your status: " << endl;
-    Content = new char[100];
-    cin.getline(Content, 100);
+    getline(cin, Content);
     pTime = time(nullptr);
     cout << endl;
 }
 
 //constructor
-Status::Status(const char* content) : Content(strdup(content))
+Status::Status(const string content) : Content(content)
 {
     pTime = time(nullptr);
-}
-
-//destructor
-Status::~Status() {
-    delete [] Content;
 }
 
 // Operator overloading
 // Operator ==
 bool Status::operator==(const Status &other) const {
-    return (strcmp(Content, other.Content) == 0);
+    return (Content == other.Content);
 }
 
 // Operator !=
 bool Status::operator!=(const Status &other) const {
-    return (strcmp(Content, other.Content) != 0);
+    return (Content != other.Content);
 }
 
-
-
-char *Status::getContent() const {
+string Status::getContent() const {
     return Content;
 }
 
-void Status::setContent(char *content) {
+void Status::setContent(string content) {
     Content = content;
 }
 
-char* Status::getTimePostPosted(){
+string Status::getTimePostPosted(){
     return ctime(&pTime);
 }
 

@@ -4,41 +4,33 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Member.h"
 #include "FanPage.h"
 
 class FaceBook {
-
-    Member **Members;
-    int NumOfMembersOverAll;
-    FanPage **FanPages;
-    int NumOfFanPagesOverAll;
+    std::vector<Member> Members;
+    std::vector<FanPage> FanPages;
 
 public:
 
     //constructor and destructor
-    FaceBook();
-    ~FaceBook();
+    FaceBook() = default;
+    ~FaceBook() = default;
 
     FaceBook(const FaceBook&) = delete;
 
     //getters :
-    Member** getMembers() const;
-    int getNumOfMembersOverAll() const;
-    FanPage** getFanPages() const;
-    int getNumOfFanPagesOverAll() const;
-
-    //setters :
-    void setNumOfMembersOverAll(int NumOfMembersOverAll);
-    void setNumOfFanPagesOverAll(int NumOfFanPagesOverAll);
+    std::vector<Member>& getMembers();
+    std::vector<FanPage>& getFanPages();
 
     //functions :
     int menu() const; // return the choice of the user
     void process(); // process the choice of the user
     void addNewMember(); // add new member to the facebook
-    void addNewMember(const char* name, int day, int month, int year ); // add new member to the facebook
+    void addNewMember(std::string name, int day, int month, int year ); // add new member to the facebook
     void addNewPage(); // add new page to the facebook
-    void addNewPage(const char* name); // add new page to the facebook
+    void addNewPage(std::string name); // add new page to the facebook
     void printAllMembers() const; // print all the members in the facebook
     void printAllFanPages() const; // print all the fan pages in the facebook
     void printAllEntitiesAndTheirData() const; // print all the members and fan pages in the facebook

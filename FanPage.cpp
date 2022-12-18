@@ -1,53 +1,24 @@
 #include "FanPage.h"
 #include "Member.h"
 #include <string>
-
 using namespace std;
 
 //constructor
-FanPage::FanPage(char *name) :  // Using here c'tor init line
-    Name(strdup(name))
-{
-    Fans = nullptr;
-    NumOfFans = 0,
-    Posts = nullptr,
-    NumOfPosts = 0;
-}
-
-//destructor
-FanPage::~FanPage() {
-  int i;
-
-  delete[] Fans;   //No need to delete every one because thats happning in the FaceBook d'tor
-
-  for (i = 0; i < NumOfPosts; i++) {
-    delete Posts[i];
-  }
-  delete[] Posts;
-
-  delete[] Name;
-}
+FanPage::FanPage(string name) :  // Using here c'tor init line
+    Name(name) {}
 
 // Getters :
 
-char *FanPage::getName() const {
+string FanPage::getName() const {
     return Name;
 }
 
-Member **FanPage::getFans() const {
+vector<Member*> FanPage::getFans() const {
     return Fans;
 }
 
-int FanPage::getNumOfFans() const {
-    return NumOfFans;
-}
-
-Status** FanPage::getPosts() const {
+vector<Status*> FanPage::getPosts() const {
     return Posts;
-}
-
-int FanPage::getNumOfPosts() const {
-    return NumOfPosts;
 }
 
 // Setters :
@@ -56,22 +27,13 @@ void FanPage::setName( char *name) {
     Name = name;
 }
 
-void FanPage::setFans(Member **fans) {
+void FanPage::setFans(vector<Member*> fans) {
     Fans = fans;
 }
 
-void FanPage::setNumOfFans(int numOfFans){
-    NumOfFans = numOfFans;
-}
-
-void FanPage::setPosts(Status **posts) {
+void FanPage::setPosts(vector<Status*> posts) {
     Posts = posts;
 }
-
-void FanPage::setNumOfPosts(int numOfPosts) {
-    NumOfPosts = numOfPosts;
-}
-
 
 // Operators :
 
@@ -87,22 +49,22 @@ void FanPage::operator-=(Member* fanToRemove){ // Remove fan operator - required
 
 bool FanPage::operator>(const FanPage& other) const{ // Greater than operator - required
 
-  return (this-> getNumOfFans() > other.getNumOfFans());
+  return (this-> Fans.size() > other.Fans.size());
 }
 
 bool FanPage::operator<(const FanPage& other) const{ // Less than operator - required
 
-  return (this-> getNumOfFans() < other.getNumOfFans());
+    return (this-> Fans.size() < other.Fans.size());
 }
 
 bool FanPage::operator>=(const FanPage& other) const{
 
-  return (this-> getNumOfFans() >= other.getNumOfFans());
+    return (this-> Fans.size() >= other.Fans.size());
 }
 
 bool FanPage::operator<=(const FanPage& other) const{
 
-  return (this-> getNumOfFans() <= other.getNumOfFans());
+    return (this-> Fans.size() <= other.Fans.size());
 }
 
 
@@ -111,45 +73,18 @@ bool FanPage::operator<=(const FanPage& other) const{
 void FanPage::addPost() {
     getchar();
     Status* newPost = new Status;
-
-    if (NumOfPosts) {
-        Status** newPosts = new Status*[NumOfPosts + 1];
-        for (int i = 0; i < NumOfPosts; i++) {
-            newPosts[i] = Posts[i];
-        }
-        newPosts[NumOfPosts] = newPost;
-        delete [] Posts;
-        Posts = newPosts;
-    }
-    else {
-        Posts = new Status*;
-        Posts[0] = newPost;
-    }
-    NumOfPosts++;
+    Posts.push_back(newPost);
 }
 
-void FanPage::addPost(const char* content) {
+void FanPage::addPost(string content) {
     Status* newPost = new Status(content);
-
-    if (NumOfPosts) {
-        Status** newPosts = new Status*[NumOfPosts + 1];
-        for (int i = 0; i < NumOfPosts; i++) {
-            newPosts[i] = Posts[i];
-        }
-        newPosts[NumOfPosts] = newPost;
-        delete [] Posts;
-        Posts = newPosts;
-    }
-    else {
-        Posts = new Status*;
-        Posts[0] = newPost;
-    }
-    NumOfPosts++;
+    Posts.push_back(newPost);
 }
 
 void FanPage::printAllPosts() const {
+    int size = Posts.size();
     cout << "Posts for page " << "'" << Name << "'" << " are:" << endl;
-    for (int i = 0; i < NumOfPosts; i++){
+    for (int i = 0; i < size; i++){
         cout <<" "<< i+1 << ". " ;
         Posts[i]->printStatus();
     }
@@ -157,32 +92,26 @@ void FanPage::printAllPosts() const {
 }
 
 void FanPage::printFanPage() const {
+    int numOfPosts = Posts.size();
+    int numOfFans = Fans.size();
     cout << "FanPage name is: " << Name << endl;
-    cout << "Number of fans: " << NumOfFans << endl;
-    cout << "Number of posts: " << NumOfPosts << endl;
+    cout << "Number of fans: " << numOfFans << endl;
+    cout << "Number of posts: " << numOfPosts << endl;
     cout << endl;
 }
 
 void FanPage::addFan(Member* fanToAdd) {
     int i;
+    int numOfFans = Fans.size();
 
     // Checking to see if needed to add that friend or not
-    for (i = 0; i < NumOfFans; i++) {
-        if (strcmp(Fans[i]->getName(), fanToAdd->getName()) == 0) {
+    for (i = 0; i < numOfFans; i++) {
+        if (Fans[i]->getName() == fanToAdd->getName()) {
             cout << "Already likes that fan page!" << endl;
             return;
         }
     }
-
-    Member** temp = new Member * [NumOfFans + 1];
-    for (i = 0; i < NumOfFans; i++) {
-        temp[i] = Fans[i];
-    }
-
-    temp[NumOfFans] = fanToAdd;
-    delete [] Fans;
-    Fans = temp;
-    NumOfFans++;
+    Fans.push_back(fanToAdd);
 
     // Need to add the page to the member's likes pages list as well
     fanToAdd->likeFanPage(this);
@@ -191,9 +120,10 @@ void FanPage::addFan(Member* fanToAdd) {
 void FanPage::removeFan(Member* fanToRemove) {
     int fansIndex;
     bool found = false;
+    int numOfFans = Fans.size();
 
-    for (fansIndex = 0; fansIndex < NumOfFans; fansIndex++) {
-        if (strcmp(Fans[fansIndex]->getName(), fanToRemove->getName()) != 0) {
+    for (fansIndex = 0; fansIndex < numOfFans; fansIndex++) {
+        if (Fans[fansIndex]->getName() != fanToRemove->getName()) {
             found = false;
         }
         else {
@@ -205,27 +135,16 @@ void FanPage::removeFan(Member* fanToRemove) {
     if (!found)
         return;
 
-    Member** temp = new Member * [NumOfFans - 1];
-    int tempIndex = 0;
-    for (fansIndex = 0; fansIndex < NumOfFans; fansIndex++) {
-        if (strcmp(Fans[fansIndex]->getName(), fanToRemove->getName()) != 0) {
-            temp[tempIndex] = Fans[fansIndex];
-            tempIndex++;
-        }
-    }
-
-    delete [] Fans;
-    Fans = temp;
-    NumOfFans--;
+    Fans.erase(Fans.begin() + fansIndex);
 
     //// Need to remove the page from the member's likes pages list as well ////
     fanToRemove->unlikeFanPage(this);
 }
 
 void FanPage::printFans() const {
-
+    int numOfFans = Fans.size();
     cout << "Fans of page " << "'" << Name << "'" << " are:" << endl;
-    for (int i = 0; i < NumOfFans; i++){
+    for (int i = 0; i < numOfFans; i++){
         cout <<" "<< i+1 << ". " ;
         Fans[i]->printMember();
     }

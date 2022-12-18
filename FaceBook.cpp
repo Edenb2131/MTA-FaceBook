@@ -1,29 +1,5 @@
-
 #include "FaceBook.h"
 using namespace std;
-
-
-//constructor
-FaceBook::FaceBook() {
-    Members = nullptr;
-    NumOfMembersOverAll = 0;
-    FanPages = nullptr;
-    NumOfFanPagesOverAll = 0;
-}
-
-//destructor
-FaceBook::~FaceBook() {
-    int i;
-    for (i = 0; i < NumOfMembersOverAll; i++) {
-        delete Members[i];
-    }
-    delete [] Members;
-
-    for (i = 0; i <NumOfFanPagesOverAll; i++) {
-        delete FanPages[i];
-    }
-    delete [] FanPages;
-}
 
 void FaceBook::process() {
     bool finish = false;
@@ -41,34 +17,34 @@ void FaceBook::process() {
             }
             case 3: {
                 int memberIndex = findMember();
-                Members[memberIndex]->addPost();
+                Members[memberIndex].addPost();
                 break;
             }
             case 4: {
                 int fanPageIndex = findFanPage();
-                FanPages[fanPageIndex]->addPost();
+                FanPages[fanPageIndex].addPost();
                 break;
             }
             case 5: {
                 int memberIndex = findMember();
-                Members[memberIndex]->printAllPosts();
+                Members[memberIndex].printAllPosts();
                 break;
             }
             case 6: {
                 int memberIndex = findMember();
-                if (Members[memberIndex]->getNumOfFanPages() == 0) {
+                if (Members[memberIndex].getFanPages().size() == 0) {
                     cout << "You have no Liked pages !" << endl;
                     break;
                 }
 
-                for (int i = 0; i < Members[memberIndex]->getNumOfFanPages(); i++){
-                    Members[memberIndex]->getFanPages()[i]->printAllPosts();
+                for (int i = 0; i < Members[memberIndex].getFanPages().size(); i++){
+                    Members[memberIndex].getFanPages()[i]->printAllPosts();
                 }
                 break;
             }
             case 7: {
                 int memberIndex = findMember();
-                Members[memberIndex]->printTenLatestPostsOfFriends();
+                Members[memberIndex].printTenLatestPostsOfFriends();
                 break;
             }
             case 8: {
@@ -84,7 +60,7 @@ void FaceBook::process() {
                 cout << "Please choose the first member: " << endl;
                 int firstMemberIndex = findMember();
                 cout << "Please choose the second member: " << endl;
-                int secondMemberIndex = findMemberByMember(*(Members[firstMemberIndex]));
+                int secondMemberIndex = findMemberByMember(Members[firstMemberIndex]);
                 disconnectTwoMembers(firstMemberIndex, secondMemberIndex);
                 break;
             }
@@ -96,7 +72,7 @@ void FaceBook::process() {
             }
             case 11: {
                 int memberIndex = findMember();
-                int fanPageIndex = findFanPageByMember(*(Members[memberIndex]));
+                int fanPageIndex = findFanPageByMember(Members[memberIndex]);
                 disconnectMemberAndFanPage(memberIndex, fanPageIndex);
                 break;
             }
@@ -107,12 +83,12 @@ void FaceBook::process() {
             }
             case 13: {
                 int memberIndex = findMember();
-                Members[memberIndex]->printFriends();
+                Members[memberIndex].printFriends();
                 break;
             }
             case 14: {
                 int memberIndex = findMember();
-                Members[memberIndex]->printLikedPages();
+                Members[memberIndex].printLikedPages();
                 break;
             }
             case 15: {
@@ -150,120 +126,51 @@ int FaceBook::menu() const {
     return choice;
 }
 
-Member **FaceBook::getMembers() const {
+ vector<Member>& FaceBook::getMembers() {
     return Members;
 }
 
-int FaceBook::getNumOfMembersOverAll() const {
-    return NumOfMembersOverAll;
-}
-
-FanPage **FaceBook::getFanPages() const {
+vector<FanPage>& FaceBook::getFanPages() {
     return FanPages;
-}
-
-int FaceBook::getNumOfFanPagesOverAll() const {
-    return NumOfFanPagesOverAll;
-}
-
-void FaceBook::setNumOfMembersOverAll(int numOfMembersOverAll) {
-    NumOfMembersOverAll = numOfMembersOverAll;
-}
-
-void FaceBook::setNumOfFanPagesOverAll(int numOfFanPagesOverAll) {
-    NumOfFanPagesOverAll = numOfFanPagesOverAll;
 }
 
 void FaceBook::addNewMember() {
     Info infoFromUser = getInfoFromUser();
-    Member* newMember = new Member(infoFromUser);
-
-    if (NumOfMembersOverAll > 0){
-        Member** newMembers = new Member*[NumOfMembersOverAll + 1];
-        for (int i = 0; i < NumOfMembersOverAll; i++){
-            newMembers[i] = Members[i];
-        }
-        newMembers[NumOfMembersOverAll] = newMember;
-        delete [] Members;
-        Members = newMembers;
-    }
-    else {
-        Members = new Member*;
-        Members[0] = newMember;
-    }
-    NumOfMembersOverAll++;
+    Member newMember(infoFromUser);
+    Members.push_back(newMember);
 }
 
-void FaceBook::addNewMember(const char* name, int day, int month, int year ) {
+void FaceBook::addNewMember(string name, int day, int month, int year ) {
 
-    Member* newMember = new Member(name, day, month, year);
-    if (NumOfMembersOverAll){
-        Member** newMembers = new Member*[NumOfMembersOverAll + 1];
-        for (int i = 0; i < NumOfMembersOverAll; i++){
-            newMembers[i] = Members[i];
-        }
-        newMembers[NumOfMembersOverAll] = newMember;
-        delete [] Members;
-        Members = newMembers;
-    }
-    else {
-        Members = new Member*;
-        Members[0] = newMember;
-    }
-    NumOfMembersOverAll++;
-
+    Member newMember(name, day, month, year);
+    Members.push_back(newMember);
 }
 
 void FaceBook::addNewPage(){
     cin.ignore();
+    string name;
     cout << "Please enter page's name:" << endl;
-    char* name = getDynamicString();
-    FanPage* newPage = new FanPage(name);
-
-    if (NumOfFanPagesOverAll){
-        FanPage** newPages = new FanPage*[NumOfFanPagesOverAll + 1];
-        for (int i = 0; i <NumOfFanPagesOverAll; i++){
-            newPages[i] = FanPages[i];
-        }
-        newPages[NumOfFanPagesOverAll] = newPage;
-        delete [] FanPages;
-        FanPages = newPages;
-    }
-    else {
-        FanPages = new FanPage*;
-        FanPages[0] = newPage;
-    }
-    NumOfFanPagesOverAll++;
+    getline(cin, name);
+    FanPage newPage(name);
+    FanPages.push_back(newPage);
 }
 
-void FaceBook::addNewPage(const char* name){
-    FanPage* newPage = new FanPage((char*)name);
-
-    if (NumOfFanPagesOverAll){
-        FanPage** newPages = new FanPage*[NumOfFanPagesOverAll + 1];
-        for (int i = 0; i <NumOfFanPagesOverAll; i++){
-            newPages[i] = FanPages[i];
-        }
-        newPages[NumOfFanPagesOverAll] = newPage;
-        delete [] FanPages;
-        FanPages = newPages;
-    }
-    else {
-        FanPages = new FanPage*;
-        FanPages[0] = newPage;
-    }
-    NumOfFanPagesOverAll++;
+void FaceBook::addNewPage(string name){
+    FanPage newPage(name);
+    FanPages.push_back(newPage);
 }
 
 void FaceBook::printAllMembers() const {
-    for (int i = 0; i < NumOfMembersOverAll; i++){
-        Members[i]->printMember();
+    int size = Members.size();
+    for (int i = 0; i < size; i++){
+        Members[i].printMember();
     }
 }
 
 void FaceBook::printAllFanPages() const {
-    for (int i = 0; i < NumOfFanPagesOverAll; i++){
-        FanPages[i]->printFanPage();
+    int size = FanPages.size();
+    for (int i = 0; i < size; i++){
+        FanPages[i].printFanPage();
     }
 }
 
@@ -273,38 +180,41 @@ void FaceBook::printAllEntitiesAndTheirData() const {
 }
 
 void FaceBook::printAllEntities() const {
+    int numOfMembersOverAll = Members.size();
+    int numOfFanPagesOverAll = FanPages.size();
     cout << "All entities are:" << endl;
 
     cout << "Members: " ;
-    for (int i = 0; i < getNumOfMembersOverAll() - 1; i++) {
-        cout << Members[i]->getName() << ", ";
+    for (int i = 0; i < numOfMembersOverAll - 1; i++) {
+        cout << Members[i].getName() << ", ";
     }
-    cout << Members[NumOfMembersOverAll - 1]->getName() << endl;
+    cout << Members[numOfMembersOverAll - 1].getName() << endl;
 
     cout << "Fan Pages: " ;
-    for (int i = 0; i < getNumOfFanPagesOverAll() - 1; i++){
-        cout << FanPages[i]->getName() << ", ";
+    for (int i = 0; i < numOfFanPagesOverAll - 1; i++){
+        cout << FanPages[i].getName() << ", ";
     }
-    cout << FanPages[NumOfFanPagesOverAll - 1]->getName() << endl;
+    cout << FanPages[numOfFanPagesOverAll - 1].getName() << endl;
 
     cout << endl;
 }
 
 int FaceBook::findMember() const {
     int index = -1;
+    int numOfMembersOverAll = Members.size();
 
-    if (NumOfMembersOverAll == 0) {
+    if (numOfMembersOverAll == 0) {
         cout << "There are no members using FaceBook!" << endl;
         return index;
     }
 
     cout << "Please choose a member from the list below:" << endl;
-    while (index < 0 || index > NumOfMembersOverAll) {
-        for (int i = 0; i < NumOfMembersOverAll; i++) {
-            cout << "Enter " << i + 1 << " for " << Members[i]->getName() << endl;
+    while (index < 0 || index > numOfMembersOverAll) {
+        for (int i = 0; i < numOfMembersOverAll; i++) {
+            cout << "Enter " << i + 1 << " for " << Members[i].getName() << endl;
         }
         cin >> index;
-        if(index < 0 || index > NumOfMembersOverAll)
+        if(index < 0 || index > numOfMembersOverAll)
             cout << "Invalid input. Enter again." << endl;
     }
     return index - 1;
@@ -312,18 +222,19 @@ int FaceBook::findMember() const {
 
 int FaceBook::findMemberByMember(const Member& member) const{
     int index = -1;
-    if (member.getNumOfFriends() == 0){
+    int numOfFriends = member.getFriends().size();
+    if (numOfFriends == 0){
         cout << "This member has no friends." << endl;
         return index;
     }
 
     cout << "Please choose a member from the list below:" << endl;
-    while(index < 0 || index > member.getNumOfFriends()) {
-        for (int i = 0; i < member.getNumOfFriends(); i++) {
+    while(index < 0 || index > numOfFriends) {
+        for (int i = 0; i < numOfFriends; i++) {
             cout << "Enter " << i + 1 << " for " << member.getFriends()[i]->getName() << endl;
         }
         cin >> index;
-        if(index < 0 || index > member.getNumOfFriends())
+        if(index < 0 || index > numOfFriends)
             cout << "Invalid input. Enter again." << endl;
     }
     return index - 1;
@@ -331,18 +242,19 @@ int FaceBook::findMemberByMember(const Member& member) const{
 
 int FaceBook::findFanPage() const {
     int index = -1;
+    int numOfFanPagesOverAll = FanPages.size();
 
-    if (NumOfFanPagesOverAll == 0) {
+    if (numOfFanPagesOverAll == 0) {
         cout << "There are no fan pages in facebook!" << endl;
         return index;
     }
     cout << "Please choose a fan page from the list below:" << endl;
-    while(index < 0 || index > NumOfFanPagesOverAll) {
-        for (int i = 0; i < NumOfFanPagesOverAll; i++) {
-            cout << "Enter " << i + 1 << " for " << FanPages[i]->getName() << endl;
+    while(index < 0 || index > numOfFanPagesOverAll) {
+        for (int i = 0; i < numOfFanPagesOverAll; i++) {
+            cout << "Enter " << i + 1 << " for " << FanPages[i].getName() << endl;
         }
         cin >> index;
-        if(index < 0 || index > NumOfFanPagesOverAll)
+        if(index < 0 || index > numOfFanPagesOverAll)
             cout << "Invalid input. Enter again." << endl;
     }
     return index - 1;
@@ -350,19 +262,19 @@ int FaceBook::findFanPage() const {
 
 int FaceBook::findFanPageByMember(const Member& member) const {
     int index = -1;
-
-    if(member.getNumOfFanPages() == 0){
+    int numOfFanPages = member.getFanPages().size();
+    if(numOfFanPages == 0){
         cout << "This member has no liked fan pages." << endl;
         return index;
     }
 
     cout << "Please choose a fan page from the list below:" << endl;
-    while(index < 0 || index > member.getNumOfFanPages()) {
-        for (int i = 0; i < member.getNumOfFanPages(); i++) {
+    while(index < 0 || index > numOfFanPages) {
+        for (int i = 0; i < numOfFanPages; i++) {
             cout << "Enter " << i + 1 << " for " << member.getFanPages()[i]->getName() << endl;
         }
         cin >> index;
-        if(index < 0 || index > member.getNumOfFanPages())
+        if(index < 0 || index > numOfFanPages)
             cout << "Invalid input. Enter again." << endl;
     }
     return index - 1;
@@ -375,53 +287,54 @@ void FaceBook::connectTwoMembers(int firstMemberIndex, int secondMemberIndex) {
         return;
     }
 
-    for (int i = 0; i < Members[firstMemberIndex]->getNumOfFriends(); i++) {
-        char* friend1Name = Members[firstMemberIndex]->getFriends()[i]->getName();
-        char* friend2Name = Members[secondMemberIndex]->getName();
-        if (strcmp (friend1Name, friend2Name) == 0) {
+    for (int i = 0; i < Members[firstMemberIndex].getFriends().size(); i++) {
+        string friend1Name = Members[firstMemberIndex].getFriends()[i]->getName();
+        string friend2Name = Members[secondMemberIndex].getName();
+        if (friend1Name == friend2Name) {
             cout << "Friends are already connected!" << endl;
             return;
         }
     }
 
-    Members[firstMemberIndex]->addFriend(Members[secondMemberIndex]);
+    Members[firstMemberIndex].addFriend(&Members[secondMemberIndex]);
     cout << "Friends connected successfully!" << endl;
 }
 
 void FaceBook::disconnectTwoMembers(int firstMemberIndex, int secondMemberIndex) {
 
-    if(Members[firstMemberIndex]->getNumOfFriends() == 0){
+    if(Members[firstMemberIndex].getFriends().size() == 0){
         return;
     }
-    Members[firstMemberIndex]->removeFriend(Members[firstMemberIndex]->getFriends()[secondMemberIndex]);
+    Members[firstMemberIndex].removeFriend(Members[firstMemberIndex].getFriends()[secondMemberIndex]);
     cout << "Friends disconnected successfully!" << endl;
 }
 
 void FaceBook::connectMemberAndFanPage(int memberIndex, int fanPageIndex) {
-    for (int i = 0; i < Members[memberIndex]->getNumOfFanPages(); i++) {
-        char* page1Name = Members[memberIndex]->getFanPages()[i]->getName();
-        char* page2Name = FanPages[fanPageIndex]->getName();
-        if (strcmp(page1Name, page2Name) == 0) {
+    for (int i = 0; i < Members[memberIndex].getFriends().size(); i++) {
+        string page1Name = Members[memberIndex].getFanPages()[i]->getName();
+        string page2Name = FanPages[fanPageIndex].getName();
+        if (page1Name == page2Name) {
             cout << "This member already likes this page!" << endl;
             return;
         }
     }
-    Members[memberIndex]->likeFanPage(FanPages[fanPageIndex]);
+    Members[memberIndex].likeFanPage(&FanPages[fanPageIndex]);
     cout << "Page liked successfully!" << endl;
 }
 
 void FaceBook::disconnectMemberAndFanPage(int memberIndex, int fanPageIndex) {
     int i;
-    if(Members[memberIndex]->getNumOfFanPages() == 0){
+    int size = getFanPages().size();
+    if(Members[memberIndex].getFanPages().size() == 0){
         return;
     }
 
-    char *page1Name = Members[memberIndex]->getFanPages()[fanPageIndex]->getName();
+    string page1Name = Members[memberIndex].getFanPages()[fanPageIndex]->getName();
     bool connected = false;
-    for (i = 0; i < NumOfFanPagesOverAll; i++) {
+    for (i = 0; i < size; i++) {
 
-        char *page2Name = FanPages[i]->getName();
-        if (strcmp(page1Name, page2Name) != 0) {
+        string page2Name = FanPages[i].getName();
+        if (page1Name == page2Name) {
             connected = false;
         }
         else {
@@ -434,7 +347,7 @@ void FaceBook::disconnectMemberAndFanPage(int memberIndex, int fanPageIndex) {
         cout << "This member does not like this page!" << endl;
         return;
     }
-    Members[memberIndex]->unlikeFanPage(FanPages[i]);
+    Members[memberIndex].unlikeFanPage(&FanPages[i]);
     cout << "Page unliked successfully!" << endl;
 }
 

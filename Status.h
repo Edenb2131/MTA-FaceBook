@@ -3,19 +3,18 @@
 #define MTA_FACEBOOK_STATUS_H
 
 #include <iostream>
-using namespace std;
 #include <string>
 #include <ctime>
 
 class Status {
-    char* Content;
+    std::string Content;
     time_t pTime;
 public:
 
     //constructors and destructor
     Status();
-    Status(const char* content);
-    ~Status();
+    Status(const std::string content);
+    ~Status() = default;
 
     // Operator overloading
     bool operator==(const Status& other) const; // Equality operator - required
@@ -23,10 +22,10 @@ public:
 
 
     //Functions :
-    char* getContent() const;
-    void setContent(char* content);
+    std::string getContent() const;
+    void setContent(std::string content);
     void printStatus();
-    char* getTimePostPosted();
+    std::string getTimePostPosted();
 };
 
 #endif //MTA_FACEBOOK_STATUS_H

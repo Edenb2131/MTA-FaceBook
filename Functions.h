@@ -17,11 +17,10 @@ struct Date{
 };
 
 struct Info{
-    char* Name;
+    std::string Name;
     Date birthDate;
 };
 
-char* getDynamicString(); //Getting a string with unknown length from the user
 Info getInfoFromUser(); //Getting info from the user
 void enterDataToStartWith(FaceBook& fb); // Preload data to the facebook application as requested
 

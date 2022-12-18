@@ -3,6 +3,8 @@
 #define MTA_FACEBOOK_MEMBER_H
 
 #include <iostream>
+#include <string>
+#include <vector>
 #include "Status.h"
 #include "Functions.h"
 
@@ -12,39 +14,27 @@ class Status;  // Forward declaration
 
 
 class Member {
-    char *Name;
-    Date Birthday{};
-    Member** Friends;
-    int NumOfFriends;
-    Status** Posts;
-    int NumOfPosts;
-    FanPage** FanPages;
-    int NumOfFanPages;
+    std::string Name;
+    Date Birthday;
+    std::vector<Member*> Friends;
+    std::vector<Status*>  Posts;
+    std::vector<FanPage*>  FanPages;
 
 public:
     //constructors and destructor
     Member() = default;
     Member(Info infoFromUser);
-    Member(const char* name, int day, int month, int year );
-    ~Member();
-
-    Member(const Member&) = delete; // copy constructor
-    Member(Member&&) = delete; // move constructor
+    Member(std::string name, int day, int month, int year);
+    ~Member() = default;
+    Member(const Member&) = default; // copy constructor
+    Member(Member&&) = default; // move constructor
 
     //getters :
-    char* getName() const;
+    std::string getName() const;
     Date getBirthday() const;
-    Member** getFriends() const;
-    int getNumOfFriends() const;
-    Status** getPosts() const;
-    int getNumOfPosts() const;
-    FanPage** getFanPages() const;
-    int getNumOfFanPages() const;
-
-    //setters :
-    void setNumOfFriends(int numOfFriends);
-    void setNumOfPosts(int numOfPosts);
-    void setNumOfFanPages(int numOfFanPages);
+    std::vector<Member*> getFriends() const;
+    std::vector<Status*> getPosts() const;
+    std::vector<FanPage*> getFanPages() const;
 
     //operators :
     //Member& operator=(const Member& other); // Assignment operator
@@ -55,13 +45,13 @@ public:
     void operator+=(Member* friendToAdd); // Add friend operator - required
     void operator-=(Member* friendToRemove); // Remove friend operator - required
 
-    friend ostream& operator<<(ostream& os, const Member& member);
-    friend istream& operator>>(istream& is, Member& member);
+    friend std::ostream& operator<<(std::ostream& os, const Member& member);
+    friend std::istream& operator>>(std::istream& is, Member& member);
 
 
     //functions :
     void addPost(); // Add a post to the member's posts
-    void addPost(const char* content); // Add a post to the member's posts
+    void addPost(std::string content); // Add a post to the member's posts
     void printAllPosts() const; // Print all the posts of the member
     void printFriends() const; // Print all the friends of the member
     void printLikedPages() const; // Print all the liked pages of the member

@@ -3,37 +3,32 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Status.h"
 
 class Member;
 
 class FanPage {
-    char *Name;
-    Member** Fans;
-    int NumOfFans;
-    Status** Posts;
-    int NumOfPosts;
+    std::string Name;
+    std::vector<Member*> Fans;
+    std::vector<Status*> Posts;
 
 public:
     //constructor and destructor
-    FanPage(char *name);
-    ~FanPage();
-
-    FanPage(const FanPage&) = delete;
+    FanPage() = default;
+    FanPage(std::string name);
+    ~FanPage() = default;
+    FanPage(const FanPage&) = default;
 
     //getters  :
-    char* getName() const;
-    Member** getFans() const;
-    int getNumOfFans() const;
-    Status** getPosts() const;
-    int getNumOfPosts() const;
+    std::string getName() const;
+    std::vector<Member*> getFans() const;
+    std::vector<Status*> getPosts() const;
 
     //setters :
     void setName(char *name);
-    void setFans(Member **fans);
-    void setNumOfFans(int numOfFans);
-    void setPosts(Status **posts);
-    void setNumOfPosts(int numOfPosts);
+    void setFans(std::vector<Member*> fans);
+    void setPosts(std::vector<Status*> posts);
 
     //operators :
     void operator+=(Member* fanToAdd); // Add fan operator - required
@@ -46,12 +41,11 @@ public:
 
     //functions :
     void addPost();
-    void addPost(const char* content);
+    void addPost(std::string content);
     void printAllPosts() const;
     void printFans() const;
     void printFanPage() const;
     void addFan(Member* fanToAdd);
     void removeFan(Member* fanToRemove);
 };
-
 #endif //MTA_FACEBOOK_FANPAGE_H

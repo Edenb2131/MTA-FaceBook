@@ -2,56 +2,26 @@
 #include "Member.h"
 #include "FanPage.h"
 #include <string>
+#include <vector>
 using namespace std;
 
 //constructor
 Member::Member(Info infoFromUser): // Using here c'tor init line
     Name(infoFromUser.Name),
-    Birthday(infoFromUser.birthDate)
-{
-    Friends = nullptr;
-    NumOfFriends = 0,
-    Posts = nullptr;
-    NumOfPosts = 0;
-    FanPages =nullptr;
-    NumOfFanPages = 0;
-}
+    Birthday(infoFromUser.birthDate) {}
 
 //constructor
-Member::Member(const char* name, int day, int month, int year) :
-    Name(strdup(name)),
-    Birthday(day, month, year), //// ??????
-    Friends(nullptr),
-    NumOfFriends(0),
-    Posts(nullptr),
-    NumOfPosts(0),
-    FanPages(nullptr),
-    NumOfFanPages(0)
+Member::Member(string name, int day, int month, int year) :
+    Name(name),
+    Birthday(day, month, year)
 {
     Birthday.day = day;
     Birthday.month = month;
     Birthday.year = year;
 }
 
-//destructor
-Member::~Member() {
-  int i;
-
-  for (i = 0; i < NumOfPosts; i++) {
-    delete Posts[i];
-  }
-  delete[] Posts;
-
-  delete[] Friends; //No need to delete every one because thats happning in the FaceBook d'tor
-
-  delete[] FanPages;  //No need to delete every one because thats happning in the FaceBook d'tor
-
-  delete[] Name;
-}
-
-
 //getters :
-char *Member::getName() const {
+string Member::getName() const {
     return Name;
 }
 
@@ -59,44 +29,17 @@ Date Member::getBirthday() const {
     return Birthday;
 }
 
-Member **Member::getFriends() const {
+vector<Member*> Member::getFriends() const {
     return Friends;
 }
 
-int Member::getNumOfFriends() const {
-    return NumOfFriends;
-}
-
-Status **Member::getPosts() const {
+vector<Status*> Member::getPosts() const {
     return Posts;
 }
 
-int Member::getNumOfPosts() const {
-    return NumOfPosts;
-}
-
-FanPage** Member::getFanPages() const {
+vector<FanPage*> Member::getFanPages() const {
     return FanPages;
 }
-
-int Member::getNumOfFanPages() const {
-    return NumOfFanPages;
-}
-
-// Setters :
-
-void Member::setNumOfFriends(int numOfFriends) {
-    NumOfFriends = numOfFriends;
-}
-
-void Member::setNumOfPosts(int numOfPosts) {
-    NumOfPosts = numOfPosts;
-}
-
-void Member::setNumOfFanPages(int numOfFanPages) {
-    NumOfFanPages = numOfFanPages;
-}
-
 
 //operators :
 
@@ -112,20 +55,20 @@ void Member::operator-=(Member* friendToRemove) { // Remove friend operator - re
 
 bool Member::operator<(const Member& other) const { // Less than operator - required
 
-    return (this->NumOfFriends < other.NumOfFriends);
+    return (this->Friends.size() < other.Friends.size());
 }
 
 bool Member::operator>(const Member& other) const { // Greater than operator - required
 
-    return (this->NumOfFriends > other.NumOfFriends);
+    return (this->Friends.size() > other.Friends.size());
 }
 
 bool Member::operator<=(const Member &other) const {
-    return (this->NumOfFriends <= other.NumOfFriends);
+    return (this->Friends.size() <= other.Friends.size());
 }
 
 bool Member::operator>=(const Member &other) const {
-    return (this->NumOfFriends >= other.NumOfFriends);
+    return (this->Friends.size() >= other.Friends.size());
 }
 
 
@@ -146,33 +89,24 @@ void Member::addFriend(Member *friendToAdd, int neededToBeAdded) {
     }
 
     //Checking to see if already friends
-    for (i = 0; i < this->NumOfFriends; i++) {
-        if (strcmp (this->Friends[i]->Name, friendToAdd->Name) == 0) {
+    int size = this->Friends.size();
+    for (i = 0; i < size; i++) {
+        if (this->Friends[i]->Name == friendToAdd->Name) {
             cout << "Already friends !" << endl;
             return;
         }
     }
 
-    Member **temp = new Member *[NumOfFriends + 1];
-    for (i = 0; i < NumOfFriends; i++) {
-        temp[i] = Friends[i];
-    }
-
-    temp[NumOfFriends] = friendToAdd;
-    delete[] Friends;
-    Friends = temp;
-    NumOfFriends++;
-
-
-
+    Friends.push_back(friendToAdd);
 }
 
 void Member::removeFriend(Member *friendToRemove) {
     int friendsIndex;
     bool found = false;
+    int size = this->Friends.size();
     // Check if possible in Theta(1)
-    for (friendsIndex = 0; friendsIndex < this->NumOfFriends; friendsIndex++) {
-        if (strcmp (this->Friends[friendsIndex]->Name, friendToRemove->Name) != 0) {
+    for (friendsIndex = 0; friendsIndex < size; friendsIndex++) {
+        if (this->Friends[friendsIndex]->Name != friendToRemove->Name) {
             found = false;
         }
         else {
@@ -184,17 +118,7 @@ void Member::removeFriend(Member *friendToRemove) {
     if (!found)
         return;
 
-    Member **temp = new Member *[NumOfFriends - 1];
-    int tempIndex = 0;
-    for (friendsIndex = 0; friendsIndex < NumOfFriends; friendsIndex++) {
-        if (strcmp (this->Friends[friendsIndex]->Name, friendToRemove->Name) != 0){
-            temp[tempIndex] = Friends[friendsIndex];
-            tempIndex++;
-        }
-    }
-    delete[] Friends;
-    Friends = temp;
-    NumOfFriends--;
+    Friends.erase(Friends.begin() + friendsIndex);
 
     //// Need to remove the friend from the friend's friend list as well ////
     friendToRemove->removeFriend(this);
@@ -202,22 +126,15 @@ void Member::removeFriend(Member *friendToRemove) {
 
 void Member::likeFanPage(FanPage *fanPageToLike) {
     int i;
-
+    int size = this->FanPages.size();
     // Checking to see if needed to add that fan-page or not
-    for (i = 0; i < NumOfFanPages; i++) {
-        if (strcmp (FanPages[i]->getName(), fanPageToLike->getName()) == 0) {
+    for (i = 0; i < size; i++) {
+        if (FanPages[i]->getName() == fanPageToLike->getName()) {
             return;
         }
     }
 
-    FanPage** temp = new FanPage * [NumOfFanPages + 1];
-    for (i = 0; i < NumOfFanPages; i++) {
-        temp[i] = FanPages[i];
-    }
-    temp[NumOfFanPages] = fanPageToLike;
-    delete [] FanPages;
-    FanPages = temp;
-    NumOfFanPages++;
+    FanPages.push_back(fanPageToLike);
 
     // Need to add the member to the page's fans as well
     fanPageToLike->addFan(this);
@@ -226,8 +143,9 @@ void Member::likeFanPage(FanPage *fanPageToLike) {
 void Member::unlikeFanPage(FanPage *fanPageToUnlike) {
     int pagesIndex;
     bool found = false;
-    for (pagesIndex = 0; pagesIndex < NumOfFanPages; pagesIndex++) {
-        if (strcmp (FanPages[pagesIndex]->getName(), fanPageToUnlike->getName()) != 0) {
+    int size = this->FanPages.size();
+    for (pagesIndex = 0; pagesIndex < size; pagesIndex++) {
+        if (FanPages[pagesIndex]->getName() == fanPageToUnlike->getName()) {
             found = false;
         }
         else {
@@ -239,18 +157,7 @@ void Member::unlikeFanPage(FanPage *fanPageToUnlike) {
     if (!found)
         return;
 
-    FanPage** temp = new FanPage * [NumOfFanPages - 1];
-    int tempIndex = 0;
-    for (pagesIndex = 0; pagesIndex < NumOfFanPages - 1; pagesIndex++) {
-        if (strcmp (FanPages[pagesIndex]->getName(), fanPageToUnlike->getName()) != 0) {
-            temp[tempIndex] = FanPages[pagesIndex];
-            tempIndex++;
-        }
-    }
-
-    delete [] FanPages;
-    FanPages = temp;
-    NumOfFanPages--;
+    FanPages.erase(FanPages.begin() + pagesIndex);
 
     //// Need to remove the member from the page's fans list as well ////
     fanPageToUnlike->removeFan(this);
@@ -259,54 +166,23 @@ void Member::unlikeFanPage(FanPage *fanPageToUnlike) {
 void Member::addPost() {
     getchar();
     Status* newPost = new Status;
-
-    if (NumOfPosts) {
-        Status** newPosts = new Status*[NumOfPosts + 1];
-        for (int i = 0; i < NumOfPosts; i++) {
-            newPosts[i] = Posts[i];
-        }
-        newPosts[NumOfPosts] = newPost;
-        delete [] Posts;
-        Posts = newPosts;
-    }
-    else {
-        Posts = new Status*;
-        Posts[0] = newPost;
-    }
-    NumOfPosts++;
+    Posts.push_back(newPost);
 }
 
-void Member::addPost(const char* content) {
+void Member::addPost(string content) {
     Status* newPost = new Status(content);
-
-    if (NumOfPosts) {
-        Status** newPosts = new Status*[NumOfPosts + 1];
-        for (int i = 0; i < NumOfPosts; i++) {
-            newPosts[i] = Posts[i];
-        }
-        newPosts[NumOfPosts] = newPost;
-        delete [] Posts;
-        Posts = newPosts;
-    }
-    else {
-        Posts = new Status*;
-        Posts[0] = newPost;
-    }
-    NumOfPosts++;
+    Posts.push_back(newPost);
 }
 
-void Member::printLatestPost() {
-    cout << Posts[NumOfPosts - 1]->getContent() << endl;
-}
-
-void Member::printFriends() {
-    if(NumOfFriends == 0){
+void Member::printFriends() const{
+    int size = Friends.size();
+    if(size == 0){
         cout << "You have no friends ! " << endl;
     }
     else {
         cout << "Friends of " << "'" << Name << "'" << " are: " ;
         int i;
-        for (i = 0; i < NumOfFriends - 1; i++)
+        for (i = 0; i < size - 1; i++)
             cout << Friends[i]->getName() << ", " ;
 
         cout << Friends[i]->getName() << endl ;
@@ -314,14 +190,15 @@ void Member::printFriends() {
     cout << endl;
 }
 
-void Member::printLikedPages() {
-    if (NumOfFanPages == 0) {
+void Member::printLikedPages() const{
+    int size = FanPages.size();
+    if (size == 0) {
         cout << "You have no liked pages !" << endl;
     }
     else {
         cout << "Liked pages of " << "'" << Name << "'" << " are: " ;
         int i;
-        for (i = 0; i < NumOfFanPages - 1; i++)
+        for (i = 0; i < size - 1; i++)
             cout << FanPages[i]->getName() << ", " ;
 
         cout << FanPages[i]->getName() << endl ;
@@ -329,13 +206,14 @@ void Member::printLikedPages() {
     cout << endl;
 }
 
-void Member::printAllPosts() {
-    if(NumOfPosts == 0){
+void Member::printAllPosts() const{
+    int size = Posts.size();
+    if(size == 0){
         cout << "You have no posts ! " << endl;
     }
     else {
         cout << "Posts of " << "'" << Name << "'" << " are:" << endl;
-        for (int i = 0; i < NumOfPosts; i++) {
+        for (int i = 0; i < size; i++) {
             cout <<" "<< i+1 << ". " ;
             Posts[i]->printStatus();
         }
@@ -343,7 +221,7 @@ void Member::printAllPosts() {
     cout << endl;
 }
 
-void Member::printMember() {
+void Member::printMember() const {
     cout << "Name: " << Name << endl;
     cout << "Birthday: " << Birthday.day << "/" << Birthday.month << "/" << Birthday.year << endl;
     printFriends();
@@ -351,38 +229,40 @@ void Member::printMember() {
     printLikedPages();
 }
 
-void Member::printTenLatestPosts() {
+void Member::printTenLatestPosts() const {
+    int size = Posts.size();
     cout << "These are your 10 latest posts: " << endl;
-    if(NumOfPosts < 10){
+    if(size < 10){
         printAllPosts();
     }
     else {
-        for (int i = NumOfPosts - 10; i < NumOfPosts; i++) {
+        for (int i = size - 10; i < size; i++) {
             cout << Posts[i]->getContent() << endl;
         }
     }
 }
 
 // Getting a friend's name and printing his 10 latest posts
-void Member::printFriendsTenLatestPosts(Member *friendToPrintLatestPosts){
+void Member::printFriendsTenLatestPosts(Member *friendToPrintLatestPosts) const{
     cout << "These are the latest posts of : '" << friendToPrintLatestPosts->getName() << "' "<< endl;
     friendToPrintLatestPosts->printTenLatestPosts();
     cout << endl;
 }
 
 // Printing all the posts of all the friends
-void Member::printTenLatestPostsOfFriends() {
+void Member::printTenLatestPostsOfFriends() const{
+    int size = Friends.size();
     cout << "These are your 10 latest posts of your friends: " << endl;
-    if(NumOfFriends == 0){
+    if(size == 0){
         cout << "You have no friends ! " << endl;
     }
     else {
-        for (int i = 0; i < NumOfFriends; i++) {
-            if (Friends[i]->getNumOfPosts() < 10) {
+        for (int i = 0; i < size; i++) {
+            if (Friends[i]->Posts.size() < 10) {
                 Friends[i]->printAllPosts();
             }
             else {
-                for (int j = Friends[i]->getNumOfPosts() - 10; j < Friends[i]->getNumOfPosts(); j++) {
+                for (int j = Friends[i]->Posts.size()  - 10; j < Friends[i]->Posts.size() ; j++) {
                     cout << Friends[i]->getPosts()[j]->getContent() << endl;
                 }
             }

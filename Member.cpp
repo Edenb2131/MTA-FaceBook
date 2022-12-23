@@ -164,7 +164,7 @@ void Member::unlikeFanPage(FanPage *fanPageToUnlike) {
 }
 
 void Member::addPost() {
-    getchar();
+    //getchar();
     Status* newPost = new Status;
     Posts.push_back(newPost);
 }

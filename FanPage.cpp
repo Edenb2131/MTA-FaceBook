@@ -71,7 +71,7 @@ bool FanPage::operator<=(const FanPage& other) const{
 // Functions :
 
 void FanPage::addPost() {
-    getchar();
+    //getchar();
     Status* newPost = new Status;
     Posts.push_back(newPost);
 }

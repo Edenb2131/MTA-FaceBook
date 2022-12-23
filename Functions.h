@@ -21,7 +21,7 @@ struct Info{
     Date birthDate;
 };
 
-Info getInfoFromUser(); //Getting info from the user
+Info getInfoFromUser(FaceBook& fb); //Getting info from the user
 void enterDataToStartWith(FaceBook& fb); // Preload data to the facebook application as requested
 
 #endif //MTA_FACEBOOK_FUNCTIONS_H

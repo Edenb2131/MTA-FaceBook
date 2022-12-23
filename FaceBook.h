@@ -9,20 +9,20 @@
 #include "FanPage.h"
 
 class FaceBook {
-    std::vector<Member> Members;
-    std::vector<FanPage> FanPages;
+    std::vector<Member*> Members;
+    std::vector<FanPage*> FanPages;
 
 public:
 
     //constructor and destructor
     FaceBook() = default;
-    ~FaceBook() = default;
+    ~FaceBook();
 
     FaceBook(const FaceBook&) = delete;
 
     //getters :
-    std::vector<Member>& getMembers();
-    std::vector<FanPage>& getFanPages();
+    std::vector<Member*>& getMembers();
+    std::vector<FanPage*>& getFanPages();
 
     //functions :
     int menu() const; // return the choice of the user

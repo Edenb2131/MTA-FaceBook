@@ -6,7 +6,7 @@
 using namespace std;
 
 //constructor
-Member::Member(Info infoFromUser): // Using here c'tor init line
+Member::Member(MemberInfo infoFromUser): // Using here c'tor init line
     Name(infoFromUser.Name),
     Birthday(infoFromUser.birthDate) {}
 

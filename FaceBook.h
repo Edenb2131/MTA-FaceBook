@@ -24,8 +24,6 @@ public:
     std::vector<FanPage*>& getFanPages();
 
     //functions :
-    int menu() const; // return the choice of the user
-    void process(); // process the choice of the user
     void addNewMember(); // add new member to the facebook
     void addNewMember(std::string name, int day, int month, int year ); // add new member to the facebook
     void addNewPage(); // add new page to the facebook

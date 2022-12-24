@@ -15,6 +15,6 @@ add_executable(MTA_FaceBook
         Member.h
         Status.cpp
         Status.h
-        Functions.cpp
-        Functions.h
-        )
+        Common.cpp
+        Common.h
+        UI.cpp UI.h)

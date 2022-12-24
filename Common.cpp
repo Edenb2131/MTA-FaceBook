@@ -5,18 +5,18 @@ using namespace std;
 
 void enterDataToStartWith(FaceBook& fb){
     //Member 1:
-    fb.addNewMember("Eden Bar" , 22 ,8 , 1997);
+    fb.addNewMember(MemberInfo("Eden Bar", Date( 28, 7, 1997)));
     fb.getMembers()[0]->addPost("I like ICE-CREAM !");
-    fb.getMembers()[0]->addPost("Let's go to paris  !");
+    fb.getMembers()[0]->addPost("Let's go to paris !");
 
     //Member 2:
-    fb.addNewMember("Avivit Cohen" , 10 ,10 , 2000);
+    fb.addNewMember(MemberInfo("Avivit Cohen", Date( 17, 10, 1996)));
     fb.getMembers()[1]->addPost("I love Computer Science !");
     fb.getMembers()[1]->addPost("Who wants to watch FRIENDS with me ?!");
     fb.getMembers()[1]->addPost("Im board.... ?!");
 
     //Member 3:
-    fb.addNewMember("Liri Cohen" , 18 ,8 , 1997);
+    fb.addNewMember(MemberInfo("Liri Cohen", Date( 18, 8, 1997)));
     fb.getMembers()[2]->addPost("Who wants to play basketball this afternoon?!");
     fb.getMembers()[2]->addPost("With my friends at tha mall (:!");
 

@@ -42,30 +42,30 @@ void UI::process() {
     while (!finish) {
         switch (choice) {
             case 1: {
-                FB->addNewMember();
+                FB->addNewMember(getMemberInfoFromUser());
                 break;
             }
             case 2: {
-                FB->addNewPage();
+                FB->addNewPage(getFanPageNameFromUser());
                 break;
             }
             case 3: {
-                int memberIndex = FB->findMember();
-                FB->getMembers()[memberIndex]->addPost();
+                int memberIndex = chooseMember();
+                FB->getMembers()[memberIndex]->addPost(getStatusFromUser());
                 break;
             }
             case 4: {
-                int fanPageIndex = FB->findFanPage();
-                FB->getFanPages()[fanPageIndex]->addPost();
+                int fanPageIndex = chooseFanPage();
+                FB->getFanPages()[fanPageIndex]->addPost(getStatusFromUser());
                 break;
             }
             case 5: {
-                int memberIndex = FB->findMember();
+                int memberIndex = chooseMember();
                 FB->getMembers()[memberIndex]->printAllPosts();
                 break;
             }
             case 6: {
-                int memberIndex = FB->findMember();
+                int memberIndex = chooseMember();
                 if (FB->getMembers()[memberIndex]->getFanPages().size() == 0) {
                     cout << "You have no Liked pages !" << endl;
                     break;
@@ -77,36 +77,36 @@ void UI::process() {
                 break;
             }
             case 7: {
-                int memberIndex = FB->findMember();
+                int memberIndex = chooseMember();
                 FB->getMembers()[memberIndex]->printTenLatestPostsOfFriends();
                 break;
             }
             case 8: {
                 cout << "Please choose the first member: " << endl;
-                int firstMemberIndex = FB->findMember();
+                int firstMemberIndex = chooseMember();
                 cout << "Please choose the second member: " << endl;
-                int secondMemberIndex = FB->findMember();
+                int secondMemberIndex = chooseMember();
 
                 FB->connectTwoMembers(firstMemberIndex, secondMemberIndex);
                 break;
             }
             case 9: {
                 cout << "Please choose the first member: " << endl;
-                int firstMemberIndex = FB->findMember();
+                int firstMemberIndex = chooseMember();
                 cout << "Please choose the second member: " << endl;
-                int secondMemberIndex = FB->findMemberByMember(*FB->getMembers()[firstMemberIndex]);
+                int secondMemberIndex = chooseFriendOfMember(*FB->getMembers()[firstMemberIndex]);
                 FB->disconnectTwoMembers(firstMemberIndex, secondMemberIndex);
                 break;
             }
             case 10: {
-                int memberIndex = FB->findMember();
-                int fanPageIndex = FB->findFanPage();
+                int memberIndex = chooseMember();
+                int fanPageIndex = chooseFanPage();
                 FB->connectMemberAndFanPage(memberIndex, fanPageIndex);
                 break;
             }
             case 11: {
-                int memberIndex = FB->findMember();
-                int fanPageIndex = FB->findFanPageByMember(*FB->getMembers()[memberIndex]);
+                int memberIndex = chooseMember();
+                int fanPageIndex = chooseFanPageOfMember(*FB->getMembers()[memberIndex]);
                 FB->disconnectMemberAndFanPage(memberIndex, fanPageIndex);
                 break;
             }
@@ -116,17 +116,17 @@ void UI::process() {
                 break;
             }
             case 13: {
-                int memberIndex = FB->findMember();
+                int memberIndex = chooseMember();
                 FB->getMembers()[memberIndex]->printFriends();
                 break;
             }
             case 14: {
-                int memberIndex = FB->findMember();
+                int memberIndex = chooseMember();
                 FB->getMembers()[memberIndex]->printLikedPages();
                 break;
             }
             case 15: {
-                int fanPageIndex = FB->findFanPage();
+                int fanPageIndex = chooseFanPage();
                 FB->getFanPages()[fanPageIndex]->printFans();
                 break;
             }
@@ -141,7 +141,7 @@ void UI::process() {
     }
 }
 
-MemberInfo UI::getMemberInfoFromUser() {
+MemberInfo UI::getMemberInfoFromUser() const {
     int day, month, year;
     getchar();
     string name;
@@ -189,5 +189,102 @@ MemberInfo UI::getMemberInfoFromUser() {
     getchar(); // This is to flush the buffer
 
     return MemberInfo(name, Date(day, month, year));
+}
+
+string UI::getFanPageNameFromUser() const {
+    cin.ignore();
+    string name;
+    cout << "Please enter page's name:" << endl;
+    getline(cin, name);
+    return name;
+}
+
+int UI::chooseMember() const {
+    int index = -1;
+    int numOfMembersOverAll = (int)FB->getMembers().size();
+
+    if (numOfMembersOverAll == 0) {
+        cout << "There are no members using FaceBook!" << endl;
+        return index;
+    }
+
+    cout << "Please choose a member from the list below:" << endl;
+    while (index < 0 || index > numOfMembersOverAll) {
+        for (int i = 0; i < numOfMembersOverAll; i++) {
+            cout << "Enter " << i + 1 << " for " << FB->getMembers()[i]->getName() << endl;
+        }
+        cin >> index;
+        if(index < 0 || index > numOfMembersOverAll)
+            cout << "Invalid input. Enter again." << endl;
+    }
+    return index - 1;
+}
+
+int UI::chooseFriendOfMember(const Member &member) const {
+    int index = -1;
+    int numOfFriends = (int)member.getFriends().size();
+    if (numOfFriends == 0){
+        cout << "This member has no friends." << endl;
+        return index;
+    }
+
+    cout << "Please choose a member from the list below:" << endl;
+    while(index < 0 || index > numOfFriends) {
+        for (int i = 0; i < numOfFriends; i++) {
+            cout << "Enter " << i + 1 << " for " << member.getFriends()[i]->getName() << endl;
+        }
+        cin >> index;
+        if(index < 0 || index > numOfFriends)
+            cout << "Invalid input. Enter again." << endl;
+    }
+    return index - 1;
+}
+
+int UI::chooseFanPage() const {
+    int index = -1;
+    int numOfFanPagesOverAll = (int)FB->getFanPages().size();
+
+    if (numOfFanPagesOverAll == 0) {
+        cout << "There are no fan pages in facebook!" << endl;
+        return index;
+    }
+    cout << "Please choose a fan page from the list below:" << endl;
+    while(index < 0 || index > numOfFanPagesOverAll) {
+        for (int i = 0; i < numOfFanPagesOverAll; i++) {
+            cout << "Enter " << i + 1 << " for " << FB->getFanPages()[i]->getName() << endl;
+        }
+        cin >> index;
+        if(index < 0 || index > numOfFanPagesOverAll)
+            cout << "Invalid input. Enter again." << endl;
+    }
+    return index - 1;
+}
+
+int UI::chooseFanPageOfMember(const Member &member) const {
+    int index = -1;
+    int numOfFanPages = (int)member.getFanPages().size();
+    if(numOfFanPages == 0){
+        cout << "This member has no liked fan pages." << endl;
+        return index;
+    }
+
+    cout << "Please choose a fan page from the list below:" << endl;
+    while(index < 0 || index > numOfFanPages) {
+        for (int i = 0; i < numOfFanPages; i++) {
+            cout << "Enter " << i + 1 << " for " << member.getFanPages()[i]->getName() << endl;
+        }
+        cin >> index;
+        if(index < 0 || index > numOfFanPages)
+            cout << "Invalid input. Enter again." << endl;
+    }
+    return index - 1;
+}
+
+string UI::getStatusFromUser() const {
+    cin.ignore();
+    string name;
+    cout << "Please enter your status:" << endl;
+    getline(cin, name);
+    return name;
 }
 

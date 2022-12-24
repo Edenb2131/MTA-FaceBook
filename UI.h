@@ -12,11 +12,13 @@ public:
 
     int menu() const;
     void process();
-    MemberInfo getMemberInfoFromUser();
-
-
-
-
+    MemberInfo getMemberInfoFromUser() const;
+    std::string getFanPageNameFromUser() const;
+    int chooseMember() const;
+    int chooseFriendOfMember(const Member& member) const;
+    int chooseFanPage() const;
+    int chooseFanPageOfMember(const Member& member)  const;
+    std::string getStatusFromUser() const;
 };
 
 

@@ -6,19 +6,7 @@
 using namespace std;
 
 //constructor
-Member::Member(MemberInfo infoFromUser): // Using here c'tor init line
-    Name(infoFromUser.Name),
-    Birthday(infoFromUser.birthDate) {}
-
-//constructor
-Member::Member(string name, int day, int month, int year) :
-    Name(name),
-    Birthday(day, month, year)
-{
-    Birthday.day = day;
-    Birthday.month = month;
-    Birthday.year = year;
-}
+Member::Member(MemberInfo infoFromUser): Name(infoFromUser.Name), Birthday(infoFromUser.birthDate) {}
 
 //getters :
 string Member::getName() const {
@@ -161,12 +149,6 @@ void Member::unlikeFanPage(FanPage *fanPageToUnlike) {
 
     //// Need to remove the member from the page's fans list as well ////
     fanPageToUnlike->removeFan(this);
-}
-
-void Member::addPost() {
-    //getchar();
-    Status* newPost = new Status;
-    Posts.push_back(newPost);
 }
 
 void Member::addPost(string content) {

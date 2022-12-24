@@ -2,14 +2,6 @@
 using namespace std;
 
 //constructor
-Status::Status() {
-    cout << "Enter your status: " << endl;
-    getline(cin, Content);
-    pTime = time(nullptr);
-    cout << endl;
-}
-
-//constructor
 Status::Status(string content) : Content(content)
 {
     pTime = time(nullptr);

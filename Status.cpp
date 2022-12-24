@@ -10,7 +10,7 @@ Status::Status() {
 }
 
 //constructor
-Status::Status(const string content) : Content(content)
+Status::Status(string content) : Content(content)
 {
     pTime = time(nullptr);
 }

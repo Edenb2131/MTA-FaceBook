@@ -92,6 +92,11 @@ void FaceBook::process() {
                 break;
             }
             case 15: {
+                int fanPageIndex = findFanPage();
+                FanPages[fanPageIndex]->printFans();
+                break;
+            }
+            case 16: {
                 cout << "Thank you for using FaceBook, hope to see you again soon!" << endl;
                 finish = true;
                 break;
@@ -120,7 +125,8 @@ int FaceBook::menu() const {
     cout << "Enter 12 to see all entities on FaceBook" << endl;
     cout << "Enter 13 to see all your friends" << endl;
     cout << "Enter 14 to see all your liked fan pages" << endl;
-    cout << "Enter 15 to exit" << endl;
+    cout << "Enter 15 to see all fans of a fan page" << endl;
+    cout << "Enter 16 to exit" << endl;
 
     cin >> choice;
     return choice;

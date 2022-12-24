@@ -23,7 +23,7 @@ vector<Status*> FanPage::getPosts() const {
 
 // Setters :
 
-void FanPage::setName( char *name) {
+void FanPage::setName(string name) {
     Name = name;
 }
 
@@ -145,8 +145,7 @@ void FanPage::printFans() const {
     int numOfFans = Fans.size();
     cout << "Fans of page " << "'" << Name << "'" << " are:" << endl;
     for (int i = 0; i < numOfFans; i++){
-        cout <<" "<< i+1 << ". " ;
-        Fans[i]->printMember();
+        cout <<" "<< i+1 << ". " << Fans[i]->getName() << endl;
     }
     cout << endl;
 }

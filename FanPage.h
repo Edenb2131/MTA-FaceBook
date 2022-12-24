@@ -26,7 +26,7 @@ public:
     std::vector<Status*> getPosts() const;
 
     //setters :
-    void setName(char *name);
+    void setName(std:: string name);
     void setFans(std::vector<Member*> fans);
     void setPosts(std::vector<Status*> posts);
 

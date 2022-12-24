@@ -1,11 +1,11 @@
-#include <iostream>
-using namespace std;
 #include "FaceBook.h"
-#include "Functions.h"
+#include "Common.h"
+#include "UI.h"
 
 int main(){
     FaceBook fb;
     enterDataToStartWith(fb);
-    fb.process();
+    UI ui(&fb);
+    ui.process();
     return 0;
 }

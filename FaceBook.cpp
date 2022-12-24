@@ -1,131 +1,6 @@
 #include "FaceBook.h"
 using namespace std;
 
-void FaceBook::process() {
-    bool finish = false;
-    int choice = menu();
-
-    while (!finish) {
-        switch (choice) {
-            case 1: {
-                addNewMember();
-                break;
-            }
-            case 2: {
-                addNewPage();
-                break;
-            }
-            case 3: {
-                int memberIndex = findMember();
-                Members[memberIndex]->addPost();
-                break;
-            }
-            case 4: {
-                int fanPageIndex = findFanPage();
-                FanPages[fanPageIndex]->addPost();
-                break;
-            }
-            case 5: {
-                int memberIndex = findMember();
-                Members[memberIndex]->printAllPosts();
-                break;
-            }
-            case 6: {
-                int memberIndex = findMember();
-                if (Members[memberIndex]->getFanPages().size() == 0) {
-                    cout << "You have no Liked pages !" << endl;
-                    break;
-                }
-
-                for (int i = 0; i < Members[memberIndex]->getFanPages().size(); i++){
-                    Members[memberIndex]->getFanPages()[i]->printAllPosts();
-                }
-                break;
-            }
-            case 7: {
-                int memberIndex = findMember();
-                Members[memberIndex]->printTenLatestPostsOfFriends();
-                break;
-            }
-            case 8: {
-                cout << "Please choose the first member: " << endl;
-                int firstMemberIndex = findMember();
-                cout << "Please choose the second member: " << endl;
-                int secondMemberIndex = findMember();
-
-                connectTwoMembers(firstMemberIndex, secondMemberIndex);
-                break;
-            }
-            case 9: {
-                cout << "Please choose the first member: " << endl;
-                int firstMemberIndex = findMember();
-                cout << "Please choose the second member: " << endl;
-                int secondMemberIndex = findMemberByMember(*Members[firstMemberIndex]);
-                disconnectTwoMembers(firstMemberIndex, secondMemberIndex);
-                break;
-            }
-            case 10: {
-                int memberIndex = findMember();
-                int fanPageIndex = findFanPage();
-                connectMemberAndFanPage(memberIndex, fanPageIndex);
-                break;
-            }
-            case 11: {
-                int memberIndex = findMember();
-                int fanPageIndex = findFanPageByMember(*Members[memberIndex]);
-                disconnectMemberAndFanPage(memberIndex, fanPageIndex);
-                break;
-            }
-            case 12: {
-                printAllEntities();
-                printAllEntitiesAndTheirData();
-                break;
-            }
-            case 13: {
-                int memberIndex = findMember();
-                Members[memberIndex]->printFriends();
-                break;
-            }
-            case 14: {
-                int memberIndex = findMember();
-                Members[memberIndex]->printLikedPages();
-                break;
-            }
-            case 15: {
-                cout << "Thank you for using FaceBook, hope to see you again soon!" << endl;
-                finish = true;
-                break;
-            }
-        }
-        if (!finish)
-            choice = menu();
-    }
-}
-
-int FaceBook::menu() const {
-    cout << endl;
-    int choice;
-    cout << "Please choose an action from the list below: " << endl;
-    cout << "Enter 1 to register to FaceBook as a member" << endl;
-    cout << "Enter 2 to register to FaceBook as a fan page" << endl;
-    cout << "Enter 3 to write a post as a member" << endl;
-    cout << "Enter 4 to write a post as a fan page" << endl;
-    cout << "Enter 5 to see all posts of a member in Facebook" << endl;
-    cout << "Enter 6 to see all posts of a fan pages you liked" << endl;
-    cout << "Enter 7 to see ten latest posts of your friends" << endl;
-    cout << "Enter 8 to add a friend" << endl;
-    cout << "Enter 9 to delete a friend" << endl;
-    cout << "Enter 10 to like a fan page" << endl;
-    cout << "Enter 11 to unlike a fan page" << endl;
-    cout << "Enter 12 to see all entities on FaceBook" << endl;
-    cout << "Enter 13 to see all your friends" << endl;
-    cout << "Enter 14 to see all your liked fan pages" << endl;
-    cout << "Enter 15 to exit" << endl;
-
-    cin >> choice;
-    return choice;
-}
-
 FaceBook::~FaceBook() {
     for(auto & Member : Members)
         delete Member;
@@ -136,7 +11,6 @@ FaceBook::~FaceBook() {
     // Members and FanPages are deleted in the destructor of vector
 }
 
-
  vector<Member*>& FaceBook::getMembers() {
     return Members;
 }
@@ -146,12 +20,12 @@ vector<FanPage*>& FaceBook::getFanPages() {
 }
 
 void FaceBook::addNewMember() {
-    Info infoFromUser = getInfoFromUser(*this);
-    Member* newMember = new Member(infoFromUser);
-    Members.push_back(newMember);
+    //MemberInfo infoFromUser = getInfoFromUser(*this);
+    //Member* newMember = new Member(infoFromUser);
+    //Members.push_back(newMember);
 }
 
-void FaceBook::addNewMember(string name, int day, int month, int year ) {
+void FaceBook::addNewMember(string name, int day, int month, int year) {
 
     Member* newMember = new Member(name, day, month, year);
     Members.push_back(newMember);

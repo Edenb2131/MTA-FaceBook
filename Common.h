@@ -1,6 +1,6 @@
 
-#ifndef MTA_FACEBOOK_FUNCTIONS_H
-#define MTA_FACEBOOK_FUNCTIONS_H
+#ifndef MTA_FACEBOOK_COMMON_H
+#define MTA_FACEBOOK_COMMON_H
 
 #include <iostream>
 #include <string>
@@ -12,16 +12,15 @@ struct Date{
     int month;
     int year;
 
-    Date() = default;
     Date(int day, int month, int year){ this->day = day; this->month = month; this->year = year; }
 };
 
-struct Info{
+struct MemberInfo{
     std::string Name;
     Date birthDate;
-};
 
-Info getInfoFromUser(FaceBook& fb); //Getting info from the user
+    MemberInfo(std:: string name, Date date):Name(name), birthDate(date) {};
+};
 void enterDataToStartWith(FaceBook& fb); // Preload data to the facebook application as requested
 
-#endif //MTA_FACEBOOK_FUNCTIONS_H
+#endif //MTA_FACEBOOK_COMMON_H

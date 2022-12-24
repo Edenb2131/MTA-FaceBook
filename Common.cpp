@@ -1,60 +1,7 @@
-#include "Functions.h"
+#include "Common.h"
 #include "FaceBook.h"
 #include <string>
 using namespace std;
-
-//Getting info from a new user
-Info getInfoFromUser(FaceBook& fb) {
-    Info infoFromUser;
-    getchar();
-    string name;
-    cout << "Enter member's name: " << endl;
-    
-    // Check if the name is already in the system or name is valid
-    try{
-        getline(cin, name);
-        if (name.empty())
-            throw "Name is empty. Exiting...";
-        if(name.length() > 20)
-            throw "Name is too long.Exiting...";
-        
-        for(int i = 0; i < fb.getMembers().size(); i++)
-            //Check to see if there is another member with the same name
-            if(fb.getMembers()[i]->getName() == name)
-                throw "Name already exists. Exiting...";
-    }
-    catch (const char* msg){
-        cout << msg << endl;
-        exit(1);
-    }
-    
-    
-    // if name is legal we continue to get the date until its right
-    cout << "Enter member's birthday: (Day Month Year)" << endl;
-    
-    cin >> infoFromUser.birthDate.day ;
-    while ( infoFromUser.birthDate.day < 1 || infoFromUser.birthDate.day > 31) {
-        cout << "Invalid day! Please enter a valid day: " << endl;
-        cin >> infoFromUser.birthDate.day;
-    }
-
-    cin >> infoFromUser.birthDate.month ;
-    while ( infoFromUser.birthDate.month < 1 || infoFromUser.birthDate.month > 12) {
-        cout << "Invalid month! Please enter a valid month: " << endl;
-        cin >> infoFromUser.birthDate.month;
-    }
-
-
-    cin>> infoFromUser.birthDate.year;
-    while ( infoFromUser.birthDate.year < 1900 || infoFromUser.birthDate.year > 2022) {
-        cout << "Invalid year! Please enter a valid year: " << endl;
-        cin >> infoFromUser.birthDate.year;
-    }
-
-    getchar(); // This is to flush the buffer
-
-    return infoFromUser;
-}
 
 void enterDataToStartWith(FaceBook& fb){
     //Member 1:

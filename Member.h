@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 #include "Status.h"
-#include "Functions.h"
+#include "Common.h"
 
 
 class FanPage; // Forward declaration
@@ -23,7 +23,7 @@ class Member {
 public:
     //constructors and destructor
     Member() = default;
-    Member(Info infoFromUser);
+    Member(MemberInfo infoFromUser);
     Member(std::string name, int day, int month, int year);
     ~Member() = default;
     Member(const Member&) = default; // copy constructor

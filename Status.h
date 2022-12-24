@@ -13,13 +13,12 @@ public:
 
     //constructors and destructor
     Status();
-    Status(const std::string content);
+    Status(std::string content);
     ~Status() = default;
 
     // Operator overloading
     bool operator==(const Status& other) const; // Equality operator - required
     bool operator!=(const Status& other) const; // Inequality operator - required
-
 
     //Functions :
     std::string getContent() const;

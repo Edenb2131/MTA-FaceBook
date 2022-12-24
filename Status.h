@@ -11,10 +11,8 @@ class Status {
     time_t pTime;
 public:
 
-    //constructors and destructor
-    Status();
+    //constructor
     Status(std::string content);
-    ~Status() = default;
 
     // Operator overloading
     bool operator==(const Status& other) const; // Equality operator - required

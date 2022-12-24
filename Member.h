@@ -1,4 +1,3 @@
-
 #ifndef MTA_FACEBOOK_MEMBER_H
 #define MTA_FACEBOOK_MEMBER_H
 
@@ -8,26 +7,19 @@
 #include "Status.h"
 #include "Common.h"
 
-
 class FanPage; // Forward declaration
 class Status;  // Forward declaration
-
 
 class Member {
     std::string Name;
     Date Birthday;
     std::vector<Member*> Friends;
-    std::vector<Status*>  Posts;
-    std::vector<FanPage*>  FanPages;
+    std::vector<Status*> Posts;
+    std::vector<FanPage*> FanPages;
 
 public:
-    //constructors and destructor
-    Member() = default;
+    //constructor
     Member(MemberInfo infoFromUser);
-    Member(std::string name, int day, int month, int year);
-    ~Member() = default;
-    Member(const Member&) = default; // copy constructor
-    Member(Member&&) = default; // move constructor
 
     //getters :
     std::string getName() const;
@@ -50,7 +42,6 @@ public:
 
 
     //functions :
-    void addPost(); // Add a post to the member's posts
     void addPost(std::string content); // Add a post to the member's posts
     void printAllPosts() const; // Print all the posts of the member
     void printFriends() const; // Print all the friends of the member

@@ -7,7 +7,7 @@
 
 class FaceBook;
 
-struct Date{
+struct Date {
     int day;
     int month;
     int year;
@@ -15,7 +15,7 @@ struct Date{
     Date(int day, int month, int year){ this->day = day; this->month = month; this->year = year; }
 };
 
-struct MemberInfo{
+struct MemberInfo {
     std::string Name;
     Date birthDate;
 

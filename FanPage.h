@@ -15,10 +15,7 @@ class FanPage {
 
 public:
     //constructor and destructor
-    FanPage() = default;
     FanPage(std::string name);
-    ~FanPage() = default;
-    FanPage(const FanPage&) = default;
 
     //getters  :
     std::string getName() const;
@@ -40,7 +37,6 @@ public:
 
 
     //functions :
-    void addPost();
     void addPost(std::string content);
     void printAllPosts() const;
     void printFans() const;

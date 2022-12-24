@@ -70,12 +70,6 @@ bool FanPage::operator<=(const FanPage& other) const{
 
 // Functions :
 
-void FanPage::addPost() {
-    //getchar();
-    Status* newPost = new Status;
-    Posts.push_back(newPost);
-}
-
 void FanPage::addPost(string content) {
     Status* newPost = new Status(content);
     Posts.push_back(newPost);

@@ -60,4 +60,37 @@ public:
     void printTenLatestPostsOfFriends() const; // Print the latest 10 posts of all the member's friends
 };
 
+class MemberException {
+    std::string message;
+    
+    MemberException(std::string& message) : message(message) {
+        std::cout << message << std::endl;
+    }
+    
+    // Maybe if we use enum we can use it to print the message....
+    MemberException(int errorCode) {
+        switch (errorCode) {
+            case 1:
+                message = "Member already exists";
+                break;
+            case 2:
+                message = "Member doesn't exist";
+                break;
+            case 3:
+                message = "Member already friends with this member";
+                break;
+            case 4:
+                message = "Member is not friends with this member";
+                break;
+            case 5:
+                message = "Member already liked this fan page";
+                break;
+            default:
+                message = "Unknown error";
+                break;
+        }
+        std::cout << message << std::endl;
+    }
+};
+
 #endif //MTA_FACEBOOK_MEMBER_H

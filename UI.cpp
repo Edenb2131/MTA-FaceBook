@@ -52,7 +52,7 @@ void UI::process() {
     while (!finish) {
         try {
             switch (choice) {
-                case (MenuOptions)1: {
+                case MenuOptions(1): {
                     FB->addNewMember(getMemberInfoFromUser());
                     break;
                 }
@@ -77,7 +77,7 @@ void UI::process() {
                 }
                 case 6: {
                     int memberIndex = chooseMember();
-                    if (FB->getMembers()[memberIndex]->getFanPages().size() == 0) {
+                    if (FB->getMembers()[memberIndex]->getFanPages().empty()) {
                         cout << "You have no Liked pages !" << endl;
                         break;
                     }
@@ -184,7 +184,7 @@ void UI::process() {
                 }
             }
         }
-        catch (const char* msg) {
+        catch (const char* msg) { // is needed ?
             cout << msg << endl;
         }
         catch (const string& msg) {

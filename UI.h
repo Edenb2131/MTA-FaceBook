@@ -16,8 +16,11 @@ public:
     std::string getFanPageNameFromUser() const;
     int chooseMember() const;
     int chooseFriendOfMember(const Member& member) const;
+    int chooseStatusOfMember(const Member& member) const;
     int chooseFanPage() const;
     int chooseFanPageOfMember(const Member& member)  const;
+    int chooseStatusOfFanPage(const FanPage& fanPage) const;
+    bool handleComparingBetweenEntities() const;
     std::string getStatusFromUser() const;
 };
 

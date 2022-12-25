@@ -59,6 +59,10 @@ bool Member::operator>=(const Member &other) const {
     return (this->Friends.size() >= other.Friends.size());
 }
 
+bool Member::operator>(const FanPage &other) const {
+    return (this->FanPages.size() > other.getFans().size());
+}
+
 
 // Functions :
 

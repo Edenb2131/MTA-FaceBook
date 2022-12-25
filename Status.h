@@ -19,8 +19,7 @@ public:
     bool operator!=(const Status& other) const; // Inequality operator - required
 
     //Functions :
-    std::string getContent() const;
-    void setContent(std::string content);
+    const std::string getContent() const;
     void printStatus();
     std::string getTimePostPosted();
 };

@@ -20,8 +20,8 @@ public:
     FaceBook(const FaceBook&) = delete;
 
     //getters :
-    std::vector<Member*>& getMembers();
-    std::vector<FanPage*>& getFanPages();
+    std::vector<Member*>& getMembers() ;
+    std::vector<FanPage*>& getFanPages() ;
 
     //functions :
     void addNewMember(MemberInfo memberInfo); // add new member to the facebook

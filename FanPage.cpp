@@ -21,19 +21,6 @@ vector<Status*> FanPage::getPosts() const {
     return Posts;
 }
 
-// Setters :
-
-void FanPage::setName(string name) {
-    Name = name;
-}
-
-void FanPage::setFans(vector<Member*> fans) {
-    Fans = fans;
-}
-
-void FanPage::setPosts(vector<Status*> posts) {
-    Posts = posts;
-}
 
 // Operators :
 

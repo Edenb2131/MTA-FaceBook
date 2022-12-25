@@ -2,6 +2,13 @@
 #include <exception>
 using namespace std;
 
+enum MenuOptions {RegisterToFaceBookAsMember = 1,RegisterToFaceBookAsFanPage,
+        WritePostAsMember,WritePostAsFanPage,PrintAllPostOfAMember,PrintAllPostOfAFanPage,
+        PrintTenLastPostOfAMember,AddAFriend,DeleteAFriend,LikeAFanPage,
+        UnLikeAFanPage,PrintAllEntitiesAndTheirData,PrintAllMembersFriends,
+        PrintAllFanPagesFans,PrintAllFansOfAFanPage,CompareTwoMembers,
+        CompareTwoFanPages,CompareBetweenPosts,Exit};
+
 UI::UI(FaceBook* fb) {
     if (fb != nullptr)
         FB = fb;
@@ -45,7 +52,7 @@ void UI::process() {
     while (!finish) {
         try {
             switch (choice) {
-                case 1: {
+                case (MenuOptions)1: {
                     FB->addNewMember(getMemberInfoFromUser());
                     break;
                 }

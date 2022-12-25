@@ -22,11 +22,6 @@ public:
     std::vector<Member*> getFans() const;
     std::vector<Status*> getPosts() const;
 
-    //setters :
-    void setName(std:: string name);
-    void setFans(std::vector<Member*> fans);
-    void setPosts(std::vector<Status*> posts);
-
     //operators :
     void operator+=(Member* fanToAdd); // Add fan operator - required
     void operator-=(Member* fanToRemove); // Remove fan operator - required

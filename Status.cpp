@@ -18,13 +18,10 @@ bool Status::operator!=(const Status &other) const {
     return (Content != other.Content);
 }
 
-string Status::getContent() const {
+const string Status::getContent() const {
     return Content;
 }
 
-void Status::setContent(string content) {
-    Content = content;
-}
 
 string Status::getTimePostPosted(){
     return ctime(&pTime);

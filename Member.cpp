@@ -257,6 +257,12 @@ void Member::printTenLatestPostsOfFriends() const{
     cout << endl;
 }
 
+std::ostream &operator<<(ostream &os, const Member &member) {
+    member.printMember();
+    return os;
+}
+
+
 
 
 

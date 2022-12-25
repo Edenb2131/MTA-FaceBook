@@ -3,6 +3,13 @@
 #include "FaceBook.h"
 #include "Common.h"
 
+enum MenuOptions {RegisterToFaceBookAsMember = 1,RegisterToFaceBookAsFanPage,
+    WritePostAsMember,WritePostAsFanPage,PrintAllPostOfAMember,PrintAllPostOfAFanPage,
+    PrintTenLastPostOfAMember,AddAFriend,DeleteAFriend,LikeAFanPage,
+    UnLikeAFanPage,PrintAllEntitiesAndTheirData,PrintAllMembersFriends,
+    PrintAllFanPagesFans,PrintAllFansOfAFanPage,CompareTwoMembers,
+    CompareTwoFanPages,CompareBetweenPosts,Exit};
+
 class UI {
 private:
   FaceBook* FB;
@@ -10,7 +17,7 @@ private:
 public:
     UI(FaceBook* fb);
 
-    int menu() const;
+    MenuOptions menu() const;
     void process();
     MemberInfo getMemberInfoFromUser() const;
     std::string getFanPageNameFromUser() const;

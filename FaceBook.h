@@ -14,12 +14,12 @@ class FaceBook {
 
 public:
     //constructor destructor
-    //TODO: ask Eyal about deleting the constructor "default"!!!
     FaceBook() = default;
     ~FaceBook();
     FaceBook(const FaceBook&) = delete;
 
     //getters :
+    // TODO: getMembers and getFanPages should be const.
     std::vector<Member*>& getMembers() ;
     std::vector<FanPage*>& getFanPages() ;
 

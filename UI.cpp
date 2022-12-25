@@ -1,13 +1,7 @@
 #include "UI.h"
+#include "CommonExceptions.h"
 #include <exception>
 using namespace std;
-
-enum MenuOptions {RegisterToFaceBookAsMember = 1,RegisterToFaceBookAsFanPage,
-        WritePostAsMember,WritePostAsFanPage,PrintAllPostOfAMember,PrintAllPostOfAFanPage,
-        PrintTenLastPostOfAMember,AddAFriend,DeleteAFriend,LikeAFanPage,
-        UnLikeAFanPage,PrintAllEntitiesAndTheirData,PrintAllMembersFriends,
-        PrintAllFanPagesFans,PrintAllFansOfAFanPage,CompareTwoMembers,
-        CompareTwoFanPages,CompareBetweenPosts,Exit};
 
 UI::UI(FaceBook* fb) {
     if (fb != nullptr)
@@ -17,7 +11,7 @@ UI::UI(FaceBook* fb) {
         throw exception();
 }
 
-int UI::menu() const {
+MenuOptions UI::menu() const {
     cout << endl;
     int choice;
     cout << "Please choose an action from the list below: " << endl;
@@ -42,31 +36,34 @@ int UI::menu() const {
     cout << "Enter 19 to exit" << endl;
 
     cin >> choice;
-    return choice;
+    return (MenuOptions)choice;
 }
 
 void UI::process() {
     bool finish = false;
-    int choice = menu();
+    MenuOptions choice = menu();
 
     while (!finish) {
         try {
             switch (choice) {
-                case MenuOptions(1): {
+                case MenuOptions::RegisterToFaceBookAsMember: {
                     FB->addNewMember(getMemberInfoFromUser());
                     break;
                 }
-                case 2: {
+                case MenuOptions::RegisterToFaceBookAsFanPage: {
                     FB->addNewPage(getFanPageNameFromUser());
                     break;
                 }
+                // TODO: complete enum...
                 case 3: {
                     int memberIndex = chooseMember();
+                    // TODO: FB->AddPostToMemeber(memberIndex, status);
                     FB->getMembers()[memberIndex]->addPost(getStatusFromUser());
                     break;
                 }
                 case 4: {
                     int fanPageIndex = chooseFanPage();
+                    // TODO: FB->AddPostToFanPage(memberIndex, status);
                     FB->getFanPages()[fanPageIndex]->addPost(getStatusFromUser());
                     break;
                 }
@@ -146,11 +143,11 @@ void UI::process() {
                     int firstMemberIndex = chooseMember();
                     cout << "Please choose the second member: " << endl;
                     int secondMemberIndex = chooseMember();
-            
-                    if (firstMemberIndex == secondMemberIndex)
-                        throw "you cannot compare between the same member !"; //////////////////////////////
-            
-            
+
+                    if (firstMemberIndex == secondMemberIndex) {
+                        throw InvalidInputException("member indices should be different for comparison. Received " + std::to_string(firstMemberIndex+1) + " twice.");
+                    }
+
                     if (*FB->getMembers()[firstMemberIndex] > *FB->getMembers()[secondMemberIndex])
                         cout << "The first member is more popular than the second member" << endl;
                     else
@@ -164,9 +161,8 @@ void UI::process() {
                     int secondFanPageIndex = chooseFanPage();
             
                     if (firstFanPageIndex == secondFanPageIndex)
-                        throw "you cannot compare between the same fan pages !"; //////////////////////////////
-            
-            
+                        throw InvalidInputException("fan page indices should be different for comparison. Received "  +  std::to_string(firstFanPageIndex+1) + " twice.");
+
                     if (*FB->getFanPages()[firstFanPageIndex] > *FB->getFanPages()[secondFanPageIndex])
                         cout << "The first fan page is more popular than the second fan page" << endl;
                     else
@@ -184,14 +180,18 @@ void UI::process() {
                 }
             }
         }
-        catch (const char* msg) { // is needed ?
-            cout << msg << endl;
-        }
-        catch (const string& msg) {
-            cout << msg << endl;
-        }
-        catch (const int& msg) {
-            cout << msg << endl;
+// TODO: remove redundant catches.
+        //        catch (const char* msg) { // is needed ?
+//            cout << msg << endl;
+//        }
+//        catch (const string& msg) {
+//            cout << msg << endl;
+//        }
+//        catch (const int& msg) {
+//            cout << msg << endl;
+//        }
+        catch (const InvalidInputException& exp) {
+            cout << "Invalid input: " << exp.what() << endl;
         }
         catch (const exception& msg) {
             cout << msg.what() << endl;
@@ -249,6 +249,7 @@ MemberInfo UI::getMemberInfoFromUser() const {
         cin >> year;
     }
 
+    // TODO: change to cin.ignore().
     getchar(); // This is to flush the buffer
 
     return MemberInfo(name, Date(day, month, year));
@@ -396,8 +397,9 @@ bool UI::handleComparingBetweenEntities() const {
     int statusIndexOfFirstMember, statusIndexOfFirstFanPage, statusIndexOfSecondMember, statusIndexOfSecondFanPage;
     Member *firstMember = nullptr, *secondMember = nullptr;
     FanPage *firstFanPage = nullptr, *secondFanPage = nullptr;
-    cout << "Do you wish to choose member or fan page? Enter 1 for member, 2 for fan page \n" << endl;
-    int res1 = 0, res2 = 0; cin >> res1;
+    cout << "Do you wish to choose member or fan page? Enter 1 for member, 2 for fan page." << endl;
+    int res1 = 0;
+    cin >> res1;
     try {
         if (res1 == 1) {
             cout << "Please choose the first member: " << endl;
@@ -414,7 +416,8 @@ bool UI::handleComparingBetweenEntities() const {
         else
             throw "Invalid input in handleComparingBetweenEntities"; //////////////////////////////////////////.// need to implement throw exception
         
-        cout << "Do you wish to choose member or fan page? Enter 1 for member, 2 for fan page \n" << endl;
+        cout << "Do you wish to choose member or fan page? Enter 1 for member, 2 for fan page." << endl;
+        int res2 = 0;
         cin >> res2;
         if (res2 == 1) {
             cout << "Please choose the second member: " << endl;

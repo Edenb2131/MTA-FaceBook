@@ -34,18 +34,17 @@ public:
 };
 
 
-class UIException : public std::exception {
-    std::string message;
+class InvalidInputException : public std::exception {
+private:
+    std::string data;
 public:
-    UIException(std::string message) : message(message) {}
-    
-    UIException(const char* message) : message(message) {}
-    
-    const char* what() const noexcept override {
-        return message.c_str();
+    InvalidInputException(const std::string& str){
+        data = str;
     }
-    
-    
+
+    const char* what() const noexcept override {
+        return data.c_str();
+    }
 };
 
 

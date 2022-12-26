@@ -66,17 +66,15 @@ bool Member::operator>(const FanPage &other) const {
 
 // Functions :
 
-void Member::addFriend(Member *friendToAdd, int neededToBeAdded) {
+void Member::addFriend(Member *friendToAdd, int connected) {
     int i;
-
     // Checking to see if not trying to add yourself
-    if(this == friendToAdd){
-        throw MemberException("You cannot add yourself !");
+    if (this == friendToAdd){
+        throw MemberException("You cannot friend yourself!");
         
     }
-
     // Need to add the friend to the friend's friend list as well
-    if(neededToBeAdded == false ){
+    if(!connected){
         friendToAdd->addFriend(this, true);
     }
 
@@ -84,38 +82,38 @@ void Member::addFriend(Member *friendToAdd, int neededToBeAdded) {
     int size = this->Friends.size();
     for (i = 0; i < size; i++) {
         if (this->Friends[i]->Name == friendToAdd->Name) {
-            throw MemberException("Already friends !");
+            throw MemberException("Members are already friends!");
         }
     }
-
     Friends.push_back(friendToAdd);
 }
 
-void Member::removeFriend(Member *friendToRemove) {
+void Member::removeFriend(Member *friendToRemove, int connected) {
+
+    // Checking to see if not trying to add yourself
+    if (this == friendToRemove){
+        throw MemberException("You cannot unfriend yourself!");
+    }
     int friendsIndex;
     bool found = false;
     int size = this->Friends.size();
-    // Check if possible in Theta(1)
     for (friendsIndex = 0; friendsIndex < size; friendsIndex++) {
-        if (this->Friends[friendsIndex]->Name != friendToRemove->Name) {
-            found = false;
-        }
-        else {
+        if (this->Friends[friendsIndex]->Name == friendToRemove->Name) {
             found = true;
             break;
         }
     }
-
     if (!found)
-        return;
+        throw MemberException("Friend was not found!");
 
     Friends.erase(Friends.begin() + friendsIndex);
 
-    //// Need to remove the friend from the friend's friend list as well ////
-    friendToRemove->removeFriend(this);
+    if (connected) { // Need to delete the friend to the friend's friend list as well
+        friendToRemove->removeFriend(this, false);
+    }
 }
 
-void Member::likeFanPage(FanPage *fanPageToLike) {
+void Member::likeFanPage(FanPage *fanPageToLike, int connected) {
     int i;
     int size = this->FanPages.size();
     // Checking to see if needed to add that fan-page or not
@@ -124,33 +122,28 @@ void Member::likeFanPage(FanPage *fanPageToLike) {
             return;
         }
     }
-
     FanPages.push_back(fanPageToLike);
 
     // Need to add the member to the page's fans as well
     fanPageToLike->addFan(this);
 }
 
-void Member::unlikeFanPage(FanPage *fanPageToUnlike) {
+void Member::unlikeFanPage(FanPage *fanPageToUnlike, int connected) {
     int pagesIndex;
     bool found = false;
     int size = this->FanPages.size();
-    for (pagesIndex = 0; pagesIndex < size; pagesIndex++) {
+    for (pagesIndex = 0; pagesIndex < size && !found; pagesIndex++) {
         if (FanPages[pagesIndex]->getName() == fanPageToUnlike->getName()) {
-            found = false;
-        }
-        else {
             found = true;
             break;
         }
     }
-
-    if (!found)
-        return;
-
+    if (!found) {
+        throw MemberException("Fan page was not found!");
+    }
     FanPages.erase(FanPages.begin() + pagesIndex);
 
-    //// Need to remove the member from the page's fans list as well ////
+//  Need to remove the member from the page's fans list as well.
     fanPageToUnlike->removeFan(this);
 }
 
@@ -162,7 +155,7 @@ void Member::addPost(string content) {
 void Member::printFriends() const{
     int size = Friends.size();
     if(size == 0){
-        cout << "You have no friends ! " << endl;
+        cout << "You have no friends! " << endl;
     }
     else {
         cout << "Friends of " << "'" << Name << "'" << " are: " ;
@@ -178,7 +171,7 @@ void Member::printFriends() const{
 void Member::printLikedPages() const{
     int size = FanPages.size();
     if (size == 0) {
-        cout << "You have no liked pages !" << endl;
+        cout << "You have no liked pages!" << endl;
     }
     else {
         cout << "Liked pages of " << "'" << Name << "'" << " are: " ;
@@ -194,7 +187,7 @@ void Member::printLikedPages() const{
 void Member::printAllPosts() const{
     int size = Posts.size();
     if(size == 0){
-        cout << "You have no posts ! " << endl;
+        cout << "You have no posts! " << endl;
     }
     else {
         cout << "Posts of " << "'" << Name << "'" << " are:" << endl;
@@ -227,29 +220,21 @@ void Member::printTenLatestPosts() const {
     }
 }
 
-// Getting a friend's name and printing his 10 latest posts
-void Member::printFriendsTenLatestPosts(Member *friendToPrintLatestPosts) const{
-    cout << "These are the latest posts of : '" << friendToPrintLatestPosts->getName() << "' "<< endl;
-    friendToPrintLatestPosts->printTenLatestPosts();
-    cout << endl;
-}
-
 // Printing all the posts of all the friends
 void Member::printTenLatestPostsOfFriends() const{
     int size = Friends.size();
-    cout << "These are your 10 latest posts of your friends: " << endl;
     if(size == 0){
-        cout << "You have no friends ! " << endl;
+        cout << "You have no friends! " << endl;
+        return;
     }
-    else {
-        for (int i = 0; i < size; i++) {
-            if (Friends[i]->Posts.size() < 10) {
-                Friends[i]->printAllPosts();
-            }
-            else {
-                for (int j = Friends[i]->Posts.size()  - 10; j < Friends[i]->Posts.size() ; j++) {
-                    cout << Friends[i]->getPosts()[j]->getContent() << endl;
-                }
+    cout << "These are your 10 latest posts of your friends: " << endl;
+    for (int i = 0; i < size; i++) {
+        if (Friends[i]->Posts.size() < 10) {
+            Friends[i]->printAllPosts();
+        }
+        else {
+            for (int j = Friends[i]->Posts.size()  - 10; j < Friends[i]->Posts.size() ; j++) {
+                cout << Friends[i]->getPosts()[j]->getContent() << endl;
             }
         }
     }

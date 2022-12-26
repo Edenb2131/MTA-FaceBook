@@ -79,7 +79,8 @@ void FaceBook::printAllEntities() const {
     int numOfFanPagesOverAll = (int)FanPages.size();
     
     if(numOfMembersOverAll == 0 && numOfFanPagesOverAll == 0){
-        throw FaceBookException("There are no members and fan pages in the facebook");
+        cout << "There are no members and fan pages in the facebook.";
+        return;
     }
     
     cout << "All entities are:" << endl;
@@ -102,7 +103,6 @@ void FaceBook::printAllEntities() const {
 void FaceBook::connectTwoMembers(int firstMemberIndex, int secondMemberIndex) {
 
     if(firstMemberIndex == secondMemberIndex){
-        //cout << "You can't connect a member to himself." << endl;
         throw MemberException("You can't connect a member to himself.");
     }
 
@@ -142,8 +142,8 @@ void FaceBook::connectMemberAndFanPage(int memberIndex, int fanPageIndex) {
 
 void FaceBook::disconnectMemberAndFanPage(int memberIndex, int fanPageIndex) {
     int i;
-    int size = getFanPages().size();
-    if(Members[memberIndex]->getFanPages().size() == 0){
+    int size = Members[memberIndex]->getFanPages().size();
+    if(size == 0){
         return;
     }
 
@@ -151,11 +151,8 @@ void FaceBook::disconnectMemberAndFanPage(int memberIndex, int fanPageIndex) {
     bool connected = false;
     for (i = 0; i < size; i++) {
 
-        string page2Name = FanPages[i]->getName();
+        string page2Name = Members[memberIndex]->getFanPages()[i]->getName();
         if (page1Name == page2Name) {
-            connected = false;
-        }
-        else {
             connected = true;
             break;
         }
@@ -163,7 +160,6 @@ void FaceBook::disconnectMemberAndFanPage(int memberIndex, int fanPageIndex) {
 
     if (!connected) {
         throw MemberException("This member does not like this page!");
-        return;
     }
     Members[memberIndex]->unlikeFanPage(FanPages[i]);
     cout << "Page unliked successfully!" << endl;

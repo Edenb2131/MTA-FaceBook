@@ -238,8 +238,7 @@ MemberInfo UI::getMemberInfoFromUser() const {
         cin >> year;
     }
 
-    // TODO: change to cin.ignore().
-    getchar(); // This is to flush the buffer
+    cin.ignore(); // This is to flush the buffer
 
     return MemberInfo(name, Date(day, month, year));
 }

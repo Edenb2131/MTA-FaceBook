@@ -51,12 +51,11 @@ public:
     void printFriends() const; // Print all the friends of the member
     void printLikedPages() const; // Print all the liked pages of the member
     void printMember() const; // Print all the member's info
-    void addFriend(Member *friendToAdd, int neededToBeAdded = false); // Add a friend to the member's friends
-    void removeFriend(Member *friendToRemove); // Remove a friend from the member's friends
-    void likeFanPage(FanPage *fanPageToLike); // Like a fan page
-    void unlikeFanPage(FanPage *fanPageToUnlike); // Unlike a fan page
+    void addFriend(Member *friendToAdd, int connected = false); // Add a friend to the member's friends
+    void removeFriend(Member *friendToRemove, int connected = false); // Remove a friend from the member's friends
+    void likeFanPage(FanPage *fanPageToLike, int connected = false); // Like a fan page
+    void unlikeFanPage(FanPage *fanPageToUnlike, int connected = false); // Unlike a fan page
     void printTenLatestPosts() const; // Print the ten latest posts of the member
-    void printFriendsTenLatestPosts(Member *friendToPrintLatestPosts) const; // Print the latest 10 posts of a friend
     void printTenLatestPostsOfFriends() const; // Print the latest 10 posts of all the member's friends
 };
 

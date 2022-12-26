@@ -4,7 +4,7 @@
 using namespace std;
 
 //constructor
-FanPage::FanPage(string name) :  // Using here c'tor init line
+FanPage::FanPage(string name) :
     Name(name) {}
 
 // Getters :
@@ -63,8 +63,12 @@ void FanPage::addPost(string content) {
 }
 
 void FanPage::printAllPosts() const {
-    int size = Posts.size();
+    if (Posts.empty()) {
+        cout << "No posts for page!" << endl;
+        return;
+    }
     cout << "Posts for page " << "'" << Name << "'" << " are:" << endl;
+    int size = Posts.size();
     for (int i = 0; i < size; i++){
         cout <<" "<< i+1 << ". " ;
         Posts[i]->printStatus();
@@ -103,25 +107,26 @@ void FanPage::removeFan(Member* fanToRemove) {
     int numOfFans = Fans.size();
 
     for (fansIndex = 0; fansIndex < numOfFans; fansIndex++) {
-        if (Fans[fansIndex]->getName() != fanToRemove->getName()) {
-            found = false;
-        }
-        else {
+        if (Fans[fansIndex]->getName() == fanToRemove->getName()) {
             found = true;
             break;
         }
     }
 
     if (!found)
-        return;
+        throw FanPageException("Fan was not found!");
 
     Fans.erase(Fans.begin() + fansIndex);
 
-    //// Need to remove the page from the member's likes pages list as well ////
+    // Need to remove the page from the member's likes pages list as well
     fanToRemove->unlikeFanPage(this);
 }
 
 void FanPage::printFans() const {
+    if (Fans.empty()) {
+        cout << "No fans for page!" << endl;
+        return;
+    }
     int numOfFans = Fans.size();
     cout << "Fans of page " << "'" << Name << "'" << " are:" << endl;
     for (int i = 0; i < numOfFans; i++){

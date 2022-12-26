@@ -1,5 +1,4 @@
 #include "UI.h"
-#include "CommonExceptions.h"
 #include <exception>
 using namespace std;
 
@@ -148,13 +147,15 @@ void UI::process() {
                 }
             }
         }
+        //TODO: make exception for naming a member or a page in white spaces (such as \n...)
+
         catch (const MemberException& exp) {
             cout << exp.what() << endl;
         }
         catch (const FanPageException& exp) {
             cout << exp.what() << endl;
         }
-        catch (const UIException& exp) {
+        catch (const InvalidInputException& exp) {
             cout << "Invalid input: " << exp.what() << endl;
         }
         
@@ -174,21 +175,21 @@ void UI::process() {
 
 MemberInfo UI::getMemberInfoFromUser() const {
     int day, month, year;
-    getchar();
+    cin.ignore(); // This is to flush the buffer
     string name;
     cout << "Enter member's name: " << endl;
 
     // Check if the name is already in the system or name is valid
     getline(cin, name);
     if (name.empty())
-        throw MemberException("Name is empty. Exiting to main menu...");
+        throw InvalidInputException("Name is empty. Exiting to main menu...");
     if(name.length() > 30)
-        throw MemberException("Name is too long.Exiting to main menu...");
+        throw InvalidInputException("Name is too long. Exiting to main menu...");
 
     for(int i = 0; i < FB->getMembers().size(); i++) {
         //Check to see if there is another member with the same name ( not case-sensitive )
         if (FB->getMembers()[i]->getName() == name)
-            throw MemberException("Name already exists. Exiting to main menu...");
+            throw InvalidInputException("Name already exists. Exiting to main menu...");
     }
     // if name is legal we continue to get the date until its right
     cout << "Enter member's birthday: (Day Month Year)" << endl;
@@ -196,18 +197,19 @@ MemberInfo UI::getMemberInfoFromUser() const {
     
     // Here we are not looking for throwing an error, we conclude that the name was OK, so we continue
     cin >> day ;
+    cin >> month;
+    cin >> year;
+
     while (day < 1 || day > 31) {
         cout << "Invalid day! Please enter a valid day: " << endl;
         cin >> day;
     }
 
-    cin >> month ;
     while (month < 1 || month > 12) {
         cout << "Invalid month! Please enter a valid month: " << endl;
         cin >> month;
     }
 
-    cin >> year;
     while (year < 1900 || year > 2022) {
         cout << "Invalid year! Please enter a valid year: " << endl;
         cin >> year;
@@ -250,7 +252,7 @@ int UI::chooseFriendOfMember(const Member &member) const {
     int index = -1;
     int numOfFriends = (int)member.getFriends().size();
     if (numOfFriends == 0){
-        throw MemberException("This member has no friends.Exiting to main menu...");
+        throw MemberException("This member has no friends. Exiting to main menu...");
     }
 
     cout << "Please choose a member from the list below:" << endl;
@@ -326,7 +328,7 @@ int UI::chooseStatusOfFanPage(const FanPage &fanPage) const {
     int index = -1;
     int numOfStatuses = (int)fanPage.getPosts().size();
     if(numOfStatuses == 0){
-        throw UIException("This fan page has no statuses. Exiting to main menu...");
+        throw FaceBookException("This fan page has no statuses. Exiting to main menu...");
     }
     
     cout << "Please choose a status from the list below:" << endl;
@@ -373,8 +375,8 @@ bool UI::handleComparingBetweenEntities() const {
             firstFanPage = FB->getFanPages()[firstFanPageIndex];
         }
         else
-            throw UIException("Invalid input in comparing between entities.");
-        
+            throw InvalidInputException("selected invalid type.");
+
         cout << "For the second entity, " ;
         cout << "Do you wish to choose a post from a member or fan page? Enter 1 for member, 2 for fan page." << endl;
         int res2 = 0;
@@ -392,10 +394,10 @@ bool UI::handleComparingBetweenEntities() const {
             secondFanPage = FB->getFanPages()[secondFanPageIndex];
         }
         else
-            throw UIException("Invalid input in comparing between entities.");
+            throw InvalidInputException("selected invalid type.");
             
        if(firstMember == nullptr && secondMember == nullptr && firstFanPage == nullptr && secondFanPage == nullptr)
-            throw UIException("Invalid input in comparing between entities.");
+            throw InvalidInputException("nothing was selected for comparison.");
             
             
         if (res1 == 1 && res2 == 1) {
@@ -437,7 +439,7 @@ bool UI::handleComparingBetweenMembers() const {
     int secondMemberIndex = chooseMember();
     
     if (firstMemberIndex == secondMemberIndex) {
-        throw UIException("member indices should be different for comparison. Received " + std::to_string(firstMemberIndex+1) + " twice.");
+        throw InvalidInputException("member indices should be different for comparison. Received " + std::to_string(firstMemberIndex+1) + " twice.");
     }
     
     if (*FB->getMembers()[firstMemberIndex] > *FB->getMembers()[secondMemberIndex])
@@ -455,7 +457,7 @@ bool UI::handleComparingBetweenFanPages() const {
     int secondFanPageIndex = chooseFanPage();
     
     if (firstFanPageIndex == secondFanPageIndex)
-        throw UIException("fan page indices should be different for comparison. Received "  +  std::to_string(firstFanPageIndex+1) + " twice.");
+        throw InvalidInputException("fan page indices should be different for comparison. Received "  +  std::to_string(firstFanPageIndex+1) + " twice.");
     
     if (*FB->getFanPages()[firstFanPageIndex] > *FB->getFanPages()[secondFanPageIndex])
         cout << "The first fan page is more popular than the second fan page" << endl;

@@ -148,6 +148,8 @@ void UI::process() {
                 }
             }
         }
+        //TODO: make exception for naming a member or a page in white spaces (such as \n...)
+
         catch (const MemberException& exp) {
             cout << exp.what() << endl;
         }
@@ -183,7 +185,7 @@ MemberInfo UI::getMemberInfoFromUser() const {
     if (name.empty())
         throw MemberException("Name is empty. Exiting to main menu...");
     if(name.length() > 30)
-        throw MemberException("Name is too long.Exiting to main menu...");
+        throw MemberException("Name is too long. Exiting to main menu...");
 
     for(int i = 0; i < FB->getMembers().size(); i++) {
         //Check to see if there is another member with the same name ( not case-sensitive )
@@ -196,18 +198,19 @@ MemberInfo UI::getMemberInfoFromUser() const {
     
     // Here we are not looking for throwing an error, we conclude that the name was OK, so we continue
     cin >> day ;
+    cin >> month;
+    cin >> year;
+
     while (day < 1 || day > 31) {
         cout << "Invalid day! Please enter a valid day: " << endl;
         cin >> day;
     }
 
-    cin >> month ;
     while (month < 1 || month > 12) {
         cout << "Invalid month! Please enter a valid month: " << endl;
         cin >> month;
     }
 
-    cin >> year;
     while (year < 1900 || year > 2022) {
         cout << "Invalid year! Please enter a valid year: " << endl;
         cin >> year;

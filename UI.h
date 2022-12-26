@@ -27,6 +27,8 @@ public:
     int chooseFanPage() const;
     int chooseFanPageOfMember(const Member& member)  const;
     int chooseStatusOfFanPage(const FanPage& fanPage) const;
+    bool handleComparingBetweenMembers() const;
+    bool handleComparingBetweenFanPages() const;
     bool handleComparingBetweenEntities() const;
     std::string getStatusFromUser() const;
 };

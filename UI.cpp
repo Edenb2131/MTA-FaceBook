@@ -130,34 +130,11 @@ void UI::process() {
                     break;
                 }
                 case MenuOptions::CompareTwoMembers: {
-                    cout << "Please choose the first member: " << endl;
-                    int firstMemberIndex = chooseMember();
-                    cout << "Please choose the second member: " << endl;
-                    int secondMemberIndex = chooseMember();
-
-                    if (firstMemberIndex == secondMemberIndex) {
-                        throw UIException("member indices should be different for comparison. Received " + std::to_string(firstMemberIndex+1) + " twice.");
-                    }
-
-                    if (*FB->getMembers()[firstMemberIndex] > *FB->getMembers()[secondMemberIndex])
-                        cout << "The first member is more popular than the second member" << endl;
-                    else
-                        cout << "The second member is more popular than the first member" << endl;
+                    handleComparingBetweenMembers();
                     break;
                 }
                 case MenuOptions::CompareTwoFanPages: {
-                    cout << "Please choose the first fan page: " << endl;
-                    int firstFanPageIndex = chooseFanPage();
-                    cout << "Please choose the second fan page: " << endl;
-                    int secondFanPageIndex = chooseFanPage();
-            
-                    if (firstFanPageIndex == secondFanPageIndex)
-                        throw UIException("fan page indices should be different for comparison. Received "  +  std::to_string(firstFanPageIndex+1) + " twice.");
-
-                    if (*FB->getFanPages()[firstFanPageIndex] > *FB->getFanPages()[secondFanPageIndex])
-                        cout << "The first fan page is more popular than the second fan page" << endl;
-                    else
-                        cout << "The second fan page is more popular than the first fan page" << endl;
+                    handleComparingBetweenFanPages();
                     break;
                 }
                 case MenuOptions::CompareBetweenPosts: {
@@ -171,22 +148,22 @@ void UI::process() {
                 }
             }
         }
-// TODO: remove redundant catches.
-        //        catch (const char* msg) { // is needed ?
-//            cout << msg << endl;
-//        }
-//        catch (const string& msg) {
-//            cout << msg << endl;
-//        }
-//        catch (const int& msg) {
-//            cout << msg << endl;
-//        }
+        catch (const MemberException& exp) {
+            cout << exp.what() << endl;
+        }
+        catch (const FanPageException& exp) {
+            cout << exp.what() << endl;
+        }
         catch (const UIException& exp) {
             cout << "Invalid input: " << exp.what() << endl;
         }
+        
+        // This one is for everything else that inherits from exception
         catch (const exception& msg) {
             cout << msg.what() << endl;
         }
+        
+        //This one is for any error that did not catch by the previous catches
         catch (...) {
             cout << "Unknown error" << endl;
         }
@@ -202,26 +179,22 @@ MemberInfo UI::getMemberInfoFromUser() const {
     cout << "Enter member's name: " << endl;
 
     // Check if the name is already in the system or name is valid
-    try{
-        getline(cin, name);
-        if (name.empty())
-            throw MemberException("Name is empty. Exiting...");
-        if(name.length() > 30)
-            throw MemberException("Name is too long.Exiting...");
+    getline(cin, name);
+    if (name.empty())
+        throw MemberException("Name is empty. Exiting to main menu...");
+    if(name.length() > 30)
+        throw MemberException("Name is too long.Exiting to main menu...");
 
-        for(int i = 0; i < FB->getMembers().size(); i++)
-            //Check to see if there is another member with the same name
-            if(FB->getMembers()[i]->getName() == name)
-                throw MemberException("Name already exists. Exiting...");
+    for(int i = 0; i < FB->getMembers().size(); i++) {
+        //Check to see if there is another member with the same name ( not case-sensitive )
+        if (FB->getMembers()[i]->getName() == name)
+            throw MemberException("Name already exists. Exiting to main menu...");
     }
-    catch (const char* msg){
-        cout << msg << endl;
-        exit(1);
-    }
-
     // if name is legal we continue to get the date until its right
     cout << "Enter member's birthday: (Day Month Year)" << endl;
 
+    
+    // Here we are not looking for throwing an error, we conclude that the name was OK, so we continue
     cin >> day ;
     while (day < 1 || day > 31) {
         cout << "Invalid day! Please enter a valid day: " << endl;
@@ -258,8 +231,7 @@ int UI::chooseMember() const {
     int numOfMembersOverAll = (int)FB->getMembers().size();
 
     if (numOfMembersOverAll == 0) {
-        cout << "There are no members using FaceBook!" << endl;
-        return index;
+        throw FaceBookException("There are no members using FaceBook! Exiting to main menu...");
     }
 
     cout << "Please choose a member from the list below:" << endl;
@@ -278,8 +250,7 @@ int UI::chooseFriendOfMember(const Member &member) const {
     int index = -1;
     int numOfFriends = (int)member.getFriends().size();
     if (numOfFriends == 0){
-        cout << "This member has no friends." << endl;
-        return index;
+        throw MemberException("This member has no friends.Exiting to main menu...");
     }
 
     cout << "Please choose a member from the list below:" << endl;
@@ -298,8 +269,7 @@ int UI::chooseStatusOfMember(const Member &member) const {
     int index = -1;
     int numOfStatuses = (int)member.getPosts().size();
     if(numOfStatuses == 0){
-        cout << "This member has no statuses." << endl;
-        return index; //////////////////////////////////////////.// need to implement throw exception
+        throw MemberException("This member has no statuses. Exiting to main menu...");
     }
     
     cout << "Please choose a status from the list below:" << endl;
@@ -319,8 +289,7 @@ int UI::chooseFanPage() const {
     int numOfFanPagesOverAll = (int)FB->getFanPages().size();
 
     if (numOfFanPagesOverAll == 0) {
-        cout << "There are no fan pages in facebook!" << endl;
-        return index;
+        throw FanPageException("There are no fan pages using FaceBook! Exiting to main menu...");
     }
     cout << "Please choose a fan page from the list below:" << endl;
     while(index < 0 || index > numOfFanPagesOverAll) {
@@ -338,8 +307,7 @@ int UI::chooseFanPageOfMember(const Member &member) const {
     int index = -1;
     int numOfFanPages = (int)member.getFanPages().size();
     if(numOfFanPages == 0){
-        cout << "This member has no liked fan pages." << endl;
-        return index;
+        throw MemberException("This member has no liked fan pages. Exiting to main menu...");
     }
 
     cout << "Please choose a fan page from the list below:" << endl;
@@ -358,8 +326,7 @@ int UI::chooseStatusOfFanPage(const FanPage &fanPage) const {
     int index = -1;
     int numOfStatuses = (int)fanPage.getPosts().size();
     if(numOfStatuses == 0){
-        cout << "This fan page has no statuses." << endl;
-        return index;
+        throw UIException("This fan page has no statuses. Exiting to main menu...");
     }
     
     cout << "Please choose a status from the list below:" << endl;
@@ -368,6 +335,8 @@ int UI::chooseStatusOfFanPage(const FanPage &fanPage) const {
             cout << "Enter " << i + 1 << " for " << fanPage.getPosts()[i]->getContent() << endl;
         }
         cin >> index;
+        
+        // We want to make sure that the user enters a valid input and no throw to main menu
         if(index < 0 || index > numOfStatuses)
             cout << "Invalid input. Enter again." << endl;
     }
@@ -387,7 +356,7 @@ bool UI::handleComparingBetweenEntities() const {
     int statusIndexOfFirstMember, statusIndexOfFirstFanPage, statusIndexOfSecondMember, statusIndexOfSecondFanPage;
     Member *firstMember = nullptr, *secondMember = nullptr;
     FanPage *firstFanPage = nullptr, *secondFanPage = nullptr;
-    cout << "Do you wish to choose member or fan page? Enter 1 for member, 2 for fan page." << endl;
+    cout << "Do you wish to choose a post from a member or fan page? Enter 1 for member, 2 for fan page." << endl;
     int res1 = 0;
     cin >> res1;
     try {
@@ -404,9 +373,10 @@ bool UI::handleComparingBetweenEntities() const {
             firstFanPage = FB->getFanPages()[firstFanPageIndex];
         }
         else
-            throw "Invalid input in handleComparingBetweenEntities"; //////////////////////////////////////////.// need to implement throw exception
+            throw UIException("Invalid input in comparing between entities.");
         
-        cout << "Do you wish to choose member or fan page? Enter 1 for member, 2 for fan page." << endl;
+        cout << "For the second entity, " ;
+        cout << "Do you wish to choose a post from a member or fan page? Enter 1 for member, 2 for fan page." << endl;
         int res2 = 0;
         cin >> res2;
         if (res2 == 1) {
@@ -422,10 +392,10 @@ bool UI::handleComparingBetweenEntities() const {
             secondFanPage = FB->getFanPages()[secondFanPageIndex];
         }
         else
-            throw "Invalid input in handleComparingBetweenEntities"; //////////////////////////////////////////.// need to implement throw exception
+            throw UIException("Invalid input in comparing between entities.");
             
        if(firstMember == nullptr && secondMember == nullptr && firstFanPage == nullptr && secondFanPage == nullptr)
-            throw "Invalid input in handleComparingBetweenEntities"; //////////////////////////////////////////.// need to implement throw exception
+            throw UIException("Invalid input in comparing between entities.");
             
             
         if (res1 == 1 && res2 == 1) {
@@ -457,6 +427,40 @@ bool UI::handleComparingBetweenEntities() const {
     catch (const char* msg) {
         cout << msg << endl;
     }
+    return true;
+}
+
+bool UI::handleComparingBetweenMembers() const {
+    cout << "Please choose the first member: " << endl;
+    int firstMemberIndex = chooseMember();
+    cout << "Please choose the second member: " << endl;
+    int secondMemberIndex = chooseMember();
+    
+    if (firstMemberIndex == secondMemberIndex) {
+        throw UIException("member indices should be different for comparison. Received " + std::to_string(firstMemberIndex+1) + " twice.");
+    }
+    
+    if (*FB->getMembers()[firstMemberIndex] > *FB->getMembers()[secondMemberIndex])
+        cout << "The first member is more popular than the second member" << endl;
+    else
+        cout << "The second member is more popular than the first member" << endl;
+    
+    return true;
+}
+
+bool UI::handleComparingBetweenFanPages() const {
+    cout << "Please choose the first fan page: " << endl;
+    int firstFanPageIndex = chooseFanPage();
+    cout << "Please choose the second fan page: " << endl;
+    int secondFanPageIndex = chooseFanPage();
+    
+    if (firstFanPageIndex == secondFanPageIndex)
+        throw UIException("fan page indices should be different for comparison. Received "  +  std::to_string(firstFanPageIndex+1) + " twice.");
+    
+    if (*FB->getFanPages()[firstFanPageIndex] > *FB->getFanPages()[secondFanPageIndex])
+        cout << "The first fan page is more popular than the second fan page" << endl;
+    else
+        cout << "The second fan page is more popular than the first fan page" << endl;
     return true;
 }
 

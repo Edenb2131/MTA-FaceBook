@@ -37,7 +37,7 @@ public:
     void printFans() const;
     void printFanPage() const;
     void addFan(Member* fanToAdd);
-    void removeFan(Member* fanToRemove);
+    void removeFan(Member* fanToRemove, bool isConnection = false);
 };
 
 

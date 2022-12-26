@@ -101,25 +101,32 @@ void FanPage::addFan(Member* fanToAdd) {
     fanToAdd->likeFanPage(this);
 }
 
-void FanPage::removeFan(Member* fanToRemove) {
+void FanPage::removeFan(Member* fanToRemove, bool isConnection) {
     int fansIndex;
     bool found = false;
     int numOfFans = Fans.size();
 
+    
     for (fansIndex = 0; fansIndex < numOfFans; fansIndex++) {
         if (Fans[fansIndex]->getName() == fanToRemove->getName()) {
             found = true;
             break;
         }
     }
-
+    
+    if(isConnection){
+        Fans.erase(Fans.begin() + fansIndex);
+        return;
+    }
+    
     if (!found)
         throw FanPageException("Fan was not found!");
 
-    Fans.erase(Fans.begin() + fansIndex);
-
+    
     // Need to remove the page from the member's likes pages list as well
     fanToRemove->unlikeFanPage(this);
+    
+    Fans.erase(Fans.begin() + fansIndex);
 }
 
 void FanPage::printFans() const {

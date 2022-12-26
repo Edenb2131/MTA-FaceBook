@@ -123,17 +123,16 @@ void FaceBook::disconnectTwoMembers(int firstMemberIndex, int secondMemberIndex)
     if(Members[firstMemberIndex]->getFriends().empty()){
         return;
     }
-    Members[firstMemberIndex]->removeFriend(Members[firstMemberIndex]->getFriends()[secondMemberIndex]);
+    Members[firstMemberIndex]->removeFriend(Members[firstMemberIndex]->getFriends()[secondMemberIndex],true);
     cout << "Friends disconnected successfully!" << endl;
 }
 
 void FaceBook::connectMemberAndFanPage(int memberIndex, int fanPageIndex) {
-    for (int i = 0; i < Members[memberIndex]->getFriends().size(); i++) {
+    for (int i = 0; i < Members[memberIndex]->getFanPages().size(); i++) {
         string page1Name = Members[memberIndex]->getFanPages()[i]->getName();
         string page2Name = FanPages[fanPageIndex]->getName();
         if (page1Name == page2Name) {
             throw MemberException("This member already likes this page!");
-            return;
         }
     }
     Members[memberIndex]->likeFanPage(FanPages[fanPageIndex]);
@@ -141,19 +140,20 @@ void FaceBook::connectMemberAndFanPage(int memberIndex, int fanPageIndex) {
 }
 
 void FaceBook::disconnectMemberAndFanPage(int memberIndex, int fanPageIndex) {
-    int i;
+    int index;
     int size = Members[memberIndex]->getFanPages().size();
     if(size == 0){
-        return;
+        throw MemberException("This member has no liked pages!");
     }
 
     string page1Name = Members[memberIndex]->getFanPages()[fanPageIndex]->getName();
     bool connected = false;
-    for (i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
 
         string page2Name = Members[memberIndex]->getFanPages()[i]->getName();
         if (page1Name == page2Name) {
             connected = true;
+            index = i;
             break;
         }
     }
@@ -161,7 +161,7 @@ void FaceBook::disconnectMemberAndFanPage(int memberIndex, int fanPageIndex) {
     if (!connected) {
         throw MemberException("This member does not like this page!");
     }
-    Members[memberIndex]->unlikeFanPage(FanPages[i]);
+    Members[memberIndex]->unlikeFanPage(Members[memberIndex]->getFanPages()[index],true);
     cout << "Page unliked successfully!" << endl;
 }
 

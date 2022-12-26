@@ -141,10 +141,12 @@ void Member::unlikeFanPage(FanPage *fanPageToUnlike, int connected) {
     if (!found) {
         throw MemberException("Fan page was not found!");
     }
-    FanPages.erase(FanPages.begin() + pagesIndex);
+   
 
 //  Need to remove the member from the page's fans list as well.
-    fanPageToUnlike->removeFan(this);
+    fanPageToUnlike->removeFan(this, true);
+    
+    FanPages.erase(FanPages.begin() + pagesIndex);
 }
 
 void Member::addPost(string content) {

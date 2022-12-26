@@ -11,11 +11,11 @@ FaceBook::~FaceBook() {
     // Members and FanPages are deleted in the destructor of vector
 }
 
- vector<Member*>& FaceBook::getMembers() {
+ const vector<Member*>& FaceBook::getMembers() const{
     return Members;
 }
 
-vector<FanPage*>& FaceBook::getFanPages() {
+const vector<FanPage*>& FaceBook::getFanPages() const{
     return FanPages;
 }
 
@@ -27,6 +27,32 @@ void FaceBook::addNewMember(MemberInfo memberInfo) {
 void FaceBook::addNewPage(string name){
     FanPage* newPage = new FanPage(name);
     FanPages.push_back(newPage);
+}
+
+void FaceBook::writePostAsMember(int memberIndex, std::string post) {
+    getMembers()[memberIndex]->addPost(post);
+}
+
+void FaceBook::writePostAsFanPage(int fanPageIndex, std::string post) {
+    getMembers()[fanPageIndex]->addPost(post);
+}
+
+void FaceBook::printAllPostOfAMember(int memberIndex) const {
+    getMembers()[memberIndex]->printAllPosts();
+}
+
+void FaceBook::printAllPostOfAFanPage(int memberIndex) const {
+    if (getMembers()[memberIndex]->getFanPages().empty()) {
+        cout << "You have no Liked pages !" << endl;
+        return;
+    }
+    for (int i = 0; i < getMembers()[memberIndex]->getFanPages().size(); i++) {
+        getMembers()[memberIndex]->getFanPages()[i]->printAllPosts();
+    }
+}
+
+void FaceBook::printTenLastPostOfAMember(int memberIndex) const {
+    getMembers()[memberIndex]->printTenLatestPostsOfFriends();
 }
 
 void FaceBook::printAllMembers() const {
@@ -137,6 +163,18 @@ void FaceBook::disconnectMemberAndFanPage(int memberIndex, int fanPageIndex) {
     }
     Members[memberIndex]->unlikeFanPage(FanPages[i]);
     cout << "Page unliked successfully!" << endl;
+}
+
+void FaceBook::printAllMembersFriends(int memberIndex) const {
+    getMembers()[memberIndex]->printFriends();
+}
+
+void FaceBook::printAllFanPagesOfMember(int memberIndex) const {
+    getMembers()[memberIndex]->printLikedPages();
+}
+
+void FaceBook::printAllFansOfAFanPage(int fanPageIndex) const {
+    getFanPages()[fanPageIndex]->printFans();
 }
 
 

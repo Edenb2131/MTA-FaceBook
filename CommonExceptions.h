@@ -11,6 +11,10 @@ public:
     InvalidInputException(const std::string& str){
         data = str;
     }
+    
+    InvalidInputException(const char* str){
+        data = str;
+    }
     const char* what() const noexcept override {
         return data.c_str();
     }

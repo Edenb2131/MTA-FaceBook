@@ -39,4 +39,45 @@ public:
     void addFan(Member* fanToAdd);
     void removeFan(Member* fanToRemove);
 };
+
+
+
+
+
+class FanPageException : public std::exception {
+    std::string message;
+    
+public:
+    FanPageException(std::string message) : message(message) {}
+    
+    FanPageException(const char* message) : message(message) {
+        std::cout << message << std::endl;
+    }
+    
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+//    FanPageException(int msg){
+//        switch (msg) {
+//            case 1:
+//                message = "FanPage already exists";
+//                break;
+//            case 2:
+//                message = "FanPage doesn't exist";
+//                break;
+//            case 3:
+//                message = "Member already a fan";
+//                break;
+//            case 4:
+//                message = "Member is not a fan";
+//                break;
+//            default:
+//                message = "Unknown error";
+//                break;
+//        }
+//    }
+    
+};
+
+
 #endif //MTA_FACEBOOK_FANPAGE_H

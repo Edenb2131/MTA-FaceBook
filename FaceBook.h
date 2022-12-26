@@ -43,4 +43,20 @@ public:
     void printAllFansOfAFanPage(int fanPageIndex) const;
 };
 
+
+
+class FaceBookException : public std::exception {
+    std::string message;
+    
+public:
+    
+    FaceBookException(std::string message) : message(message) {}
+    
+    FaceBookException(const char* message) : message(message) {}
+
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
 #endif //MTA_FACEBOOK_FACEBOOK_H

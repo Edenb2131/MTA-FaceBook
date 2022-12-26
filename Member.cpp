@@ -6,7 +6,7 @@
 using namespace std;
 
 //constructor
-Member::Member(MemberInfo infoFromUser): Name(infoFromUser.Name), Birthday(infoFromUser.birthDate) {}
+Member::Member(const MemberInfo& infoFromUser): Name(infoFromUser.Name), Birthday(infoFromUser.birthDate) {}
 
 //getters :
 string Member::getName() const {
@@ -71,8 +71,8 @@ void Member::addFriend(Member *friendToAdd, int neededToBeAdded) {
 
     // Checking to see if not trying to add yourself
     if(this == friendToAdd){
-        cout << "You cannot add yourself !" << endl;
-        return;
+        throw MemberException("You cannot add yourself !");
+        
     }
 
     // Need to add the friend to the friend's friend list as well
@@ -84,8 +84,7 @@ void Member::addFriend(Member *friendToAdd, int neededToBeAdded) {
     int size = this->Friends.size();
     for (i = 0; i < size; i++) {
         if (this->Friends[i]->Name == friendToAdd->Name) {
-            cout << "Already friends !" << endl;
-            return;
+            throw MemberException("Already friends !");
         }
     }
 

@@ -19,7 +19,7 @@ class Member {
 
 public:
     //constructor
-    Member(MemberInfo infoFromUser);
+    Member(const MemberInfo& infoFromUser);
 
     //getters :
     std::string getName() const;
@@ -60,11 +60,16 @@ public:
     void printTenLatestPostsOfFriends() const; // Print the latest 10 posts of all the member's friends
 };
 
-class MemberException {
+class MemberException : public std::exception {
     std::string message;
+public:
     
-    MemberException(std::string& message) : message(message) {
-        std::cout << message << std::endl;
+
+    
+    explicit MemberException(const char* message) : message(message) {}
+    
+    const char* what() const noexcept override {
+        return message.c_str();
     }
     
     // Maybe if we use enum we can use it to print the message....
@@ -91,6 +96,8 @@ class MemberException {
         }
         std::cout << message << std::endl;
     }
+    
+
 };
 
 #endif //MTA_FACEBOOK_MEMBER_H

@@ -88,8 +88,7 @@ void FanPage::addFan(Member* fanToAdd) {
     // Checking to see if needed to add that friend or not
     for (i = 0; i < numOfFans; i++) {
         if (Fans[i]->getName() == fanToAdd->getName()) {
-            cout << "Already likes that fan page!" << endl;
-            return;
+            throw FanPageException("Already likes that fan page!");
         }
     }
     Fans.push_back(fanToAdd);

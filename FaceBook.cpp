@@ -43,8 +43,8 @@ void FaceBook::printAllPostOfAMember(int memberIndex) const {
 
 void FaceBook::printAllPostOfAFanPage(int memberIndex) const {
     if (getMembers()[memberIndex]->getFanPages().empty()) {
-        cout << "You have no Liked pages !" << endl;
-        return;
+        throw FaceBookException("You have no Liked pages !");
+        
     }
     for (int i = 0; i < getMembers()[memberIndex]->getFanPages().size(); i++) {
         getMembers()[memberIndex]->getFanPages()[i]->printAllPosts();
@@ -77,6 +77,11 @@ void FaceBook::printAllEntitiesAndTheirData() const {
 void FaceBook::printAllEntities() const {
     int numOfMembersOverAll = (int)Members.size();
     int numOfFanPagesOverAll = (int)FanPages.size();
+    
+    if(numOfMembersOverAll == 0 && numOfFanPagesOverAll == 0){
+        throw FaceBookException("There are no members and fan pages in the facebook");
+    }
+    
     cout << "All entities are:" << endl;
 
     cout << "Members: " ;
@@ -97,16 +102,15 @@ void FaceBook::printAllEntities() const {
 void FaceBook::connectTwoMembers(int firstMemberIndex, int secondMemberIndex) {
 
     if(firstMemberIndex == secondMemberIndex){
-        cout << "You can't connect a member to himself." << endl;
-        return;
+        //cout << "You can't connect a member to himself." << endl;
+        throw MemberException("You can't connect a member to himself.");
     }
 
     for (int i = 0; i < Members[firstMemberIndex]->getFriends().size(); i++) {
         string friend1Name = Members[firstMemberIndex]->getFriends()[i]->getName();
         string friend2Name = Members[secondMemberIndex]->getName();
         if (friend1Name == friend2Name) {
-            cout << "Friends are already connected!" << endl;
-            return;
+            throw MemberException("Friends are already connected!");
         }
     }
 
@@ -128,7 +132,7 @@ void FaceBook::connectMemberAndFanPage(int memberIndex, int fanPageIndex) {
         string page1Name = Members[memberIndex]->getFanPages()[i]->getName();
         string page2Name = FanPages[fanPageIndex]->getName();
         if (page1Name == page2Name) {
-            cout << "This member already likes this page!" << endl;
+            throw MemberException("This member already likes this page!");
             return;
         }
     }
@@ -158,7 +162,7 @@ void FaceBook::disconnectMemberAndFanPage(int memberIndex, int fanPageIndex) {
     }
 
     if (!connected) {
-        cout << "This member does not like this page!" << endl;
+        throw MemberException("This member does not like this page!");
         return;
     }
     Members[memberIndex]->unlikeFanPage(FanPages[i]);

@@ -3,6 +3,8 @@
 #include <exception>
 using namespace std;
 
+#define ABNORMAL_NAME_LEN 40
+
 UI::UI(FaceBook* fb) {
     if (fb != nullptr)
         FB = fb;
@@ -134,7 +136,7 @@ void UI::process() {
                     int secondMemberIndex = chooseMember();
 
                     if (firstMemberIndex == secondMemberIndex) {
-                        throw InvalidInputException("member indices should be different for comparison. Received " + std::to_string(firstMemberIndex+1) + " twice.");
+                        throw UIException("member indices should be different for comparison. Received " + std::to_string(firstMemberIndex+1) + " twice.");
                     }
 
                     if (*FB->getMembers()[firstMemberIndex] > *FB->getMembers()[secondMemberIndex])
@@ -150,7 +152,7 @@ void UI::process() {
                     int secondFanPageIndex = chooseFanPage();
             
                     if (firstFanPageIndex == secondFanPageIndex)
-                        throw InvalidInputException("fan page indices should be different for comparison. Received "  +  std::to_string(firstFanPageIndex+1) + " twice.");
+                        throw UIException("fan page indices should be different for comparison. Received "  +  std::to_string(firstFanPageIndex+1) + " twice.");
 
                     if (*FB->getFanPages()[firstFanPageIndex] > *FB->getFanPages()[secondFanPageIndex])
                         cout << "The first fan page is more popular than the second fan page" << endl;
@@ -179,7 +181,7 @@ void UI::process() {
 //        catch (const int& msg) {
 //            cout << msg << endl;
 //        }
-        catch (const InvalidInputException& exp) {
+        catch (const UIException& exp) {
             cout << "Invalid input: " << exp.what() << endl;
         }
         catch (const exception& msg) {
@@ -203,14 +205,14 @@ MemberInfo UI::getMemberInfoFromUser() const {
     try{
         getline(cin, name);
         if (name.empty())
-            throw "Name is empty. Exiting..."; /////////////////////////////
-        if(name.length() > 20)
-            throw "Name is too long.Exiting...";
+            throw MemberException("Name is empty. Exiting...");
+        if(name.length() > 30)
+            throw MemberException("Name is too long.Exiting...");
 
         for(int i = 0; i < FB->getMembers().size(); i++)
             //Check to see if there is another member with the same name
             if(FB->getMembers()[i]->getName() == name)
-                throw "Name already exists. Exiting..."; /////////////////////////////
+                throw MemberException("Name already exists. Exiting...");
     }
     catch (const char* msg){
         cout << msg << endl;

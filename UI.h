@@ -32,4 +32,19 @@ public:
 };
 
 
+class UIException : public std::exception {
+    std::string message;
+public:
+    UIException(std::string message) : message(message) {}
+    
+    UIException(const char* message) : message(message) {}
+    
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+    
+    
+};
+
+
 #endif //MTA_FACEBOOK_UI_H

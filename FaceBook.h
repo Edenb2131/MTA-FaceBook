@@ -19,13 +19,17 @@ public:
     FaceBook(const FaceBook&) = delete;
 
     //getters :
-    // TODO: getMembers and getFanPages should be const.
-    std::vector<Member*>& getMembers() ;
-    std::vector<FanPage*>& getFanPages() ;
+    const std::vector<Member*>& getMembers() const;
+    const std::vector<FanPage*>& getFanPages() const;
 
     //functions :
     void addNewMember(MemberInfo memberInfo); // add new member to the facebook
     void addNewPage(std::string name); // add new page to the facebook
+    void writePostAsMember(int memberIndex, std::string post);
+    void writePostAsFanPage(int fanPageIndex, std::string post);
+    void printAllPostOfAMember(int memberIndex) const;
+    void printAllPostOfAFanPage(int memberIndex) const;
+    void printTenLastPostOfAMember(int memberIndex) const;
     void printAllMembers() const; // print all the members in the facebook
     void printAllFanPages() const; // print all the fan pages in the facebook
     void printAllEntitiesAndTheirData() const; // print all the members and fan pages in the facebook
@@ -34,6 +38,9 @@ public:
     void disconnectTwoMembers(int firstMemberIndex, int secondMemberIndex); // disconnect two members
     void connectMemberAndFanPage(int memberIndex, int fanPageIndex); // connect member and fan page
     void disconnectMemberAndFanPage(int memberIndex, int fanPageIndex); // disconnect member and fan page
+    void printAllMembersFriends(int memberIndex) const;
+    void printAllFanPagesOfMember(int memberIndex) const;
+    void printAllFansOfAFanPage(int fanPageIndex) const;
 };
 
 #endif //MTA_FACEBOOK_FACEBOOK_H

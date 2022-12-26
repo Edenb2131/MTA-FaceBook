@@ -7,7 +7,7 @@ enum MenuOptions {RegisterToFaceBookAsMember = 1,RegisterToFaceBookAsFanPage,
     WritePostAsMember,WritePostAsFanPage,PrintAllPostOfAMember,PrintAllPostOfAFanPage,
     PrintTenLastPostOfAMember,AddAFriend,DeleteAFriend,LikeAFanPage,
     UnLikeAFanPage,PrintAllEntitiesAndTheirData,PrintAllMembersFriends,
-    PrintAllFanPagesFans,PrintAllFansOfAFanPage,CompareTwoMembers,
+    PrintAllFanPagesOfMember,PrintAllFansOfAFanPage,CompareTwoMembers,
     CompareTwoFanPages,CompareBetweenPosts,Exit};
 
 class UI {

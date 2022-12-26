@@ -54,51 +54,40 @@ void UI::process() {
                     FB->addNewPage(getFanPageNameFromUser());
                     break;
                 }
-                // TODO: complete enum...
-                case 3: {
+                case MenuOptions::WritePostAsMember: {
                     int memberIndex = chooseMember();
-                    // TODO: FB->AddPostToMemeber(memberIndex, status);
-                    FB->getMembers()[memberIndex]->addPost(getStatusFromUser());
+                    FB->writePostAsMember(memberIndex, getStatusFromUser());
                     break;
                 }
-                case 4: {
+                case MenuOptions::WritePostAsFanPage: {
                     int fanPageIndex = chooseFanPage();
-                    // TODO: FB->AddPostToFanPage(memberIndex, status);
-                    FB->getFanPages()[fanPageIndex]->addPost(getStatusFromUser());
+                    FB->writePostAsFanPage(fanPageIndex, getStatusFromUser());
                     break;
                 }
-                case 5: {
+                case MenuOptions::PrintAllPostOfAMember: {
                     int memberIndex = chooseMember();
-                    FB->getMembers()[memberIndex]->printAllPosts();
+                    FB->printAllPostOfAMember(memberIndex);
                     break;
                 }
-                case 6: {
+                case MenuOptions::PrintAllPostOfAFanPage: {
                     int memberIndex = chooseMember();
-                    if (FB->getMembers()[memberIndex]->getFanPages().empty()) {
-                        cout << "You have no Liked pages !" << endl;
-                        break;
-                    }
-            
-                    for (int i = 0; i < FB->getMembers()[memberIndex]->getFanPages().size(); i++) {
-                        FB->getMembers()[memberIndex]->getFanPages()[i]->printAllPosts();
-                    }
+                    FB->printAllPostOfAFanPage(memberIndex);
                     break;
                 }
-                case 7: {
+                case MenuOptions::PrintTenLastPostOfAMember: {
                     int memberIndex = chooseMember();
-                    FB->getMembers()[memberIndex]->printTenLatestPostsOfFriends();
+                    FB->printTenLastPostOfAMember(memberIndex);
                     break;
                 }
-                case 8: {
+                case MenuOptions::AddAFriend: {
                     cout << "Please choose the first member: " << endl;
                     int firstMemberIndex = chooseMember();
                     cout << "Please choose the second member: " << endl;
                     int secondMemberIndex = chooseMember();
-            
                     FB->connectTwoMembers(firstMemberIndex, secondMemberIndex);
                     break;
                 }
-                case 9: {
+                case MenuOptions::DeleteAFriend: {
                     cout << "Please choose the first member: " << endl;
                     int firstMemberIndex = chooseMember();
                     cout << "Please choose the second member: " << endl;
@@ -106,39 +95,39 @@ void UI::process() {
                     FB->disconnectTwoMembers(firstMemberIndex, secondMemberIndex);
                     break;
                 }
-                case 10: {
+                case MenuOptions::LikeAFanPage: {
                     int memberIndex = chooseMember();
                     int fanPageIndex = chooseFanPage();
                     FB->connectMemberAndFanPage(memberIndex, fanPageIndex);
                     break;
                 }
-                case 11: {
+                case MenuOptions::UnLikeAFanPage: {
                     int memberIndex = chooseMember();
                     int fanPageIndex = chooseFanPageOfMember(*FB->getMembers()[memberIndex]);
                     FB->disconnectMemberAndFanPage(memberIndex, fanPageIndex);
                     break;
                 }
-                case 12: {
+                case MenuOptions::PrintAllEntitiesAndTheirData: {
                     FB->printAllEntities();
                     FB->printAllEntitiesAndTheirData();
                     break;
                 }
-                case 13: {
+                case MenuOptions::PrintAllMembersFriends: {
                     int memberIndex = chooseMember();
-                    FB->getMembers()[memberIndex]->printFriends();
+                    FB->printAllMembersFriends(memberIndex);
                     break;
                 }
-                case 14: {
+                case MenuOptions::PrintAllFanPagesOfMember: {
                     int memberIndex = chooseMember();
-                    FB->getMembers()[memberIndex]->printLikedPages();
+                    FB->printAllFanPagesOfMember(memberIndex);
                     break;
                 }
-                case 15: {
+                case MenuOptions::PrintAllFansOfAFanPage: {
                     int fanPageIndex = chooseFanPage();
-                    FB->getFanPages()[fanPageIndex]->printFans();
+                    FB->printAllFansOfAFanPage(fanPageIndex);
                     break;
                 }
-                case 16: {
+                case MenuOptions::CompareTwoMembers: {
                     cout << "Please choose the first member: " << endl;
                     int firstMemberIndex = chooseMember();
                     cout << "Please choose the second member: " << endl;
@@ -154,7 +143,7 @@ void UI::process() {
                         cout << "The second member is more popular than the first member" << endl;
                     break;
                 }
-                case 17: {
+                case MenuOptions::CompareTwoFanPages: {
                     cout << "Please choose the first fan page: " << endl;
                     int firstFanPageIndex = chooseFanPage();
                     cout << "Please choose the second fan page: " << endl;
@@ -169,11 +158,11 @@ void UI::process() {
                         cout << "The second fan page is more popular than the first fan page" << endl;
                     break;
                 }
-                case 18: {
+                case MenuOptions::CompareBetweenPosts: {
                     handleComparingBetweenEntities();
                     break;
                 }
-                case 19: {
+                case MenuOptions::Exit: {
                     cout << "Thank you for using FaceBook, hope to see you again soon!" << endl;
                     finish = true;
                     break;

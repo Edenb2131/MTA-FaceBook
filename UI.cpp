@@ -195,7 +195,7 @@ void UI::process() {
 
 MemberInfo UI::getMemberInfoFromUser() const {
     int day, month, year;
-    getchar();
+    cin.ignore(); // This is to flush the buffer
     string name;
     cout << "Enter member's name: " << endl;
 

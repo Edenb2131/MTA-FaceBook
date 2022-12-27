@@ -34,7 +34,7 @@ void FaceBook::writePostAsMember(int memberIndex, std::string post) {
 }
 
 void FaceBook::writePostAsFanPage(int fanPageIndex, std::string post) {
-    getMembers()[fanPageIndex]->addPost(post);
+    getFanPages()[fanPageIndex]->addPost(post);
 }
 
 void FaceBook::printAllPostOfAMember(int memberIndex) const {

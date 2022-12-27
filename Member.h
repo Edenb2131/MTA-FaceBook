@@ -34,12 +34,11 @@ public:
     bool operator>(const Member& other) const; // Greater than operator - required
     bool operator<=(const Member& other) const;
     bool operator>=(const Member& other) const;
-    void operator+=(Member* friendToAdd); // Add friend operator - required
-    void operator-=(Member* friendToRemove); // Remove friend operator - required
+    const Member& operator+=(Member* friendToAdd); // Add friend operator - required
+    const Member& operator-=(Member* friendToRemove); // Remove friend operator - required
     
     //comparing between different entities (member, fan page) : (not clear if required)
     bool operator>(const FanPage& other) const; // Greater than operator - required
-    
 
     friend std::ostream& operator<<(std::ostream& os, const Member& member);
     //friend std::istream& operator>>(std::istream& is, Member& member);

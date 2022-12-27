@@ -2,14 +2,11 @@
 #include <exception>
 using namespace std;
 
-#define ABNORMAL_NAME_LEN 40
-
 UI::UI(FaceBook* fb) {
     if (fb != nullptr)
         FB = fb;
     else
-       // TODO: fix exception;
-        throw exception();
+        throw FaceBookException("Pointer to faceBook cannot be NULL! ");
 }
 
 MenuOptions UI::menu() const {
@@ -147,7 +144,6 @@ void UI::process() {
                 }
             }
         }
-        //TODO: make exception for naming a member or a page in white spaces (such as \n...)
 
         catch (const MemberException& exp) {
             cout << exp.what() << endl;
@@ -225,6 +221,16 @@ string UI::getFanPageNameFromUser() const {
     string name;
     cout << "Please enter page's name:" << endl;
     getline(cin, name);
+    if (name.empty())
+        throw InvalidInputException("Name is empty. Exiting to main menu...");
+    if(name.length() > 30)
+        throw InvalidInputException("Name is too long. Exiting to main menu...");
+
+    for(int i = 0; i < FB->getFanPages().size(); i++) {
+        //Check to see if there is another fan page with the same name ( not case-sensitive )
+        if (FB->getFanPages()[i]->getName() == name)
+            throw InvalidInputException("Name already exists. Exiting to main menu...");
+    }
     return name;
 }
 

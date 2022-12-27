@@ -24,18 +24,4 @@ public:
     std::string getTimePostPosted();
 };
 
-
-///// Do we even need this? /////
-class statusException : public std::exception {
-    std::string message;
-public:
-    
-    statusException(std::string message) : message(message) {}
-    
-    
-    const char* what() const noexcept override {
-        return message.c_str();
-    }
-};
-
 #endif //MTA_FACEBOOK_STATUS_H

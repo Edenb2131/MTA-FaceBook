@@ -47,5 +47,4 @@ public:
     }
 };
 
-
 #endif //MTA_FACEBOOK_UI_H

@@ -353,10 +353,12 @@ int UI::chooseStatusOfFanPage(const FanPage &fanPage) const {
 
 string UI::getStatusFromUser() const {
     cin.ignore();
-    string name;
+    string post;
     cout << "Please enter your status:" << endl;
-    getline(cin, name);
-    return name;
+    getline(cin, post);
+    if (post.empty())
+        throw InvalidInputException("Post is empty. Exiting to main menu...");
+    return post;
 }
 
 bool UI::handleComparingBetweenEntities() const {

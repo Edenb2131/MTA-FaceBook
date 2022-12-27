@@ -23,8 +23,8 @@ public:
     std::vector<Status*> getPosts() const;
 
     //operators :
-    void operator+=(Member* fanToAdd); // Add fan operator - required
-    void operator-=(Member* fanToRemove); // Remove fan operator - required
+    const FanPage& operator+=(Member* fanToAdd); // Add fan operator - required
+    const FanPage& operator-=(Member* fanToRemove); // Remove fan operator - required
     bool operator>(const FanPage& other) const; // Greater than operator - required
     bool operator<(const FanPage& other) const; // Less than operator - required
     bool operator>=(const FanPage& other) const;

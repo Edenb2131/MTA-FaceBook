@@ -24,14 +24,16 @@ vector<Status*> FanPage::getPosts() const {
 
 // Operators :
 
-void FanPage::operator+=(Member* fanToAdd) { // Add fan operator - required
+const FanPage& FanPage::operator+=(Member* fanToAdd) { // Add fan operator - required
 
   this ->addFan(fanToAdd);
+  return *this;
 }
 
-void FanPage::operator-=(Member* fanToRemove){ // Remove fan operator - required
+const FanPage& FanPage::operator-=(Member* fanToRemove){ // Remove fan operator - required
 
   this -> removeFan(fanToRemove);
+  return *this;
 }
 
 bool FanPage::operator>(const FanPage& other) const{ // Greater than operator - required

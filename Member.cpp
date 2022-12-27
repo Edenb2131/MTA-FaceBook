@@ -31,14 +31,16 @@ vector<FanPage*> Member::getFanPages() const {
 
 //operators :
 
-void Member::operator+=(Member* friendToAdd) { // Add friend operator - required
+const Member& Member::operator+=(Member* friendToAdd) { // Add friend operator - required
 
     this ->addFriend(friendToAdd, false); // false = need to be added to the other friend as well
+    return *this;
 }
 
-void Member::operator-=(Member* friendToRemove) { // Remove friend operator - required
+const Member& Member::operator-=(Member* friendToRemove) { // Remove friend operator - required
 
     this ->removeFriend(friendToRemove);
+    return *this;
 }
 
 bool Member::operator<(const Member& other) const { // Less than operator - required

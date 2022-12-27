@@ -22,7 +22,6 @@ const string Status::getContent() const {
     return Content;
 }
 
-
 string Status::getTimePostPosted(){
     return ctime(&pTime);
 }

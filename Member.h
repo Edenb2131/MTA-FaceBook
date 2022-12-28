@@ -62,37 +62,10 @@ class MemberException : public std::exception {
     std::string message;
 public:
     
-
-    
     explicit MemberException(const char* message) : message(message) {}
     
     const char* what() const noexcept override {
         return message.c_str();
-    }
-    
-    // Maybe if we use enum we can use it to print the message....
-    MemberException(int errorCode) {
-        switch (errorCode) {
-            case 1:
-                message = "Member already exists";
-                break;
-            case 2:
-                message = "Member doesn't exist";
-                break;
-            case 3:
-                message = "Member already friends with this member";
-                break;
-            case 4:
-                message = "Member is not friends with this member";
-                break;
-            case 5:
-                message = "Member already liked this fan page";
-                break;
-            default:
-                message = "Unknown error";
-                break;
-        }
-        std::cout << message << std::endl;
     }
     
 

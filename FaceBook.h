@@ -50,7 +50,6 @@ class FaceBookException : public std::exception {
     
 public:
     
-    FaceBookException(std::string message) : message(message) {}
     
     FaceBookException(const char* message) : message(message) {}
 

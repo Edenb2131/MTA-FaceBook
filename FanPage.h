@@ -57,25 +57,6 @@ public:
     const char* what() const noexcept override {
         return message.c_str();
     }
-//    FanPageException(int msg){
-//        switch (msg) {
-//            case 1:
-//                message = "FanPage already exists";
-//                break;
-//            case 2:
-//                message = "FanPage doesn't exist";
-//                break;
-//            case 3:
-//                message = "Member already a fan";
-//                break;
-//            case 4:
-//                message = "Member is not a fan";
-//                break;
-//            default:
-//                message = "Unknown error";
-//                break;
-//        }
-//    }
     
 };
 

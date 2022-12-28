@@ -11,29 +11,41 @@ UI::UI(FaceBook* fb) {
 
 MenuOptions UI::menu() const {
     cout << endl;
-    int choice;
-    cout << "Please choose an action from the list below: " << endl;
-    cout << "Enter 1 to register to FaceBook as a member" << endl;
-    cout << "Enter 2 to register to FaceBook as a fan page" << endl;
-    cout << "Enter 3 to write a post as a member" << endl;
-    cout << "Enter 4 to write a post as a fan page" << endl;
-    cout << "Enter 5 to see all posts of a member in Facebook" << endl;
-    cout << "Enter 6 to see all posts of a fan pages you liked" << endl;
-    cout << "Enter 7 to see ten latest posts of your friends" << endl;
-    cout << "Enter 8 to add a friend" << endl;
-    cout << "Enter 9 to delete a friend" << endl;
-    cout << "Enter 10 to like a fan page" << endl;
-    cout << "Enter 11 to unlike a fan page" << endl;
-    cout << "Enter 12 to see all entities on FaceBook" << endl;
-    cout << "Enter 13 to see all your friends" << endl;
-    cout << "Enter 14 to see all your liked fan pages" << endl;
-    cout << "Enter 15 to see all fans of a fan page" << endl;
-    cout << "Enter 16 to compare between two members" << endl;
-    cout << "Enter 17 to compare between two fan pages" << endl;
-    cout << "Enter 18 to compare between two posts" << endl;
-    cout << "Enter 19 to exit" << endl;
-
-    cin >> choice;
+    int choice = -1;
+    while(choice < 1 || choice > 20) {
+        try {
+            cout << "Please choose an action from the list below: " << endl;
+            cout << "Enter 1 to register to FaceBook as a member" << endl;
+            cout << "Enter 2 to register to FaceBook as a fan page" << endl;
+            cout << "Enter 3 to write a post as a member" << endl;
+            cout << "Enter 4 to write a post as a fan page" << endl;
+            cout << "Enter 5 to see all posts of a member in Facebook" << endl;
+            cout << "Enter 6 to see all posts of a fan pages you liked" << endl;
+            cout << "Enter 7 to see ten latest posts of your friends" << endl;
+            cout << "Enter 8 to add a friend" << endl;
+            cout << "Enter 9 to delete a friend" << endl;
+            cout << "Enter 10 to like a fan page" << endl;
+            cout << "Enter 11 to unlike a fan page" << endl;
+            cout << "Enter 12 to see all entities on FaceBook" << endl;
+            cout << "Enter 13 to see all your friends" << endl;
+            cout << "Enter 14 to see all your liked fan pages" << endl;
+            cout << "Enter 15 to see all fans of a fan page" << endl;
+            cout << "Enter 16 to compare between two members" << endl;
+            cout << "Enter 17 to compare between two fan pages" << endl;
+            cout << "Enter 18 to compare between two posts" << endl;
+            cout << "Enter 19 to exit" << endl;
+        
+            cin >> choice;
+        
+            if (choice < 1 || choice > 19)
+                throw FaceBookException("Invalid choice! ");
+        }
+        catch (FaceBookException &e) {
+            cout << e.what() << endl;
+            cout << "Exiting the program...." << endl;
+            return MenuOptions::Exit;
+        }
+    }
     return (MenuOptions)choice;
 }
 
@@ -409,25 +421,25 @@ bool UI::handleComparingBetweenEntities() const {
             
             
         if (res1 == 1 && res2 == 1) {
-            if (firstMember->getPosts()[statusIndexOfFirstMember] == (secondMember->getPosts()[statusIndexOfSecondMember]))
+            if (firstMember->getPosts()[statusIndexOfFirstMember]->getContent() == (secondMember->getPosts()[statusIndexOfSecondMember])->getContent())
                 cout << "These posts are Identical!" << endl;
             else
                 cout << "These post are different..." << endl;
         }
         else if (res1 == 1 && res2 == 2) {
-            if (firstMember->getPosts()[statusIndexOfFirstMember] == (secondFanPage->getPosts()[statusIndexOfSecondFanPage]))
+            if (firstMember->getPosts()[statusIndexOfFirstMember]->getContent() == (secondFanPage->getPosts()[statusIndexOfSecondFanPage])->getContent())
                 cout << "These posts are Identical!" << endl;
             else
                 cout << "These post are different..." << endl;
         }
         else if (res1 == 2 && res2 == 1) {
-            if (firstFanPage->getPosts()[statusIndexOfFirstFanPage] == (secondMember->getPosts()[statusIndexOfSecondMember]))
+            if (firstFanPage->getPosts()[statusIndexOfFirstFanPage]->getContent() == (secondMember->getPosts()[statusIndexOfSecondMember])->getContent())
                 cout << "These posts are Identical!" << endl;
             else
                 cout << "These post are different..." << endl;
         }
         else if (res1 == 2 && res2 == 2) {
-            if (firstFanPage->getPosts()[statusIndexOfFirstFanPage] == (secondFanPage->getPosts()[statusIndexOfSecondFanPage]))
+            if (firstFanPage->getPosts()[statusIndexOfFirstFanPage]->getContent() == (secondFanPage->getPosts()[statusIndexOfSecondFanPage])->getContent())
                 cout << "These posts are Identical!" << endl;
             else
                 cout << "These post are different..." << endl;
@@ -450,11 +462,14 @@ bool UI::handleComparingBetweenMembers() const {
         throw InvalidInputException("member indices should be different for comparison. Received " + std::to_string(firstMemberIndex+1) + " twice.");
     }
     
-    if (*FB->getMembers()[firstMemberIndex] > *FB->getMembers()[secondMemberIndex])
-        cout << "The first member is more popular than the second member" << endl;
-    else
-        cout << "The second member is more popular than the first member" << endl;
-    
+    if (FB->getMembers()[firstMemberIndex]->getFriends().size() > FB->getMembers()[secondMemberIndex]->getFriends().size())
+        cout << "The  member: "<<FB->getMembers()[firstMemberIndex]->getName() << " is more popular than " << FB->getMembers()[secondMemberIndex]->getName() << endl;
+    else {
+        if (FB->getMembers()[firstMemberIndex]->getFriends().size() < FB->getMembers()[secondMemberIndex]->getFriends().size())
+            cout << "The  member: "<<FB->getMembers()[secondMemberIndex]->getName() << " is more popular than " << FB->getMembers()[firstMemberIndex]->getName() << endl;
+        else
+            cout << "Both members have the same number of friends." << endl;
+    }
     return true;
 }
 
@@ -465,12 +480,20 @@ bool UI::handleComparingBetweenFanPages() const {
     int secondFanPageIndex = chooseFanPage();
     
     if (firstFanPageIndex == secondFanPageIndex)
-        throw InvalidInputException("fan page indices should be different for comparison. Received "  +  std::to_string(firstFanPageIndex+1) + " twice.");
+        throw InvalidInputException("fan page indices should be different for comparison. Received " +
+                                    std::to_string(firstFanPageIndex + 1) + " twice.");
     
-    if (*FB->getFanPages()[firstFanPageIndex] > *FB->getFanPages()[secondFanPageIndex])
-        cout << "The first fan page is more popular than the second fan page" << endl;
-    else
-        cout << "The second fan page is more popular than the first fan page" << endl;
+    if (FB->getFanPages()[firstFanPageIndex]->getFans().size() > FB->getFanPages()[secondFanPageIndex]->getFans().size())
+        cout << "The fan page: " << FB->getFanPages()[firstFanPageIndex]->getName() << " is more popular than: "
+             << FB->getFanPages()[secondFanPageIndex]->getName() << endl;
+    else {
+        if (FB->getFanPages()[firstFanPageIndex]->getFans().size() == FB->getFanPages()[secondFanPageIndex]->getFans().size())
+            cout << "The fan pages are equally popular." << endl;
+        else {
+            cout << "The fan page: " << FB->getFanPages()[secondFanPageIndex]->getName() << " is more popular than: "
+            << FB->getFanPages()[firstFanPageIndex]->getName() << endl;
+        }
+    }
     return true;
 }
 

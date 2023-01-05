@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "FaceBook.h"
 #include "Common.h"
 #include "UI.h"

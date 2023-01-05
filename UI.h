@@ -3,7 +3,7 @@
 #include "FaceBook.h"
 #include "Common.h"
 
-enum MenuOptions {RegisterToFaceBookAsMember = 1,RegisterToFaceBookAsFanPage,
+enum class MenuOptions {RegisterToFaceBookAsMember = 1,RegisterToFaceBookAsFanPage,
     WritePostAsMember,WritePostAsFanPage,PrintAllPostOfAMember,PrintAllPostOfAFanPage,
     PrintTenLastPostOfAMember,AddAFriend,DeleteAFriend,LikeAFanPage,
     UnLikeAFanPage,PrintAllEntitiesAndTheirData,PrintAllMembersFriends,

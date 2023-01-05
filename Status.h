@@ -2,6 +2,7 @@
 #ifndef MTA_FACEBOOK_STATUS_H
 #define MTA_FACEBOOK_STATUS_H
 
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string>
 #include <ctime>

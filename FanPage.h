@@ -33,6 +33,8 @@ public:
 
     //functions :
     void addPost(std::string content);
+    void addPostWithImage(std::string content, std::string image);
+    void addPostWithVideo(std::string content, std::string video);
     void printAllPosts() const;
     void printFans() const;
     void printFanPage() const;

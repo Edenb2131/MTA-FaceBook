@@ -26,7 +26,11 @@ public:
     void addNewMember(MemberInfo memberInfo); // add new member to the facebook
     void addNewPage(std::string name); // add new page to the facebook
     void writePostAsMember(int memberIndex, std::string post);
+    void writePostWithImageAsMember(int memberIndex, std::string post, std::string image);
+    void writePostWithVideoAsMember(int memberIndex, std::string post, std::string video);
     void writePostAsFanPage(int fanPageIndex, std::string post);
+    void writePostWithImageAsFanPage(int fanPageIndex, std::string post, std::string image);
+    void writePostWithVideoAsFanPage(int fanPageIndex, std::string post, std::string video);
     void printAllPostOfAMember(int memberIndex) const;
     void printAllPostOfAFanPage(int memberIndex) const;
     void printTenLastPostOfAMember(int memberIndex) const;

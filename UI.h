@@ -30,7 +30,7 @@ public:
     bool handleComparingBetweenMembers() const;
     bool handleComparingBetweenFanPages() const;
     bool handleComparingBetweenEntities() const;
-    std::string getStatusFromUser() const;
+    std::string getStatusFromUser(int& choice) const;
 };
 
 

@@ -152,7 +152,18 @@ void Member::unlikeFanPage(FanPage *fanPageToUnlike, int connected) {
 }
 
 void Member::addPost(string content) {
+
     Status* newPost = new Status(content);
+    Posts.push_back(newPost);
+}
+
+void Member::addPostWithImage(std::string content, std::string image) {
+    StatusWithImage* newPost = new StatusWithImage(content, image);
+    Posts.push_back(newPost);
+}
+
+void Member::addPostWithVideo(std::string content, std::string video) {
+    StatusWithVideo* newPost = new StatusWithVideo(content, video);
     Posts.push_back(newPost);
 }
 
@@ -197,7 +208,7 @@ void Member::printAllPosts() const{
         cout << "Posts of " << "'" << Name << "'" << " are:" << endl;
         for (int i = 0; i < size; i++) {
             cout <<" "<< i+1 << ". " ;
-            Posts[i]->printStatus();
+            Posts[i]->printStatus(); // Polymorphism
         }
     }
     cout << endl;

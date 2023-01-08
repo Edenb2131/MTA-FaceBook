@@ -65,13 +65,43 @@ void UI::process() {
                     break;
                 }
                 case MenuOptions::WritePostAsMember: {
+                    int choiceOfMember = 1;
                     int memberIndex = chooseMember();
-                    FB->writePostAsMember(memberIndex, getStatusFromUser());
+                    string s = getStatusFromUser(choiceOfMember);
+                    switch (choiceOfMember){
+                        case 1: {
+                            FB->writePostAsMember(memberIndex, s);
+                            break;
+                        }
+                        case 2: {
+                            FB->writePostWithImageAsMember(memberIndex, s, "image");
+                            break;
+                        }
+                        case 3: {
+                            FB->writePostWithVideoAsMember(memberIndex, s, "video");
+                            break;
+                        }
+                    }
                     break;
                 }
                 case MenuOptions::WritePostAsFanPage: {
+                    int choiceOfFanPage = 1;
                     int fanPageIndex = chooseFanPage();
-                    FB->writePostAsFanPage(fanPageIndex, getStatusFromUser());
+                    string s = getStatusFromUser(choiceOfFanPage);
+                    switch (choiceOfFanPage){
+                        case 1: {
+                            FB->writePostAsMember(fanPageIndex, s);
+                            break;
+                        }
+                        case 2: {
+                            FB->writePostWithImageAsFanPage(fanPageIndex, s, "image");
+                            break;
+                        }
+                        case 3: {
+                            FB->writePostWithVideoAsFanPage(fanPageIndex, s, "video");
+                            break;
+                        }
+                    }
                     break;
                 }
                 case MenuOptions::PrintAllPostOfAMember: {
@@ -363,13 +393,27 @@ int UI::chooseStatusOfFanPage(const FanPage &fanPage) const {
     return index - 1;
 }
 
-string UI::getStatusFromUser() const {
-    cin.ignore();
+string UI::getStatusFromUser(int& choice) const {
+    
     string post;
+    
+    cout << "Please chose between a regular post, a post with photo or a post with video" << endl;
+    cout << "1. Post" << endl;
+    cout << "2. Post with photo" << endl;
+    cout << "3. Post with video" << endl;
+    cin >> choice;
+    
+    if( choice < 1 || choice > 3)
+        throw InvalidInputException("Invalid input. Exiting to main menu...");
+    
+    cin.ignore();
+    
     cout << "Please enter your status:" << endl;
     getline(cin, post);
+    
     if (post.empty())
         throw InvalidInputException("Post is empty. Exiting to main menu...");
+
     return post;
 }
 
@@ -496,6 +540,8 @@ bool UI::handleComparingBetweenFanPages() const {
     }
     return true;
 }
+
+
 
 
 

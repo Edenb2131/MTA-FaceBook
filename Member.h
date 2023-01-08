@@ -46,6 +46,8 @@ public:
 
     //functions :
     void addPost(std::string content); // Add a post to the member's posts
+    void addPostWithImage(std::string content, std::string image); // Add a post with image to the member's posts
+    void addPostWithVideo(std::string content, std::string video); // Add a post with video to the member's posts
     void printAllPosts() const; // Print all the posts of the member
     void printFriends() const; // Print all the friends of the member
     void printLikedPages() const; // Print all the liked pages of the member

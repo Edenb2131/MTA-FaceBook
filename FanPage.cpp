@@ -64,6 +64,16 @@ void FanPage::addPost(string content) {
     Posts.push_back(newPost);
 }
 
+void FanPage::addPostWithImage(std::string content, std::string image) {
+    StatusWithImage* newPost = new StatusWithImage(content, image);
+    Posts.push_back(newPost);
+}
+
+void FanPage::addPostWithVideo(std::string content, std::string video) {
+    StatusWithVideo* newPost = new StatusWithVideo(content, video);
+    Posts.push_back(newPost);
+}
+
 void FanPage::printAllPosts() const {
     if (Posts.empty()) {
         cout << "No posts for page!" << endl;
@@ -74,6 +84,7 @@ void FanPage::printAllPosts() const {
     for (int i = 0; i < size; i++){
         cout <<" "<< i+1 << ". " ;
         Posts[i]->printStatus();
+        
     }
     cout << endl;
 }
@@ -143,4 +154,6 @@ void FanPage::printFans() const {
     }
     cout << endl;
 }
+
+
 

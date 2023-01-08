@@ -21,8 +21,39 @@ public:
 
     //Functions :
     const std::string getContent() const;
-    void printStatus();
+    virtual void printStatus();
     std::string getTimePostPosted();
 };
+
+
+class StatusWithImage : public Status {
+    std::string Image;
+public:
+    
+    
+    StatusWithImage(std::string content, std::string image) : Status(content), Image(image) {}
+
+    const std::string getImage() const {
+        return Image;
+    }
+    
+    void printStatus() override;
+};
+
+class StatusWithVideo : public Status {
+    std::string Video;
+public:
+    StatusWithVideo(std::string content, std::string video) : Status(content), Video(video) {}
+
+    const std::string getVideo() const {
+        return Video;
+    }
+    
+    void printStatus() override;
+};
+
+
+
+
 
 #endif //MTA_FACEBOOK_STATUS_H

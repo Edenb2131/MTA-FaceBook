@@ -30,11 +30,28 @@ void FaceBook::addNewPage(string name){
 }
 
 void FaceBook::writePostAsMember(int memberIndex, std::string post) {
+    
     getMembers()[memberIndex]->addPost(post);
+}
+
+void FaceBook::writePostWithImageAsMember(int memberIndex, std::string post, std::string image) {
+    getMembers()[memberIndex]->addPostWithImage(post, image);
+}
+
+void FaceBook::writePostWithVideoAsMember(int memberIndex, std::string post, std::string video) {
+    getMembers()[memberIndex]->addPostWithVideo(post, video);
 }
 
 void FaceBook::writePostAsFanPage(int fanPageIndex, std::string post) {
     getFanPages()[fanPageIndex]->addPost(post);
+}
+
+void FaceBook::writePostWithImageAsFanPage(int fanPageIndex, std::string post, std::string image) {
+    getFanPages()[fanPageIndex]->addPostWithImage(post,image);
+}
+
+void FaceBook::writePostWithVideoAsFanPage(int fanPageIndex, std::string post, std::string video) {
+    getFanPages()[fanPageIndex]->addPostWithVideo(post,video);
 }
 
 void FaceBook::printAllPostOfAMember(int memberIndex) const {
@@ -176,6 +193,10 @@ void FaceBook::printAllFanPagesOfMember(int memberIndex) const {
 void FaceBook::printAllFansOfAFanPage(int fanPageIndex) const {
     getFanPages()[fanPageIndex]->printFans();
 }
+
+
+
+
 
 
 

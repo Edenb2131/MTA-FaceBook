@@ -31,3 +31,16 @@ void Status::printStatus() {
 }
 
 
+// For classes
+
+
+void StatusWithImage::printStatus() {
+    cout << this->getContent() << "   Image: " << this->getImage() << "   At time: " << this->getTimePostPosted();
+//    system("start Mountain.jpeg");
+    
+}
+
+void StatusWithVideo::printStatus() {
+    cout << this->getContent() << "   Video: " << this->getVideo() << "   At time: " << this->getTimePostPosted();
+//    system("start CatReuniteWithOwner.mp4");
+}

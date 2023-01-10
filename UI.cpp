@@ -90,7 +90,7 @@ void UI::process() {
                     string s = getStatusFromUser(choiceOfFanPage);
                     switch (choiceOfFanPage){
                         case 1: {
-                            FB->writePostAsMember(fanPageIndex, s);
+                            FB->writePostAsFanPage(fanPageIndex, s);
                             break;
                         }
                         case 2: {

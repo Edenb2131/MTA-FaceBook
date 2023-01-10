@@ -29,8 +29,7 @@ public:
 class StatusWithImage : public Status {
     std::string Image;
 public:
-    
-    
+
     StatusWithImage(std::string content, std::string image) : Status(content), Image(image) {}
 
     const std::string getImage() const {
@@ -51,9 +50,5 @@ public:
     
     void printStatus() override;
 };
-
-
-
-
 
 #endif //MTA_FACEBOOK_STATUS_H

@@ -194,6 +194,22 @@ void FaceBook::printAllFansOfAFanPage(int fanPageIndex) const {
     getFanPages()[fanPageIndex]->printFans();
 }
 
+Member* FaceBook::operator[](std::string name) {
+    for (int i = 0; i < Members.size(); i++) {
+        if (Members[i]->getName() == name)
+            return Members[i];
+    }
+    return nullptr;
+}
+
+FanPage* FaceBook::operator()(std::string name) {
+    for (int i = 0; i < FanPages.size(); i++) {
+        if (FanPages[i]->getName() == name)
+            return FanPages[i];
+    }
+    return nullptr;
+}
+
 
 
 

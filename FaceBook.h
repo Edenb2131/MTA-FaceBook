@@ -45,6 +45,9 @@ public:
     void printAllMembersFriends(int memberIndex) const;
     void printAllFanPagesOfMember(int memberIndex) const;
     void printAllFansOfAFanPage(int fanPageIndex) const;
+
+    Member* operator[](std::string name); // returns the member with the same name
+    FanPage* operator()(std::string name); // returns the fan page with the same name
 };
 
 

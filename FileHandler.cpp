@@ -94,21 +94,35 @@ void FileHandler::saveFriendsAndLikedPages(std::vector<Member *> friends, std::v
 }
 
 void FileHandler::loadDataFromFileToFacebook(const std::string &fileName) {
-    int numOfMembers, numOfFanPages;
+    int numOfMembers, numOfFanPages, numOfFriends, numOfLikedPages, i, j;
     ifstream inFile(fileName, ios::in|ios::binary);
 
     inFile.read((char*)numOfMembers, sizeof(int));
-    for (int i = 0; i < numOfMembers; i++) {
+    for (i = 0; i < numOfMembers; i++) {
         FB->addNewMember(MemberInfo(readString(inFile), readBirthDate(inFile)));
         readPostsFromFileAndAddToMember(inFile, FB->getMembers()[i]);
     }
 
     inFile.read((char*)numOfFanPages, sizeof(int));
-    for (int i = 0; i < numOfFanPages; i++) {
+    for (i = 0; i < numOfFanPages; i++) {
         FB->addNewPage(readString(inFile));
         readPostsFromFileAndAddToFanPage(inFile, FB->getFanPages()[i]);
     }
-    // TODO: add connections between  member and its friends and liked pages.
+
+    // TODO: after adding connections think how to avoid unnecessary prints (like "already friends" and so on).
+    for (i = 0; i < numOfMembers; i++) {
+        inFile.read((char*)numOfFriends, sizeof(int));
+        for (j = 0; j < numOfFriends; j++) {
+            string name = readString(inFile);
+            FB->getMembers()[i]->addFriend((*FB)[name]);
+        }
+
+        inFile.read((char*)numOfFanPages, sizeof(int));
+        for (j = 0; j < numOfFanPages; j++) {
+            string name = readString(inFile);
+            FB->getMembers()[j]->likeFanPage((*FB)(name));
+        }
+    }
     inFile.close();
 }
 

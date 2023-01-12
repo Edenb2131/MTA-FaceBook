@@ -64,8 +64,7 @@ void FileHandler::savePosts(std::vector<Status *> posts, std::ofstream &outFile)
     for (int i = 0; i < numOfPosts; i++) {
         int postLen = posts[i]->getContent().size();
         string post = posts[i]->getContent();
-        int timeLen = posts[i]->getTimePostPosted().size();
-        string postTime = posts[i]->getTimePostPosted();
+        time_t time = posts[i]->getTime();
 
         if (typeid(post).name() == typeid(Status).name())
             outFile.write((char*)StatusOptions::TextPost, sizeof(int));
@@ -76,8 +75,7 @@ void FileHandler::savePosts(std::vector<Status *> posts, std::ofstream &outFile)
 
         outFile.write((char*)postLen, sizeof(int));
         outFile.write((char*)&post, sizeof(string));
-        outFile.write((char*)timeLen, sizeof(int));
-        outFile.write((char*)&postTime, sizeof(string));
+        outFile.write((char*)time, sizeof(time_t));
     }
 }
 
@@ -96,25 +94,35 @@ void FileHandler::saveFriendsAndLikedPages(std::vector<Member *> friends, std::v
 }
 
 void FileHandler::loadDataFromFileToFacebook(const std::string &fileName) {
-    int numOfMembers, numOfFanPages, i;
+    int numOfMembers, numOfFanPages;
     ifstream inFile(fileName, ios::in|ios::binary);
-    inFile.read((char*)numOfMembers, sizeof(int));
-    for (i = 0; i < numOfMembers; i++) {
 
+    inFile.read((char*)numOfMembers, sizeof(int));
+    for (int i = 0; i < numOfMembers; i++) {
+        FB->addNewMember(MemberInfo(readString(inFile), readBirthDate(inFile)));
+        readPostsFromFileAndAddToMember(inFile, FB->getMembers()[i]);
     }
+
+    inFile.read((char*)numOfFanPages, sizeof(int));
+    for (int i = 0; i < numOfFanPages; i++) {
+        FB->addNewPage(readString(inFile));
+        readPostsFromFileAndAddToFanPage(inFile, FB->getFanPages()[i]);
+    }
+    // TODO: add connections between  member and its friends and liked pages.
+    inFile.close();
 }
 
-string FileHandler::readName(std::ifstream &inFile) {
-    int nameLen;
-    string name;
+string FileHandler::readString(std::ifstream &inFile) {
+    int len;
+    string str;
 
-    inFile.read((char*)nameLen, sizeof(int));
-    char* temp = new char[nameLen+1];
-    inFile.read(temp, nameLen);
-    temp[nameLen] = '\0';
-    name = temp;
+    inFile.read((char*)len, sizeof(int));
+    char* temp = new char[len + 1];
+    inFile.read(temp, len);
+    temp[len] = '\0';
+    str = temp;
     delete [] temp;
-    return name;
+    return str;
 }
 
 Date FileHandler::readBirthDate(std::ifstream &inFile) {
@@ -125,3 +133,58 @@ Date FileHandler::readBirthDate(std::ifstream &inFile) {
 
     return Date(day, month, year);
 }
+
+time_t FileHandler::readPostTime(std::ifstream &inFile) {
+    time_t time;
+    inFile.read((char*)time, sizeof(time_t));
+    return time;
+}
+
+void FileHandler::readPostsFromFileAndAddToMember(std::ifstream &inFile, Member *member) {
+    int numOfPosts;
+    StatusOptions op;
+
+    inFile.read((char *) numOfPosts, sizeof(int));
+    for (int i = 0; i < numOfPosts; i++) {
+        inFile.read((char *) op, sizeof(StatusOptions));
+        string post = readString(inFile);
+        time_t time = readPostTime(inFile);
+        switch (op) {
+            case StatusOptions::TextPost:
+                member->addPost(post);
+                break;
+            case StatusOptions::ImagePost:
+                member->addPostWithImage(post, "Image");
+                break;
+            case StatusOptions::VideoPost:
+                member->addPostWithVideo(post, "Video");
+                break;
+        }
+        member->getPosts()[i]->setTime(time);
+    }
+}
+
+void FileHandler::readPostsFromFileAndAddToFanPage(std::ifstream &inFile, FanPage *page) {
+    int numOfPosts;
+    StatusOptions op;
+
+    inFile.read((char *) numOfPosts, sizeof(int));
+    for (int i = 0; i < numOfPosts; i++) {
+        inFile.read((char *) op, sizeof(StatusOptions));
+        string post = readString(inFile);
+        time_t time = readPostTime(inFile);
+        switch (op) {
+            case StatusOptions::TextPost:
+                page->addPost(post);
+                break;
+            case StatusOptions::ImagePost:
+                page->addPostWithImage(post, "Image");
+                break;
+            case StatusOptions::VideoPost:
+                page->addPostWithVideo(post, "Video");
+                break;
+        }
+        page->getPosts()[i]->setTime(time);
+    }
+}
+

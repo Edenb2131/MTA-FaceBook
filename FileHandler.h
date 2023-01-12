@@ -21,9 +21,11 @@ public:
     void savePosts(std::vector<Status*> posts, std::ofstream& outFile);
     void saveFriendsAndLikedPages(std::vector<Member*> friends, std::vector<FanPage*> likedPages, std::ofstream& outFile);
     void loadDataFromFileToFacebook(const std::string& fileName);
-    std::string readName(std::ifstream& inFile);
+    std::string readString(std::ifstream& inFile);
     Date readBirthDate(std::ifstream& inFile);
-    std::vector<Status*> readPosts(std::ifstream& inFile);
+    time_t readPostTime(std::ifstream& inFile);
+    void readPostsFromFileAndAddToMember(std::ifstream& inFile, Member* member);
+    void readPostsFromFileAndAddToFanPage(std::ifstream& inFile, FanPage* page);
 };
 
 #endif //MTA_FACEBOOK_FILEHANDLER_H

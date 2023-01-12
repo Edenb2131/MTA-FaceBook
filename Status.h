@@ -14,7 +14,7 @@ public:
 
     //constructor
     Status(std::string content);
-    //Status(std::string content, std::string time); // TODO: check how to convert a string to time!!!
+    Status(std::string content, time_t time);
 
     // Operator overloading
     bool operator==(const Status& other) const; // Equality operator - required
@@ -23,7 +23,9 @@ public:
     //Functions :
     const std::string getContent() const;
     virtual void printStatus();
-    std::string getTimePostPosted();
+    std::string getTimeAsString() const;
+    time_t getTime() const;
+    void setTime(time_t time);
 };
 
 

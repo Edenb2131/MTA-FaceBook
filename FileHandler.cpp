@@ -83,10 +83,45 @@ void FileHandler::savePosts(std::vector<Status *> posts, std::ofstream &outFile)
 
 void FileHandler::saveFriendsAndLikedPages(std::vector<Member *> friends, std::vector<FanPage *> likedPages, std::ofstream &outFile) {
     int numOfFriends = friends.size(), numOfLikedPages = likedPages.size(), i;
+
+    outFile.write((char*)numOfFriends, sizeof(int));
     for (i = 0; i < numOfFriends; i++) {
         saveName(friends[i]->getName(), outFile);
     }
+
+    outFile.write((char*)numOfLikedPages, sizeof(int));
     for (i = 0; i < numOfLikedPages; i++) {
         saveName(likedPages[i]->getName(), outFile);
     }
+}
+
+void FileHandler::loadDataFromFileToFacebook(const std::string &fileName) {
+    int numOfMembers, numOfFanPages, i;
+    ifstream inFile(fileName, ios::in|ios::binary);
+    inFile.read((char*)numOfMembers, sizeof(int));
+    for (i = 0; i < numOfMembers; i++) {
+
+    }
+}
+
+string FileHandler::readName(std::ifstream &inFile) {
+    int nameLen;
+    string name;
+
+    inFile.read((char*)nameLen, sizeof(int));
+    char* temp = new char[nameLen+1];
+    inFile.read(temp, nameLen);
+    temp[nameLen] = '\0';
+    name = temp;
+    delete [] temp;
+    return name;
+}
+
+Date FileHandler::readBirthDate(std::ifstream &inFile) {
+    int day, month, year;
+    inFile.read((char*)day, sizeof(int));
+    inFile.read((char*)month, sizeof(int));
+    inFile.read((char*)year, sizeof(int));
+
+    return Date(day, month, year);
 }

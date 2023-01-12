@@ -14,6 +14,7 @@ public:
 
     //constructor
     Status(std::string content);
+    //Status(std::string content, std::string time); // TODO: check how to convert a string to time!!!
 
     // Operator overloading
     bool operator==(const Status& other) const; // Equality operator - required

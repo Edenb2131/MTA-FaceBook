@@ -5,6 +5,7 @@
 #include <string>
 #include <ctime>
 #include "FaceBook.h"
+#include "Common.h"
 
 enum class StatusOptions {TextPost, ImagePost, VideoPost};
 
@@ -19,6 +20,10 @@ public:
     void saveBirthDate(Date birthDate, std::ofstream& outFile);
     void savePosts(std::vector<Status*> posts, std::ofstream& outFile);
     void saveFriendsAndLikedPages(std::vector<Member*> friends, std::vector<FanPage*> likedPages, std::ofstream& outFile);
+    void loadDataFromFileToFacebook(const std::string& fileName);
+    std::string readName(std::ifstream& inFile);
+    Date readBirthDate(std::ifstream& inFile);
+    std::vector<Status*> readPosts(std::ifstream& inFile);
 };
 
 #endif //MTA_FACEBOOK_FILEHANDLER_H

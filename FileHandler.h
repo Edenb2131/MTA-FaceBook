@@ -7,8 +7,6 @@
 #include "FaceBook.h"
 #include "Common.h"
 
-enum class StatusOptions {TextPost, ImagePost, VideoPost};
-
 class FileHandler {
 private:
     FaceBook* FB;

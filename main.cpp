@@ -12,6 +12,6 @@ int main(){
     enterDataToStartWith(fb);
     UI ui(&fb);
     ui.process();
-    //fh.saveDataToFile("/Users/uder/Downloads/cs/שנה ב/MTA-FaceBook/Data.bin");
+    fh.saveDataToFile("/Users/uder/Downloads/cs/שנה ב/MTA-FaceBook/Data.bin");
     return 0;
 }

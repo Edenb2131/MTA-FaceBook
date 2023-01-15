@@ -14,11 +14,13 @@ void enterDataToStartWith(FaceBook& fb){
     fb.getMembers()[1]->addPost("I love Computer Science !");
     fb.getMembers()[1]->addPost("Who wants to watch FRIENDS with me ?!");
     fb.getMembers()[1]->addPost("Im board.... ?!");
+    fb.getMembers()[1]->addPostWithImage("Image!", "image");
 
     //Member 3:
     fb.addNewMember(MemberInfo("Liri Cohen", Date( 18, 8, 1997)));
     fb.getMembers()[2]->addPost("Who wants to play basketball this afternoon?!");
     fb.getMembers()[2]->addPost("With my friends at tha mall (:!");
+    fb.getMembers()[2]->addPostWithVideo("Video!", "video");
 
 
     // Linking between friends

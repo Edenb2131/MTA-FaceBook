@@ -8,12 +8,9 @@ int main(){
 
     FaceBook fb;
     FileHandler fh(&fb);
-    fh.printAllDataFromBinaryFile("/Users/edenbar/CLionProjects/Year2/MTA-FaceBook/Data.bin");
-    //fh.loadDataFromFileToFacebook("/Users/edenbar/CLionProjects/Year2/MTA-FaceBook/Data.bin");
-    enterDataToStartWith(fb);
+    fh.loadDataFromFileToFacebook("Data.bin");
     UI ui(&fb);
     ui.process();
-    fh.saveDataToFile("/Users/edenbar/CLionProjects/Year2/MTA-FaceBook/Data.bin");
-    //fh.printAllDataFromBinaryFile("/Users/edenbar/CLionProjects/Year2/MTA-FaceBook/Data.bin");
+    fh.saveDataToFile("Data.bin");
     return 0;
 }

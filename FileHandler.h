@@ -7,6 +7,18 @@
 #include "FaceBook.h"
 #include "Common.h"
 
+
+/*
+How we save the data to the file :
+1. Save number of members in facebook.
+2. Save the Members in facebook -> Name(length, content), BirthDay, number of posts ,Posts(type, length, content, time).
+3. Save the number of Fan pages in facebook
+4. Save the Fan Page -> Name(length, content), number of posts, Posts(type, length, content, time).
+5. Then we save the number of Friends and fan pages of each member by the order ->
+    number of friends, friends name,  number of fan pages, fan pages names.
+
+*/
+
 class FileHandler {
 private:
     FaceBook* FB;
@@ -23,7 +35,10 @@ public:
     Date readBirthDate(std::ifstream& inFile);
     time_t readPostTime(std::ifstream& inFile);
     void readPostsFromFileAndAddToMember(std::ifstream& inFile, Member* member);
+    void readPostsFromFileAndPrintOfAMember(std::ifstream& inFile);
     void readPostsFromFileAndAddToFanPage(std::ifstream& inFile, FanPage* page);
+    void readPostsFromFileAndPrintOfAFanPage(std::ifstream& inFile);
+    void printAllDataFromBinaryFile(const std::string& fileName);
 };
 
 #endif //MTA_FACEBOOK_FILEHANDLER_H

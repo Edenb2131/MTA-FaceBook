@@ -5,7 +5,7 @@ using namespace std;
 
 void enterDataToStartWith(FaceBook& fb){
     //Member 1:
-    fb.addNewMember(MemberInfo("Eden Bar", Date( 28, 7, 1997)));
+    fb.addNewMember(MemberInfo("Eden Bar", Date( 22, 8, 1997)));
     fb.getMembers()[0]->addPost("I like ICE-CREAM !");
     fb.getMembers()[0]->addPost("Let's go to paris !");
 

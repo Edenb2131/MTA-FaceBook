@@ -8,10 +8,12 @@ int main(){
 
     FaceBook fb;
     FileHandler fh(&fb);
-    //fh.loadDataFromFileToFacebook("/Users/uder/Downloads/cs/שנה ב/MTA-FaceBook/Data.bin");
+    fh.printAllDataFromBinaryFile("/Users/edenbar/CLionProjects/Year2/MTA-FaceBook/Data.bin");
+    //fh.loadDataFromFileToFacebook("/Users/edenbar/CLionProjects/Year2/MTA-FaceBook/Data.bin");
     enterDataToStartWith(fb);
     UI ui(&fb);
     ui.process();
-    fh.saveDataToFile("/Users/uder/Downloads/cs/שנה ב/MTA-FaceBook/Data.bin");
+    fh.saveDataToFile("/Users/edenbar/CLionProjects/Year2/MTA-FaceBook/Data.bin");
+    //fh.printAllDataFromBinaryFile("/Users/edenbar/CLionProjects/Year2/MTA-FaceBook/Data.bin");
     return 0;
 }

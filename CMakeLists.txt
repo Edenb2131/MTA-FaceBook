@@ -17,4 +17,4 @@ add_executable(MTA_FaceBook
         Status.h
         Common.cpp
         Common.h
-        UI.cpp UI.h HandleFiles.h HandleFiles.cpp FileHandler.cpp FileHandler.h)
+        UI.cpp UI.h FileHandler.cpp FileHandler.h)

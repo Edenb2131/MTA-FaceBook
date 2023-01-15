@@ -35,10 +35,7 @@ public:
     Date readBirthDate(std::ifstream& inFile);
     time_t readPostTime(std::ifstream& inFile);
     void readPostsFromFileAndAddToMember(std::ifstream& inFile, Member* member);
-    void readPostsFromFileAndPrintOfAMember(std::ifstream& inFile);
     void readPostsFromFileAndAddToFanPage(std::ifstream& inFile, FanPage* page);
-    void readPostsFromFileAndPrintOfAFanPage(std::ifstream& inFile);
-    void printAllDataFromBinaryFile(const std::string& fileName);
 };
 
 #endif //MTA_FACEBOOK_FILEHANDLER_H

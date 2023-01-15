@@ -46,7 +46,7 @@ void FileHandler::saveDataToFile(const std::string &fileName) {
 void FileHandler::saveName(string name, ofstream& outFile) {
     int nameLen = name.size();
     outFile.write((char*)&nameLen, sizeof(int)); // save name length
-    outFile.write((char*)&name, sizeof(string)); // save name
+    outFile.write((char*)name.c_str(), sizeof(char)*nameLen); // save name
 }
 
 void FileHandler::saveBirthDate(Date birthDate, std::ofstream &outFile) {
@@ -70,16 +70,18 @@ void FileHandler::savePosts(std::vector<Status *> posts, std::ofstream &outFile)
         time_t time = posts[i]->getTime(); // time of post
 
         // save post's type
-        if (typeid(post).name() == typeid(Status).name())
-            outFile.write((char*)&textPost, sizeof(int));
-        else if (typeid(post).name() == typeid(StatusWithImage).name())
-            outFile.write((char*)&imagePost, sizeof(int));
-        else
-            outFile.write((char*)&videoPost, sizeof(int));
+        if (typeid(*posts[i]) == typeid(Status)) {
+            outFile.write((char *) &textPost, sizeof(int));
+        }
+        else if (typeid(*posts[i]) == typeid(StatusWithImage)) {
+            outFile.write((char *) &imagePost, sizeof(int));
+        }
+        else {
+            outFile.write((char *) &videoPost, sizeof(int));
+        }
 
         outFile.write((char*)&postLen, sizeof(int)); // save post's length
-        ////// Changed from "outFile.write((char*)&post, sizeof(string));" to the following line: still not working
-        outFile.write((char*)&post, (int)post.size()); // save post's content
+        outFile.write((char*)post.c_str(), sizeof(char)*postLen); // save post's content
         outFile.write((char*)&time, sizeof(time)); // save time of post
     }
 }
@@ -105,23 +107,25 @@ void FileHandler::loadDataFromFileToFacebook(const std::string &fileName) {
     inFile.read((char*)&numOfMembers, sizeof(int)); // read number of members
     for (i = 0; i < numOfMembers; i++) {
         // loading member's name and birthdate
-        FB->addNewMember(MemberInfo(readString(inFile), readBirthDate(inFile)));
+        string name = readString(inFile);
+        Date birthDate = readBirthDate(inFile);
+        FB->addNewMember(MemberInfo(name, birthDate));
         // loading member's posts
         readPostsFromFileAndAddToMember(inFile, FB->getMembers()[i]);
     }
 
     inFile.read((char*)&numOfFanPages, sizeof(int));
     for (i = 0; i < numOfFanPages; i++) {
-        FB->addNewPage(readString(inFile));
+        string name = readString(inFile);
+        FB->addNewPage(name);
         readPostsFromFileAndAddToFanPage(inFile, FB->getFanPages()[i]);
     }
 
-    // TODO: after adding connections think how to avoid unnecessary prints (like "already friends" and so on).
     for (i = 0; i < numOfMembers; i++) {
         inFile.read((char*)&numOfFriends, sizeof(int));
         for (j = 0; j < numOfFriends; j++) {
             string name = readString(inFile);
-            FB->getMembers()[i]->addFriend((*FB)[name]);
+            FB->getMembers()[i]->addFriend((*FB)[name], true);
         }
 
         inFile.read((char*)&numOfLikedPages, sizeof(int));
@@ -183,6 +187,7 @@ void FileHandler::readPostsFromFileAndAddToMember(std::ifstream &inFile, Member 
                 break;
         }
         member->getPosts()[i]->setTime(time);
+        cout<<endl;
     }
 }
 
@@ -209,92 +214,5 @@ void FileHandler::readPostsFromFileAndAddToFanPage(std::ifstream &inFile, FanPag
         page->getPosts()[i]->setTime(time);
     }
 }
-
-void FileHandler::printAllDataFromBinaryFile(const string &fileName) {
-    int numOfMembers, numOfFanPages, numOfFriends, numOfLikedPages, i, j;
-    ifstream inFile(fileName, ios::in|ios::binary);
-
-    inFile.read((char*)&numOfMembers, sizeof(int)); // read number of members
-    for (i = 0; i < numOfMembers; i++) {
-        string name = readString(inFile);
-        cout << "Member " << i + 1 << ": " << name << " " ;
-        Date birthDate = readBirthDate(inFile);
-        birthDate.printDate();
-        readPostsFromFileAndPrintOfAMember(inFile);
-    }
-
-    inFile.read((char*)&numOfFanPages, sizeof(int)); // read number of fan pages
-    for (i = 0; i < numOfFanPages; i++) {
-        cout << "FanPage " << i + 1 << ": " << readString(inFile) << endl;
-        readPostsFromFileAndPrintOfAFanPage(inFile);
-    }
-    
-    for (i = 0; i < numOfMembers; i++) {
-        inFile.read((char*)&numOfFriends, sizeof(int)); // read number of friends
-        for (j = 0; j < numOfFriends; j++) {
-            string name = readString(inFile);
-            cout << "Member " << i + 1 << " is friends with " << name << endl;
-        }
-
-        inFile.read((char*)&numOfLikedPages, sizeof(int)); // read number of liked pages
-        for (j = 0; j < numOfLikedPages; j++) {
-            string name = readString(inFile);
-            cout << "Member " << i + 1 << " likes " << name << endl;
-        }
-    }
-    
-    inFile.close();
-}
-
-void FileHandler::readPostsFromFileAndPrintOfAMember(ifstream &inFile) {
-    int numOfPosts;
-    int op;
-
-    inFile.read((char *)&numOfPosts, sizeof(int)); // read number of posts
-    for (int i = 0; i < numOfPosts; i++) {
-        inFile.read((char *)&op, sizeof(int)); // read post's type
-        string post = readString(inFile); // read post's content
-        time_t time = readPostTime(inFile); // read time of post
-        switch (op) {
-            case 1:
-                cout << "Post " << i + 1 << ": " << post << endl;
-                break;
-            case 2:
-                cout << "Post " << i + 1 << ": " << post << " with image" << endl;
-                break;
-            case 3:
-                cout << "Post " << i + 1 << ": " << post << " with video" << endl;
-                break;
-        }
-        cout << "Time: " << ctime(&time) << endl;
-    }
-
-}
-
-void FileHandler::readPostsFromFileAndPrintOfAFanPage(ifstream &inFile) {
-
-    int numOfPosts;
-    int op;
-
-    inFile.read((char *)&numOfPosts, sizeof(int)); // read number of posts
-    for (int i = 0; i < numOfPosts; i++) {
-        inFile.read((char *)&op, sizeof(int)); // read post's type
-        string post = readString(inFile); // read post's content
-        time_t time = readPostTime(inFile); // read time of post
-        switch (op) {
-            case 1:
-                cout << "Post " << i + 1 << ": " << post << endl;
-                break;
-            case 2:
-                cout << "Post " << i + 1 << ": " << post << " with image" << endl;
-                break;
-            case 3:
-                cout << "Post " << i + 1 << ": " << post << " with video" << endl;
-                break;
-        }
-        cout << "Time: " << ctime(&time) << endl;
-    }
-}
-
 
 

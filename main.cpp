@@ -8,9 +8,9 @@ int main(){
 
     FaceBook fb;
     FileHandler fh(&fb);
-    fh.loadDataFromFileToFacebook("Data.bin");
+    fh.loadDataFromFileToFacebook("/Users/edenbar/CLionProjects/Year2/MTA-FaceBook/Data.bin");
     UI ui(&fb);
     ui.process();
-    fh.saveDataToFile("Data.bin");
+    fh.saveDataToFile("/Users/edenbar/CLionProjects/Year2/MTA-FaceBook/Data.bin");
     return 0;
 }

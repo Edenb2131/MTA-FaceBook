@@ -187,7 +187,6 @@ void FileHandler::readPostsFromFileAndAddToMember(std::ifstream &inFile, Member 
                 break;
         }
         member->getPosts()[i]->setTime(time);
-        cout<<endl;
     }
 }
 

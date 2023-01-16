@@ -219,16 +219,10 @@ MemberInfo UI::getMemberInfoFromUser() const {
 
     // Check if the name is already in the system or name is valid
     getline(cin, name);
-    if (name.empty())
-        throw InvalidInputException("Name is empty. Exiting to main menu...");
-    if(name.length() > 30)
-        throw InvalidInputException("Name is too long. Exiting to main menu...");
-
-    for(int i = 0; i < FB->getMembers().size(); i++) {
-        //Check to see if there is another member with the same name ( not case-sensitive )
-        if (FB->getMembers()[i]->getName() == name)
-            throw InvalidInputException("Name already exists. Exiting to main menu...");
-    }
+    
+    checkIfNameIsValid(name);
+    checkIfMemberExists(name);
+    
     // if name is legal we continue to get the date until its right
     cout << "Enter member's birthday: (Day Month Year)" << endl;
 
@@ -257,6 +251,24 @@ MemberInfo UI::getMemberInfoFromUser() const {
 
     return MemberInfo(name, Date(day, month, year));
 }
+
+bool UI::checkIfMemberExists(const string &name) const {
+    for(auto i : FB->getMembers()) {
+        //Check to see if there is another member with the same name ( not case-sensitive )
+        if (i->getName() == name)
+            throw InvalidInputException("Name already exists. Exiting to main menu...");
+    }
+    return true;
+}
+
+bool UI::checkIfNameIsValid(const std::string& name) const{
+    if (name.empty())
+        throw InvalidInputException("Name is empty. Exiting to main menu...");
+    if(name.length() > 30)
+        throw InvalidInputException("Name is too long. Exiting to main menu...");
+    return true;
+}
+
 
 string UI::getFanPageNameFromUser() const {
     cin.ignore();
@@ -540,6 +552,7 @@ bool UI::handleComparingBetweenFanPages() const {
     }
     return true;
 }
+
 
 
 

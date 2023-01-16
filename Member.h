@@ -34,8 +34,8 @@ public:
     bool operator>(const Member& other) const; // Greater than operator - required
     bool operator<=(const Member& other) const;
     bool operator>=(const Member& other) const;
-    const Member& operator+=(Member* friendToAdd); // Add friend operator - required
-    const Member& operator-=(Member* friendToRemove); // Remove friend operator - required
+    Member& operator+=(Member* friendToAdd); // Add friend operator - required
+    Member& operator-=(Member* friendToRemove); // Remove friend operator - required
     
     //comparing between different entities (member, fan page) : (not clear if required)
     bool operator>(const FanPage& other) const; // Greater than operator - required

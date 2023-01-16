@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <ctime>
+#include <utility>
 
 class Status {
     std::string Content;
@@ -21,7 +22,7 @@ public:
     bool operator!=(const Status& other) const; // Inequality operator - required
 
     //Functions :
-    const std::string getContent() const;
+    const std::string& getContent() const;
     virtual void printStatus();
     std::string getTimeAsString() const;
     time_t getTime() const;
@@ -33,25 +34,32 @@ class StatusWithImage : public Status {
     std::string Image;
 public:
 
-    StatusWithImage(std::string content, std::string image) : Status(content), Image(image) {}
+    StatusWithImage(std::string content, std::string image) : Status(std::move(content)), Image(std::move(image)) {}
 
-    const std::string getImage() const {
+    const std::string& getImage() const {
         return Image;
     }
     
     void printStatus() override;
 };
 
+
+
+
 class StatusWithVideo : public Status {
     std::string Video;
 public:
-    StatusWithVideo(std::string content, std::string video) : Status(content), Video(video) {}
+    StatusWithVideo(std::string content, std::string video) : Status(std::move(content)), Video(std::move(video)) {}
 
-    const std::string getVideo() const {
+    const std::string& getVideo() const {
         return Video;
     }
     
     void printStatus() override;
 };
+
+
+
+
 
 #endif //MTA_FACEBOOK_STATUS_H

@@ -16,6 +16,7 @@ class FanPage {
 public:
     //constructor and destructor
     FanPage(std::string name);
+    ~FanPage();
 
     //getters  :
     std::string getName() const;
@@ -23,8 +24,8 @@ public:
     std::vector<Status*> getPosts() const;
 
     //operators :
-    const FanPage& operator+=(Member* fanToAdd); // Add fan operator - required
-    const FanPage& operator-=(Member* fanToRemove); // Remove fan operator - required
+    FanPage& operator+=(Member* fanToAdd); // Add fan operator - required
+    FanPage& operator-=(Member* fanToRemove); // Remove fan operator - required
     bool operator>(const FanPage& other) const; // Greater than operator - required
     bool operator<(const FanPage& other) const; // Less than operator - required
     bool operator>=(const FanPage& other) const;

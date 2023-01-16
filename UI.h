@@ -20,6 +20,8 @@ public:
     MenuOptions menu() const;
     void process();
     MemberInfo getMemberInfoFromUser() const;
+    bool checkIfMemberExists(const std::string& name) const;
+    bool checkIfNameIsValid(const std::string& name) const;
     std::string getFanPageNameFromUser() const;
     int chooseMember() const;
     int chooseFriendOfMember(const Member& member) const;

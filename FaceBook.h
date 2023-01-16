@@ -48,6 +48,7 @@ public:
 
     Member* operator[](std::string name); // returns the member with the same name
     FanPage* operator()(std::string name); // returns the fan page with the same name
+    
 };
 
 

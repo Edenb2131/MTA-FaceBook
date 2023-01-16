@@ -20,7 +20,7 @@ bool Status::operator!=(const Status &other) const {
     return (Content != other.Content);
 }
 
-const string Status::getContent() const {
+const string& Status::getContent() const {
     return Content;
 }
 

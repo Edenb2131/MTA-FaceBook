@@ -9,7 +9,7 @@ FanPage::FanPage(string name) :
 
 // Getters :
 
-string FanPage::getName() const {
+string& FanPage::getName() const {
     return Name;
 }
 
@@ -20,6 +20,14 @@ vector<Member*> FanPage::getFans() const {
 vector<Status*> FanPage::getPosts() const {
     return Posts;
 }
+
+FanPage::~FanPage() {
+    for (auto post : Posts) {
+        delete post;
+    }
+}
+
+
 
 
 // Operators :
